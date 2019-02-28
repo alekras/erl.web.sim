@@ -1,0 +1,251 @@
+
+body {
+/*	margin: 15px;*/
+}
+
+table tr td {
+  padding: 0px;
+}
+
+.tbl_1 {
+  width: 370px;
+  margin: auto;
+  border-spacing: 0px;
+}
+.etr td {
+  height: 1px;
+  width: 30px
+}
+
+.text-cont-r {
+  height: 50px;
+  padding: 0px;
+  background-color: rgba(67,220,165,1);
+  text-align:right;
+}
+
+.label {
+  color: rgba(70,160,185,1);
+  margin: auto;
+  padding-right: 5px;
+  white-space:nowrap;
+  font-size: 12pt;
+  font-family: monospace;
+  font-style: normal;
+  font-weight: normal;
+}
+
+.text-cont-l {
+  height: 50px;
+  padding: 0px;
+  background-color: rgba(67,220,165,1);
+  text-align:left;
+}
+
+.text-input {
+  width:108px; /* 30*5=150-12 */
+  text-align: left;
+  margin: 12px 6px;
+  border: 0px;
+  font-size: 14pt;
+  font-family: monospace;
+  font-style: normal;
+  font-weight: normal;
+}
+/*
+@media screen and (-webkit-min-device-pixel-ratio:0) { 
+  select:focus,
+  textarea:focus,
+  input:focus {
+    font-size: 14pt;
+    background: #eee;
+  }
+}
+@media screen and (-webkit-min-device-pixel-ratio:0) { 
+  select,
+  textarea,
+  input {
+    font-size: 14pt;
+  }
+}
+*/
+.text-open {
+  height: 50px;
+  padding: 12px;
+  background-color: white;
+  text-align:center;
+}
+
+.text-error {
+  height: 30px;
+  padding: 0px;
+  background-color: white;
+  color: red;
+  text-align:center;
+  font-size: 10pt;
+  font-family: monospace;
+  font-style: normal;
+  font-weight: normal;
+}
+
+.button-cont {
+  padding: 0px;
+  background-color: rgba(67,220,165,1);
+  text-align:center;
+}
+
+.button {
+  display: block;
+  height: 40px;
+  width: 50px;
+  margin: 10px;
+  padding: 0px 5px;
+  border-radius: 10px;
+  text-align: center;
+  white-space:nowrap;
+  color: black;
+  font-size: 12pt; font-family: sans-serif; font-style: normal; font-weight: normal;
+  cursor: pointer;
+}
+
+.button_first {
+  display: inline-block;
+  width: 50%;
+  margin: 10px;
+  border: 2px solid white;
+  border-radius: 0px;
+  background-color: rgba(70,160,185,1);
+  color: white;
+  font-size: 14pt;
+  font-weight: bold;
+}
+
+.button_on {
+  border: 2px solid rgba(137,200,205,1);
+}
+
+.button_link {
+  width: 70px; 
+  border: 2px solid rgba(137,200,205,1);
+  background-color: yellow;
+}
+
+.button_send {
+  border: 2px solid rgba(137,200,205,1);
+  background-color: yellow;
+}
+
+
+/* Chat page*/
+
+.header_1 {
+  border: 0px solid black;
+  height: 45px;
+  padding: 0px;
+  background-color: rgba(67,220,165,1);
+  text-align:center;
+}
+
+.status {
+  text-align: center;
+  background-color: transparent;
+  font-size: 12pt;
+  font-family: monospace;
+  font-style: normal;
+  font-weight: bold;
+}
+
+.user-id {
+  width: auto;
+  text-align: center;
+  margin: 0px 4px;
+  padding: 2px 2px;
+  border: 0px;
+  background-color: aquamarine;
+  font-size: 14pt;
+  font-family: monospace;
+  font-style: normal;
+  font-weight: normal;
+}
+
+.header_2 {
+  border: 0px solid black;
+  height: 45px;
+  padding: 0px;
+  background-color: rgba(167,220,205,1);
+  text-align:center;
+}
+
+.board {
+  height: 300px;
+  width: auto;
+  border: 1px solid black;
+  padding: 0px;
+  background-color: rgba(167,220,205,1);
+  overflow: auto;
+}
+
+.send_panel {
+  height: 60px;
+  border: 0px solid black;
+  padding: 0px;
+  background-color: rgba(67,220,165,1);
+}
+
+.text-area {
+  display: block;
+  height: 42px;
+  width: 280px;
+  resize: none;
+/*  outline: none; */
+  overflow: auto;
+  margin: 2px;
+  border: 0px;
+  font-size: 14pt;
+  font-family: monospace;
+  font-style: normal;
+  font-weight: normal;
+}
+
+.left-msg {
+  float:left;
+  width: 90%;
+  text-align: left;
+  margin: 2px 0px 0px 2px;
+  padding: 2px;
+  border: 2px solid green;
+  border-radius: 8px;
+}
+
+.right-msg {
+  float:right;
+  width: 90%;
+  text-align: right;
+  margin: 2px 2px 0px 0px;
+  padding: 2px;
+  border: 2px solid blue;
+  border-radius: 8px;
+}
+
+.text-msg {
+  text-align: left;
+  padding: 0px 8px;
+  background-color: white;
+  font-size: 10pt;
+  font-family: monospace;
+  font-style: normal;
+  font-weight: normal;
+}
+
+.text-timestamp {
+  text-align: center;
+  color: red;
+  padding: 0px 5px;
+  font-size: 8pt;
+  font-stretch:semi-condensed;
+  vertical-align:bottom;
+  font-family: sans-serif;
+  font-style: italic;
+  font-weight: normal;
+}
+

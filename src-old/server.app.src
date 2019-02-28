@@ -1,0 +1,17 @@
+{application, server,
+ [
+  {description, "Simulator httpd ssl server."},
+  {vsn, "0.1"},
+  {modules, [
+             ]},
+  {registered, []},
+  {applications, [
+                  kernel,
+                  stdlib,
+                  sasl,
+                  asn1,
+                  inets
+                 ]},
+  {mod, {web_server_sim, []}},
+  {env, []}
+ ]}.
