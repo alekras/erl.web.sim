@@ -8,7 +8,8 @@
 <script src="/sim/js/prototypejs-1.7.3.js" type="text/javascript"></script>
 <script src="/sim/js/mqttws31.js" type="text/javascript"></script>
 <script src="/sim/js/moment.js" type="text/javascript"></script>
-<script src="/sim/js/sim-control.js" type="text/javascript"></script>
+<script src="/sim/js/sim-web-api.js" type="text/javascript"></script>
+<script src="/sim/js/sim-actions.js" type="text/javascript"></script>
 <script src="/sim/js/sim-view.js" type="text/javascript"></script>
 <script src="/sim/js/sim-mqttclient.js" type="text/javascript"></script>
 <title>SIM4U</title>
@@ -156,7 +157,8 @@
 <script type="text/javascript">
 function start() {
 	var ismobile = (navigator.userAgent.match(/(iPad)|(iPhone)|(iPod)|(android)|(webOS)/i)) ? true : false;
-	var w = window.innerWidth, h = window.innerHeight;
+	var w = window.innerWidth, 
+	h = window.innerHeight;
 	var div = $('info');
 	var log_tbl = $('login-tbl'), 
 			reg_tbl = $('reg-tbl'),
@@ -190,10 +192,10 @@ function start() {
 //	div1.innerHTML = ' w= ' + w + ' h= ' + h + ' tbl.w= ' + log_tbl.offsetWidth;
 
 // Initial:
-	log_tbl.style.display = 'none';//'table';
+	log_tbl.style.display = 'none'; //'table';
 	reg_tbl.style.display = 'none';
 	user = "tom"; user_password = "tommy";
-	chat_tbl.style.display = 'table';//'none';
+	chat_tbl.style.display = 'table'; //'none';
 	contacts_tbl.style.display = 'none';
 	help_tbl.style.display = 'none';
 	

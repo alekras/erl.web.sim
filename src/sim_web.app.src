@@ -12,5 +12,8 @@
                   inets
                  ]},
   {mod, {sim_web, []}},
-  {env, []}
+  {env, [
+		{storage, dets},
+		{dets_home_folder, "test"}
+	]}
  ]}.

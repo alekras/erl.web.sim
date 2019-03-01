@@ -25,9 +25,9 @@
 %%
 %% Include files
 %%
--include("sim_web.hrl").
 -include_lib("mysql_client/include/my.hrl").
 -include_lib("stdlib/include/ms_transform.hrl").
+-include("sim_web.hrl").
 
 %% ====================================================================
 %% API functions
@@ -72,7 +72,7 @@ start() ->
 	},
 	case my:new_datasource(DS_def) of
 		{ok, _Pid} ->
-			Connect = datasource:get_connection(user_db),
+			Connect = datasource:get_connection(user_db), %% @todo check connection
 			R0 = connection:execute_query(Connect, "CREATE DATABASE IF NOT EXISTS " ++ DB_name),
 			lager:debug("create DB: ~p", [R0]),
 			datasource:return_connection(user_db, Connect);

@@ -11,3 +11,4 @@ rel/example_project
 /log/
 /logs/
 /_build/
+/common.log.txt

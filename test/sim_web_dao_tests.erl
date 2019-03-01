@@ -31,10 +31,35 @@
 -include_lib("sim_web.hrl").
 -include("test.hrl").
 
+-ifdef(MYSQL).
+	-define(MYSQL_TESTS,
+				{mysql, fun clean_up/2},
+				{mysql, fun save/2},
+				{mysql, fun get/2},
+				{mysql, fun remove/2},
+				{mysql, fun add_contact/2},
+				{mysql, fun remove_contact/2},
+				{mysql, fun get_all/2},
+				{mysql, fun exist/2},
+				).
+	-define(MYSQL_START, 
+		sim_web_mysql_dao:start(),
+		sim_web_mysql_dao:cleanup(),
+		).
+	-define(MYSQL_STOP, 
+		sim_web_mysql_dao:cleanup(),
+		sim_web_mysql_dao:close(),
+		).
+-endif.
+-ifndef(MYSQL).
+	-define(MYSQL_TESTS, ).
+	-define(MYSQL_START, ).
+	-define(MYSQL_STOP, ).
+-endif.
+
 %%
 %% Import modules
 %%
-%-import(helper_common, []).
 
 %%
 %% Exported Functions
@@ -54,22 +79,15 @@ sim_web_dao_test_() ->
 			fun setup/1,
 			fun cleanup/2,
 			[
+				?MYSQL_TESTS
 				{dets, fun clean_up/2},
-				{mysql, fun clean_up/2},
 				{dets, fun save/2},
-				{mysql, fun save/2},
 				{dets, fun get/2},
-				{mysql, fun get/2},
 				{dets, fun remove/2},
-				{mysql, fun remove/2},
 				{dets, fun add_contact/2},
-				{mysql, fun add_contact/2},
 				{dets, fun remove_contact/2},
-				{mysql, fun remove_contact/2},
 				{dets, fun get_all/2},
-				{mysql, fun get_all/2},
-				{dets, fun exist/2},
-				{mysql, fun exist/2}
+				{dets, fun exist/2}
 			]
 		}
 	 }
@@ -94,16 +112,15 @@ do_start() ->
 
 	application:set_env(lager, handlers, Handlers, [{persistent, true}]),
 	lager:start(),
-	sim_web_mysql_dao:start(),
-	sim_web_mysql_dao:cleanup(),
-
+	application:load(sim_web),
+	V = application:get_env(sim_web, dets_home_folder, "Undef"),
+	?debug_Fmt("::test:: dets_home_folder = ~p", [V]),	
+	?MYSQL_START
 	sim_web_dets_dao:start(),
 	sim_web_dets_dao:cleanup().
 
 do_stop(_X) ->
-	sim_web_mysql_dao:cleanup(),
-	sim_web_mysql_dao:close(),
-
+	?MYSQL_STOP
 	sim_web_dets_dao:cleanup(),	
 	sim_web_dets_dao:close().	
 
