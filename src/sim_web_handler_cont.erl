@@ -71,6 +71,7 @@ make_reply_get_all(User, Req) ->
 	case sim_web_dets_dao:get(User) of
 		#user{user_id = User, contacts = Contacts} ->
 			L = contacts_json(Contacts),
+			lager:info("~n --- Contacts: ~p~n --- Json: ~p~n", [Contacts, L]),
 			cowboy_req:reply(200, #{
 						<<"content-type">> => <<"application/json">>
 					}, L, Req);
@@ -82,22 +83,27 @@ make_reply_get_all(User, Req) ->
 
 rest_req_isconnected(User) ->
 	ReqTo0 = {?URL ++ "/rest/user/" ++ User ++ "/isconnected", [{"X-Forwarded-For", "localhost"}, {"Accept", "application/json"}]},
-	Response0 = httpc:request(get, ReqTo0, [], []),
-	{ok, {{_Pr, Status, _}, _Headers, Body}} = Response0,
 	ConnStatus =
-	case Status of
-		200 -> case Body of
-							"online" -> "on";
-							"offline" -> "off";
-							_ -> "off"
-					 end;
-		404 -> undefined
+	case httpc:request(get, ReqTo0, [], []) of
+		{ok, {{_Pr, Status, _}, _Headers, Body}} ->
+			case Status of
+				200 -> case Body of
+									"online" -> "on";
+									"offline" -> "off";
+									_ -> "off"
+					 		end;
+				404 -> undefined
+			end;
+		{error, Reason} ->
+%			lager:error("Conection error: ~p", [Reason]),
+			"off";
+		_ -> "off"
 	end,
-	lager:info("get /rest/user/:user_name/isconnected, Body: ~120p; Status: ~120p; Conn: ~p", [Body, Status, ConnStatus]),
+	lager:info("get /rest/user/:user_name/isconnected, user_name: ~p Connection status: ~p", [User, ConnStatus]),
 	ConnStatus.
 	
 contacts_json(Contacts_list) ->
-	L = 	[ 
+	L = [ 
 		begin
 			Status = rest_req_isconnected(Contact),
 			lists:concat([

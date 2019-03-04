@@ -45,7 +45,7 @@
 
 start() ->
 	DB_Folder = application:get_env(sim_web, dets_home_folder, "priv/dets-storage"),
-	lager:error("dets folder: ~p~n", [DB_Folder]),
+	lager:warning("dets folder: ~p~n", [DB_Folder]),
 	case dets:open_file(user_db, [{file, filename:join(DB_Folder, "user_db.bin")}, {type, set}, {auto_save, 10000}, {keypos, #user.user_id}]) of
 		{ok, user_db} ->
 			true;
