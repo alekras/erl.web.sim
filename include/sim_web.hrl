@@ -1,8 +1,8 @@
 -record(user,
 	{
 		user_id :: string(),
-		contacts = [] :: [string()],
-		state :: online | offline
+		contacts = [] :: [{user_id :: string(), state :: term()}], %% state keeps value is owner choose the user to talk (recently)
+		state :: term() %% @todo for future 
 	}
 ).
 

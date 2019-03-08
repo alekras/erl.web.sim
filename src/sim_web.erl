@@ -3,12 +3,16 @@
 
 -module(sim_web).
 -behaviour(application).
+-include("sim_web.hrl").
 
 %% ====================================================================
 %% API functions
 %% ====================================================================
--export([start/2]).
--export([stop/1]).
+-export([
+	start/2,
+	stop/1,
+	test_setup/0
+]).
 
 start(_Type, _Args) ->
 	lager:start(),
@@ -39,6 +43,14 @@ start(_Type, _Args) ->
 
 stop(_State) ->
 	ok.
+
+test_setup() ->
+	sim_web_dets_dao:save(#user{user_id = "alex", contacts = ["tom", "john", "sam"], state = online}),
+	sim_web_dets_dao:save(#user{user_id = "tom", contacts = ["alex"], state = offline}),
+	sim_web_dets_dao:save(#user{user_id = "sam", contacts = ["alex", "john"], state = offline}),
+	sim_web_dets_dao:save(#user{user_id = "john", contacts = ["tom", "alex"], state = online}),
+	List = dets:match_object(user_db, #user{user_id = '_', _ = '_'}),
+	[io:format("~p~n", [U]) || U <- List].
 
 %% ====================================================================
 %% Internal functions

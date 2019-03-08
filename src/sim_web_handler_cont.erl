@@ -94,8 +94,8 @@ rest_req_isconnected(User) ->
 					 		end;
 				404 -> undefined
 			end;
-		{error, Reason} ->
-%			lager:error("Conection error: ~p", [Reason]),
+		{error, _Reason} ->
+%			lager:error("Conection error: ~p", [_Reason]),
 			"off";
 		_ -> "off"
 	end,
