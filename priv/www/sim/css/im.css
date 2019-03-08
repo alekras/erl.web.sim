@@ -74,12 +74,6 @@ table tr td {
   font-weight: normal;
 }
 
-.button-cont {
-  padding: 0px;
-  background-color: rgba(67,220,165,1);
-  text-align:center;
-}
-
 .button {
   display: block;
   height: 40px;
@@ -119,6 +113,19 @@ table tr td {
 .button_send {
   border: 2px solid rgba(137,200,205,1);
   background-color: yellow;
+}
+
+.button-add {
+  padding: 0px;
+  height: 30px;
+  background-color: rgba(67,220,165,1);
+  text-align:center;
+}
+
+.button-cont {
+  padding: 0px;
+  background-color: rgba(67,220,165,1);
+  text-align:center;
 }
 
 /* Contacts page */
