@@ -74,7 +74,7 @@ function add_contact() {
 //			console.log("add contact: " + transport.responseJSON.status + " | " + transport.responseJSON.reason);
 //			console.log(transport.responseText);
 			if (transport.responseJSON.status == 'ok') {
-				contactNames = parse_contacts(transport.responseJSON.contacts);
+//				contactNames = parse_contacts(transport.responseJSON.contacts);
 //				contactNames.forEach(function(element, index, array) { console.log(index + ': ' + element);});
 				render_contacts(transport.responseJSON.contacts);
 				$('td-cont-error').innerHTML = "You are successfully add new contact";
@@ -101,7 +101,7 @@ function get_contacts() {
 //			console.log(transport.responseText);
 //			console.log(transport.responseJSON.status + " | " + transport.responseJSON.contacts);
 			if (transport.responseJSON.status == 'ok') {
-				contactNames = parse_contacts(transport.responseJSON.contacts);
+//				contactNames = parse_contacts(transport.responseJSON.contacts);
 //				contactNames.forEach(function(element, index, array) { console.log(index + ': ' + element);});
 				render_contacts(transport.responseJSON.contacts);
 				$('td-cont-error').innerHTML = "You are successfully get all your contacts";
@@ -127,7 +127,7 @@ function remove_contact(contactName) {
 //			console.log("remove contact: " + transport.responseJSON.status + " | " + transport.responseJSON.reason);
 //		console.log(transport.responseText);
 			if (transport.responseJSON.status == 'ok') {
-				contactNames = parse_contacts(transport.responseJSON.contacts);
+//				contactNames = parse_contacts(transport.responseJSON.contacts);
 //				contactNames.forEach(function(element, index, array) { console.log(index + ': ' + element);});
 				render_contacts(transport.responseJSON.contacts);
 				$('td-cont-error').innerHTML = "You are successfully add new contact";

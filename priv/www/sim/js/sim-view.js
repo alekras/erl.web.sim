@@ -105,21 +105,24 @@ var Board = Class.create({
 
 function render_contacts(contacts) {
 	var board = $('contacts');
-	board.childElements().forEach(function(child){child.remove()});
+	board.childElements().forEach(function(child){child.remove()}); // clean up board
 	contacts.forEach(
 		function(element, index, array)
 		{ 
 			var div = new Element('div', {class: 'left-msg'});
 			var contName = new Element('span', {class:'text-msg'});
 			var status = new Element('span', {class:'cont-state'});
-			var remove = new Element('span', {class:'', onclick:'remove_contact("' + element.id + '");'})
+			var remove = new Element('span', {class:'', onclick:'remove_contact("' + element.id + '");'});
+			var connect = new Element('span', {class:'', onclick:'gotoChat();'});
 			div.insert(status);
 			div.insert(contName);
+			div.insert(connect);
 			div.insert(remove);
 			board.insert(div);
 			contName.update(element.id);
 			status.update(element.status);
-			remove.update('(-)')
+			remove.update(' (-) ');
+			connect.update(' (-c->) ');
 			var isScrolledToBottom = (board.scrollHeight - board.clientHeight) <= (board.scrollTop + 1);
 			if(!isScrolledToBottom) {
 				board.scrollTop = board.scrollHeight - board.clientHeight;

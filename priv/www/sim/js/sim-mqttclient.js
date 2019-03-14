@@ -18,11 +18,7 @@ function send() {
 	}
 
 	$('td-chat-error').innerHTML = ""
-	var message = new Messaging.Message(stringPayload);
-	message.destinationName = topic;
-	message.qos = 2;
-	message.retained = true;
-	websocketclient.client.send(message);
+	websocketclient.send(topic, stringPayload);
 	board.outMessage(payload);
 }
 
@@ -30,8 +26,9 @@ function link() {
 	contactId = $('contact').value;
 	var topic = "/" + user + "/" + contactId;
 
+	websocketclient.connect();
+console.log("link: is conn - " + websocketclient.connected);
 	if (!websocketclient.connected) {
-		websocketclient.connect();
 		$('td-chat-error').innerHTML = "Try to link again."
 		return false;
 	}
@@ -46,11 +43,7 @@ function link() {
 		return false;
 	}
 
-	websocketclient.client.subscribe(topic, {qos: 2});
-
-	websocketclient.subscriptions.push({'topic': topic, 'qos': 2});
-	websocketclient.subscribed = true;
-
+	websocketclient.subscribe(topic);
 	$('td-chat-error').innerHTML = "";
 	link_header.doLink();
 }
@@ -71,7 +64,9 @@ var websocketclient = {
 	
 
 	'connect': function () {
-
+		if (this.connected) {
+			return;
+		}
 //		var host = "192.168.1.75";
 //		var host = "lucky3p.com";
 		var host = "localhost";
@@ -91,16 +86,16 @@ var websocketclient = {
 		var lwMessage = "";
 	
 		this.client = new Messaging.Client(host, port, clientId);
-		this.client.onConnectionLost = this.onConnectionLost;
-		this.client.onMessageArrived = this.onMessageArrived;
+		this.client.onConnectionLost = this.onConnectionLost.bind(this);
+		this.client.onMessageArrived = this.onMessageArrived.bind(this);
 	
 		var options = {
 			timeout: 10,
 			keepAliveInterval: keepAlive,
 			cleanSession: cleanSession,
 			useSSL: ssl,
-			onSuccess: this.onConnect,
-			onFailure: this.onFail
+			onSuccess: this.onConnect.bind(this),
+			onFailure: this.onFail.bind(this)
 		};
 	
 		if (username.length > 0) {
@@ -121,28 +116,34 @@ var websocketclient = {
 	},
 
 	'onConnect': function () {
-		websocketclient.connected = true;
+		this.connected = true;
 		top_header.successConnect();
-	console.log("on Connect: " + contactId);
+console.log("on Connect: " + contactId);
 		if (contactId.length > 0) {
 			var topic = "/" + user + "/" + contactId;
-			websocketclient.client.subscribe(topic, {qos: 2});
-			websocketclient.subscriptions.push({'topic': topic, 'qos': 2});
-			websocketclient.subscribed = true;
+			this.subscribe(topic);
 			link_header.doLink();
 		}
 	},
 
+	'send': function (topic, payload) {
+		var message = new Messaging.Message(payload);
+		message.destinationName = topic;
+		message.qos = 2;
+		message.retained = true;
+		this.client.send(message);
+	},
+
 	'onFail': function (message) {
-		websocketclient.connected = false;
-		websocketclient.subscribed = false;
+		this.connected = false;
+		this.subscribed = false;
 		$('td-chat-error').innerHTML = "Connection is broken.";
 		console.log("error: " + message.errorMessage);
 		top_header.disconnect();
 	},
 
 	'onConnectionLost': function (responseObject) {
-		websocketclient.connected = false;
+		this.connected = false;
 		if (responseObject.errorCode !== 0) {
 			$('td-chat-error').innerHTML = "Cannot establish connection.";
 			console.log("onConnectionLost:" + responseObject.errorMessage);
@@ -150,14 +151,20 @@ var websocketclient = {
 		top_header.disconnect();
 
 	//Cleanup subscriptions
-		websocketclient.subscribed = false;
+		this.subscribed = false;
 		link_header.doUnlink();
-		websocketclient.subscriptions = [];
+		this.subscriptions = [];
+	},
+
+	'subscribe': function (topic) {
+		this.client.subscribe(topic, {qos: 2});
+		this.subscriptions.push({'topic': topic, 'qos': 2});
+		this.subscribed = true;
 	},
 
 	'unsubscribe': function (topic) {
 		this.client.unsubscribe(topic);
-		websocketclient.subscriptions = websocketclient.subscriptions.filter(function (element, index, array) { return element.topic != topic;});
+		this.subscriptions = this.subscriptions.filter(function (element, index, array) { return element.topic != topic;});
 		this.subscribed = false;
 	},
 
@@ -173,13 +180,13 @@ var websocketclient = {
 			messageAck.destinationName = topic;
 			messageAck.qos = 2;
 			messageAck.retained = true;
-			websocketclient.client.send(messageAck);
+			this.client.send(messageAck);
 //		}
 	},
 // do I need it?
 	'disconnect': function () {
 		var topic = "/" + user + "/" + contactId;
-		websocketclient.unsubscribe(topic);
+		this.unsubscribe(topic);
 		link_header.doUnlink();
 		this.connected = false;
 		this.client.disconnect();
