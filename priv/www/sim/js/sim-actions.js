@@ -15,12 +15,14 @@ function gotoContacts() {
 	$('td-cont-error').innerHTML = "Contacts";
 }
 
-function gotoChat() {
+function gotoChat(contactId) {
+	console.log("gotoChat: contact id= " + contactId);
 //	$('login-tbl').style.display = 'none';
 	$('chat-tbl').style.display = 'table';
 	$('contacts-tbl').style.display = 'none';
 	$('help-tbl').style.display = 'none';
 	$('td-chat-error').innerHTML = "Chat";
+	link(contactId);
 }
 
 function gotoHelp() {

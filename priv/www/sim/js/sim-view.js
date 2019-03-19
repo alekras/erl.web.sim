@@ -33,20 +33,21 @@ var LinkHeader = Class.create({
 		this.doUnlink();
 	},
 	
-	doLink: function() {
+	doLink: function(contactId) {
 		this.button.innerHTML = "Unlink";
 		this.button.style.backgroundColor = "LightSalmon";
-		this.button.onclick = function() {unlink();};
-		this.contact.setAttribute("readonly", "readonly");
+//		this.button.onclick = function() {unlink();};
+//		this.contact.setAttribute("readonly", "readonly");
 		this.contact.style.backgroundColor = "Aquamarine";
 		this.userId.update(user);
+		this.contact.value = contactId;
 	},
 	
 	doUnlink: function() {
 		this.button.innerHTML = "Link to";
 		this.button.style.backgroundColor = "MediumSpringGreen";
-		this.button.onclick = function() {link();};
-		this.contact.removeAttribute("readonly");
+//		this.button.onclick = function() {link();};
+//		this.contact.removeAttribute("readonly");
 		this.contact.style.backgroundColor = "White";
 	}
 })
@@ -113,7 +114,7 @@ function render_contacts(contacts) {
 			var contName = new Element('span', {class:'text-msg'});
 			var status = new Element('span', {class:'cont-state'});
 			var remove = new Element('span', {class:'', onclick:'remove_contact("' + element.id + '");'});
-			var connect = new Element('span', {class:'', onclick:'gotoChat();'});
+			var connect = new Element('span', {class:'', onclick:'gotoChat("' + element.id + '");'});
 			div.insert(status);
 			div.insert(contName);
 			div.insert(connect);

@@ -1,9 +1,10 @@
-var user, user_password, contactId = "", 
+var user, user_password, 
+//	contactId = "", 
 	contactNames, 
 	top_header, link_header, send_footer, board;
 
-function send() {
-	var topic =  "/" + contactId + "/" + user;
+function send(contactId) {
+//	var topic =  "/" + contactId + "/" + user;
 	var payload = send_footer.payload()
 	var stringPayload = JSON.stringify(payload);
 	if (!websocketclient.connected) {
@@ -18,41 +19,40 @@ function send() {
 	}
 
 	$('td-chat-error').innerHTML = ""
-	websocketclient.send(topic, stringPayload);
+	websocketclient.send(stringPayload);
 	board.outMessage(payload);
 }
 
-function link() {
-	contactId = $('contact').value;
-	var topic = "/" + user + "/" + contactId;
+function link(contactId) {
+//	contactId = $('contact').value;
+	websocketclient.contactId = contactId;
+	console.log("link: contact id= '" + contactId + "'");
+//	var topic = "/" + user + "/" + contactId;
 
-	websocketclient.connect();
-console.log("link: is conn - " + websocketclient.connected);
 	if (!websocketclient.connected) {
-		$('td-chat-error').innerHTML = "Try to link again."
+		websocketclient.connect();
+//		console.log("link: is conn - " + websocketclient.connected);
+//		$('td-chat-error').innerHTML = "Try to link again."
 		return false;
+	} else {
+		websocketclient.onConnect();
 	}
 
-	if (contactId.length < 1) {
-		$('td-chat-error').innerHTML = "Contact name cannot be empty."
-		return false;
-	}
+//	if (websocketclient.subscriptions.some(function (element, index, array) { return (element.topic == topic);})) {
+//		$('td-chat-error').innerHTML = "You are already linked to this contact."
+//		return false;
+//	}
 
-	if (websocketclient.subscriptions.some(function (element, index, array) { return (element.topic == topic);})) {
-		$('td-chat-error').innerHTML = "You are already linked to this contact."
-		return false;
-	}
-
-	websocketclient.subscribe(topic);
-	$('td-chat-error').innerHTML = "";
-	link_header.doLink();
+//	websocketclient.subscribe(topic);
+//	$('td-chat-error').innerHTML = "";
+//	link_header.doLink();
 }
 
-function unlink() {
+function unlink(contactId) {
 	var topic = "/" + user + "/" + contactId;
 	websocketclient.unsubscribe(topic);
 	link_header.doUnlink();
-	contactId = "";
+//	contactId = "";
 }
 
 var websocketclient = {
@@ -61,7 +61,7 @@ var websocketclient = {
 	'messages': [],
 	'connected': false,
 	'subscribed': false,
-	
+	'contactId': "",
 
 	'connect': function () {
 		if (this.connected) {
@@ -118,15 +118,16 @@ var websocketclient = {
 	'onConnect': function () {
 		this.connected = true;
 		top_header.successConnect();
-console.log("on Connect: " + contactId);
-		if (contactId.length > 0) {
-			var topic = "/" + user + "/" + contactId;
+console.log("on Connect: " + this.contactId);
+		if (this.contactId.length > 0) {
+			var topic = "/" + user + "/" + this.contactId;
 			this.subscribe(topic);
-			link_header.doLink();
+			link_header.doLink(this.contactId);
 		}
 	},
 
-	'send': function (topic, payload) {
+	'send': function (payload) {
+		var topic =  "/" + this.contactId + "/" + user;
 		var message = new Messaging.Message(payload);
 		message.destinationName = topic;
 		message.qos = 2;
@@ -157,6 +158,10 @@ console.log("on Connect: " + contactId);
 	},
 
 	'subscribe': function (topic) {
+		if (this.subscriptions.some(function (element, index, array) { return (element.topic == topic);})) {
+			console.log("You are already linked to this contact.");
+			return;
+		}
 		this.client.subscribe(topic, {qos: 2});
 		this.subscriptions.push({'topic': topic, 'qos': 2});
 		this.subscribed = true;
@@ -176,7 +181,7 @@ console.log("on Connect: " + contactId);
 // Acknowledge endpoint to delete retain message as already delivered. 
 //		if (message.retained) {
 			var messageAck = new Messaging.Message('');
-			var topic = "/" + user + "/" + contactId;
+			var topic = "/" + user + "/" + this.contactId;
 			messageAck.destinationName = topic;
 			messageAck.qos = 2;
 			messageAck.retained = true;
