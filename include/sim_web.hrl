@@ -1,7 +1,7 @@
 -record(user,
 	{
 		user_id :: string(),
-		contacts = [] :: [{user_id :: string(), state :: term()}], %% state keeps value is owner choose the user to talk (recently)
+		contacts = [] :: list({string(), term()}), %% state keeps value is owner choose the user to talk (recently)
 		state :: term() %% @todo for future 
 	}
 ).
