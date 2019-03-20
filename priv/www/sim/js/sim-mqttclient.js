@@ -188,12 +188,13 @@ console.log("on Connect: " + this.contactId);
 			this.client.send(messageAck);
 //		}
 	},
-// do I need it?
+// do I need it? --Yes!
 	'disconnect': function () {
-		var topic = "/" + user + "/" + contactId;
+		var topic = "/" + user + "/" + this.contactId;
 		this.unsubscribe(topic);
 		link_header.doUnlink();
 		this.connected = false;
+		this.contactId = "";
 		this.client.disconnect();
 		top_header.disconnect();
 	}

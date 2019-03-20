@@ -129,15 +129,6 @@ table tr td {
 }
 
 /* Contacts page */
-
-.tab_header {
-  height: 50px;
-  padding: 0px;
-  background-color: rgba(67,220,165,1);
-  text-align:center;
-  cursor: pointer;
-}
-
 .menu {
   text-align: center;
   background-color: transparent;
@@ -146,6 +137,20 @@ table tr td {
   font-style: normal;
   font-weight: bold;
   cursor: inherit;
+}
+
+.logout {
+  color: red;
+  font-family: serif;
+  font-stretch: ultra-condensed;
+}
+
+.tab_header {
+  height: 50px;
+  padding: 0px;
+  background-color: rgba(67,220,165,1);
+  text-align:center;
+  cursor: pointer;
 }
 
 .tab_on {
