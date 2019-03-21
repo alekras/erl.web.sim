@@ -18,12 +18,9 @@ function doLoginRequest() {
 		onSuccess: function(transport){
 			console.log(transport.responseJSON.status);
 			if (transport.responseJSON.status == 'ok') {
-				user = $('f1').value;
-				user_password = $('f2').value;
-				$('login-tbl').style.display = 'none';
-				$('chat-tbl').style.display = 'table';
-				$('td-chat-error').innerHTML = "";
-				websocketclient.connect();
+				var user = $('f1').value;
+				var user_password = $('f2').value;
+				gotoAfterSuccessLogin(user, user_password);
 			} else {
 				$('td-login-error').innerHTML = "User name or Password are invalid.<br/>Please try again.";
 			}

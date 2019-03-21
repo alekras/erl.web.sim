@@ -130,11 +130,3 @@ function render_contacts(contacts) {
 			}
 		});
 }
-
-function init() {
-	console.log(">>> init()");
-	top_header = new TopHeader();
-	link_header = new LinkHeader();
-	send_footer = new SendFooter();
-	board = new Board();
-}

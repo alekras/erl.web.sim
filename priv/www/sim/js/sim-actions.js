@@ -1,3 +1,13 @@
+
+function init() {
+	console.log(">>> init()");
+	top_header = new TopHeader();
+	link_header = new LinkHeader();
+	send_footer = new SendFooter();
+	board = new Board();
+	websocketclient.create("localhost", 8880, user, user_password);
+}
+
 function gotoLogin() {
 	user = "";
 	user_password = "";
@@ -10,6 +20,13 @@ function gotoLogin() {
 	$('td-login-error').innerHTML = "";
 }
 
+function gotoAfterSuccessLogin(p_user, p_user_password) {
+	user = p_user;
+	user_password = p_user_password;
+	websocketclient.create("localhost", 8880, user, user_password);
+	gotoContacts();
+}
+
 function gotoReq() {
 	$('login-tbl').style.display = 'none';
 	$('reg-tbl').style.display = 'table';
@@ -18,8 +35,8 @@ function gotoReq() {
 
 function gotoContacts() {
 	get_contacts();
-//	$('login-tbl').style.display = 'none';
-//	$('reg-tbl').style.display = 'none';
+	$('login-tbl').style.display = 'none';
+	$('reg-tbl').style.display = 'none';
 	$('chat-tbl').style.display = 'none';
 	$('contacts-tbl').style.display = 'table';
 	$('help-tbl').style.display = 'none';
@@ -28,7 +45,8 @@ function gotoContacts() {
 
 function gotoChat(contactId) {
 	console.log("gotoChat: contact id= " + contactId);
-//	$('login-tbl').style.display = 'none';
+	$('login-tbl').style.display = 'none';
+	$('reg-tbl').style.display = 'none';
 	$('chat-tbl').style.display = 'table';
 	$('contacts-tbl').style.display = 'none';
 	$('help-tbl').style.display = 'none';
@@ -37,8 +55,8 @@ function gotoChat(contactId) {
 }
 
 function gotoHelp() {
-//	$('login-tbl').style.display = 'none';
-//	$('reg-tbl').style.display = 'none';
+	$('login-tbl').style.display = 'none';
+	$('reg-tbl').style.display = 'none';
 	$('chat-tbl').style.display = 'none';
 	$('contacts-tbl').style.display = 'none';
 	$('help-tbl').style.display = 'table';

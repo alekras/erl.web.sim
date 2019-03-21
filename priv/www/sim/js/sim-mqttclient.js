@@ -48,12 +48,12 @@ function link(contactId) {
 //	link_header.doLink();
 }
 
-function unlink(contactId) {
-	var topic = "/" + user + "/" + contactId;
-	websocketclient.unsubscribe(topic);
-	link_header.doUnlink();
-//	contactId = "";
-}
+//function unlink(contactId) {
+//	var topic = "/" + user + "/" + contactId;
+//	websocketclient.unsubscribe(topic);
+//	link_header.doUnlink();
+////	contactId = "";
+//}
 
 var websocketclient = {
 	'client': null,
@@ -62,22 +62,20 @@ var websocketclient = {
 	'connected': false,
 	'subscribed': false,
 	'contactId': "",
-
-	'connect': function () {
-		if (this.connected) {
-			return;
-		}
+	
+	'create': function(host, port, user, password) {
 //		var host = "192.168.1.75";
 //		var host = "lucky3p.com";
-		var host = "localhost";
-		var port = 8880;
+		this.host = host; //"localhost";
+		this.port = port; //8880;
 		var ssl = false;
 //		var host = "192.168.1.71";
 //		var port = 4443;
 //		var ssl = true;
-		var clientId = user;
-		var username = user;
-		var password = user_password;
+//		this.clientId = user;
+		this.username = user;
+		this.password = password;
+		
 		var keepAlive = 60;
 		var cleanSession = true;
 		var lwTopic = "";
@@ -85,11 +83,11 @@ var websocketclient = {
 		var lwRetain = false;
 		var lwMessage = "";
 	
-		this.client = new Messaging.Client(host, port, clientId);
+		this.client = new Messaging.Client(host, port, user);
 		this.client.onConnectionLost = this.onConnectionLost.bind(this);
 		this.client.onMessageArrived = this.onMessageArrived.bind(this);
 	
-		var options = {
+		this.options = {
 			timeout: 10,
 			keepAliveInterval: keepAlive,
 			cleanSession: cleanSession,
@@ -97,12 +95,11 @@ var websocketclient = {
 			onSuccess: this.onConnect.bind(this),
 			onFailure: this.onFail.bind(this)
 		};
-	
-		if (username.length > 0) {
-			options.userName = username;
+		if (user.length > 0) {
+			this.options.userName = user;
 		}
 		if (password.length > 0) {
-			options.password = password;
+			this.options.password = password;
 		}
 		if (lwTopic.length > 0) {
 			var willmsg = new Messaging.Message(lwMessage);
@@ -111,8 +108,14 @@ var websocketclient = {
 			willmsg.retained = lwRetain;
 			options.willMessage = willmsg;
 		}
+	},
+
+	'connect': function () {
+		if (this.connected) {
+			return;
+		}
 	
-		this.client.connect(options);
+		this.client.connect(this.options);
 	},
 
 	'onConnect': function () {
@@ -120,14 +123,14 @@ var websocketclient = {
 		top_header.successConnect();
 console.log("on Connect: " + this.contactId);
 		if (this.contactId.length > 0) {
-			var topic = "/" + user + "/" + this.contactId;
+			var topic = "/" + this.username + "/" + this.contactId;
 			this.subscribe(topic);
 			link_header.doLink(this.contactId);
 		}
 	},
 
 	'send': function (payload) {
-		var topic =  "/" + this.contactId + "/" + user;
+		var topic =  "/" + this.contactId + "/" + this.username;
 		var message = new Messaging.Message(payload);
 		message.destinationName = topic;
 		message.qos = 2;
@@ -181,7 +184,7 @@ console.log("on Connect: " + this.contactId);
 // Acknowledge endpoint to delete retain message as already delivered. 
 //		if (message.retained) {
 			var messageAck = new Messaging.Message('');
-			var topic = "/" + user + "/" + this.contactId;
+			var topic = "/" + this.username + "/" + this.contactId;
 			messageAck.destinationName = topic;
 			messageAck.qos = 2;
 			messageAck.retained = true;
@@ -190,11 +193,15 @@ console.log("on Connect: " + this.contactId);
 	},
 // do I need it? --Yes!
 	'disconnect': function () {
-		var topic = "/" + user + "/" + this.contactId;
+		if (!this.connected) {
+			return;
+		}
+		var topic = "/" + this.username + "/" + this.contactId;
 		this.unsubscribe(topic);
 		link_header.doUnlink();
 		this.connected = false;
 		this.contactId = "";
+		console.log("disconnect: " + this.username);
 		this.client.disconnect();
 		top_header.disconnect();
 	}
