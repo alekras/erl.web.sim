@@ -74,10 +74,10 @@
       <td id="td-chat-error" colspan="10" class="text-error"></td>
     </tr>
     <tr>
-		  <td colspan="3" class="tab_header tab_off" onclick="gotoContacts();"><label class="menu">Contact</label></td>
+		  <td colspan="3" class="tab_header tab_off" onclick="gotoContacts();"><label class="menu">Contacts</label></td>
 		  <td colspan="3" class="tab_header tab_on"><label class="menu">Chat</label></td>
 		  <td colspan="3" class="tab_header tab_off" onclick="gotoHelp();"><label class="menu">Help</label></td>
-		  <td colspan="1" class="tab_header tab_off" ></td>
+		  <td colspan="1" class="tab_header tab_off" onclick="gotoLogin();"><label class="menu logout">Logout</label></td>
     </tr>
     <tr>
 		  <td colspan="10" class="header_1"><label id = "status_conn" class="status">Offline</label></td>
@@ -111,9 +111,9 @@
     </tr>
     <tr>
 		  <td colspan="3" class="tab_header tab_on"><label class="menu">Contacts</label></td>
-		  <td colspan="3" class="tab_header tab_off" onclick="gotoChat();"><label class="menu">Chat</label></td>
+		  <td colspan="3" class="tab_header tab_off" onclick="gotoChat(user);"><label class="menu">Chat</label></td>
 		  <td colspan="3" class="tab_header tab_off" onclick="gotoHelp();"><label class="menu">Help</label></td>
-		  <td colspan="1" class="tab_header tab_off" ></td>
+		  <td colspan="1" class="tab_header tab_off" onclick="gotoLogin();"><label class="menu logout">Logout</label></td>
     </tr>
     <tr>
       <td colspan="7" class="header_1"><input size="25" class="text-input" id="contact_add" type="text" placeholder="Type contact Id"/></td>
@@ -135,9 +135,9 @@
     </tr>
     <tr>
 		  <td colspan="3" class="tab_header tab_off" onclick="gotoContacts();"><label class="menu">Contact</label></td>
-		  <td colspan="3" class="tab_header tab_off" onclick="gotoChat();"><label class="menu">Chat</label></td>
+		  <td colspan="3" class="tab_header tab_off" onclick="gotoChat(user);"><label class="menu">Chat</label></td>
 		  <td colspan="3" class="tab_header tab_on" ><label class="menu">Help</label></td>
-		  <td colspan="1" class="tab_header tab_off" ></td>
+		  <td colspan="1" class="tab_header tab_off" onclick="gotoLogin();"><label class="menu logout">Logout</label></td>
     </tr>
     <tr>
 		  <td colspan="10" class="header_1"><label id = "status_help" class="status"></label></td>

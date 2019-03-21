@@ -1,3 +1,14 @@
+function gotoLogin() {
+	user = "";
+	user_password = "";
+	websocketclient.disconnect();
+	$('login-tbl').style.display = 'table';
+	$('reg-tbl').style.display = 'none';
+	$('chat-tbl').style.display = 'none';
+	$('contacts-tbl').style.display = 'none';
+	$('help-tbl').style.display = 'none';
+	$('td-login-error').innerHTML = "";
+}
 
 function gotoReq() {
 	$('login-tbl').style.display = 'none';
