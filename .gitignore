@@ -12,3 +12,4 @@ rel/example_project
 /logs/
 /_build/
 /common.log.txt
+/.DS_Store
