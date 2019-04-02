@@ -51,7 +51,7 @@ function gotoChat(contact, ContactList) {
 	$('contacts-tbl').style.display = 'none';
 	$('help-tbl').style.display = 'none';
 	$('td-chat-error').innerHTML = "Chat";
-	link(contact.id, ContactList);
+	link(contact, ContactList);
 }
 
 function gotoHelp() {

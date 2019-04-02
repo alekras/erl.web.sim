@@ -33,14 +33,15 @@ var LinkHeader = Class.create({
 		this.doUnlink();
 	},
 	
-	doLink: function(contactId) {
+	doLink: function(contact) {
 		this.button.innerHTML = "Unlink";
 		this.button.style.backgroundColor = "LightSalmon";
 //		this.button.onclick = function() {unlink();};
 //		this.contact.setAttribute("readonly", "readonly");
+		console.log(contact.status);
 		this.contact.style.backgroundColor = "Aquamarine";
 		this.userId.update(user);
-		this.contact.value = contactId;
+		this.contact.value = contact.id;
 	},
 	
 	doUnlink: function() {
@@ -88,14 +89,19 @@ var Board = Class.create({
 	
 	inMessage: function(message) {
 		var payload = JSON.parse(message.payloadString);
+		var who = message.destinationName.split("/")[2];
+		console.log(who);
 		var div = new Element('div', {class: 'right-msg'});
 		var textMsg = new Element('span', {class:'text-msg'});
 		var time = new Element('span', {class:'text-timestamp'});
+		var sender = new Element('span', {class:'text-msg'});
+		div.insert(sender);
 		div.insert(time);
 		div.insert(textMsg);
 		this.board.insert(div);
 		textMsg.update(payload.msg);
 		time.update(payload.time);
+		sender.update(who);
 		var isScrolledToBottom = (this.board.scrollHeight - this.board.clientHeight) <= (this.board.scrollTop + 1);
 		if(!isScrolledToBottom) {
 			this.board.scrollTop = this.board.scrollHeight - this.board.clientHeight;
