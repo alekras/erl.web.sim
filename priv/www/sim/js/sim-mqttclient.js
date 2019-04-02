@@ -23,9 +23,10 @@ function send(contactId) {
 	board.outMessage(payload);
 }
 
-function link(contactId) {
+function link(contactId, contactList) {
 //	contactId = $('contact').value;
 	websocketclient.contactId = contactId;
+	websocketclient.contacts = contactList;
 	console.log("link: contact id= '" + contactId + "'");
 //	var topic = "/" + user + "/" + contactId;
 
@@ -58,7 +59,8 @@ function link(contactId) {
 var websocketclient = {
 	'client': null,
 	'subscriptions': [],
-	'messages': [],
+	'contacts': [],
+	'messages': [], // ???
 	'connected': false,
 	'subscribed': false,
 	'contactId': "",

@@ -114,7 +114,9 @@ function render_contacts(contacts) {
 			var contName = new Element('span', {class:'text-msg'});
 			var status = new Element('span', {class:'cont-state'});
 			var remove = new Element('span', {class:'', onclick:'remove_contact("' + element.id + '");'});
-			var connect = new Element('span', {class:'', onclick:'gotoChat("' + element.id + '");'});
+//			var connect = new Element('span', {class:'', onclick:'gotoChat("' + element.id + '");'});
+			var connect = new Element('span', {class:'' });
+			connect.onclick = function(e){gotoChat(element, contacts);};
 			div.insert(status);
 			div.insert(contName);
 			div.insert(connect);
