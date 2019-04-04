@@ -3,7 +3,7 @@ var user, user_password,
 	contactNames, 
 	top_header, link_header, send_footer, board;
 
-function send(contactId) {
+function send() {
 //	var topic =  "/" + contactId + "/" + user;
 	var payload = send_footer.payload()
 	var stringPayload = JSON.stringify(payload);
@@ -24,29 +24,30 @@ function send(contactId) {
 }
 
 function link(contact, contactList) {
-//	contactId = $('contact').value;
 	websocketclient.contact = contact;
-	websocketclient.contacts = parse_contacts(contactList);
+	websocketclient.contacts = contactList;
 	console.log("link: contact id= '" + contact.id + "'");
-//	var topic = "/" + user + "/" + contactId;
 
 	if (!websocketclient.connected) {
 		websocketclient.connect();
-//		console.log("link: is conn - " + websocketclient.connected);
-//		$('td-chat-error').innerHTML = "Try to link again."
 		return false;
 	} else {
 		websocketclient.onConnect();
 	}
 
-//	if (websocketclient.subscriptions.some(function (element, index, array) { return (element.topic == topic);})) {
-//		$('td-chat-error').innerHTML = "You are already linked to this contact."
-//		return false;
-//	}
+}
 
-//	websocketclient.subscribe(topic);
-//	$('td-chat-error').innerHTML = "";
-//	link_header.doLink();
+function reLink(contact) {
+	websocketclient.contact = contact;
+	console.log("reLink: contact id= '" + contact.id + "'");
+
+	if (!websocketclient.connected) {
+		websocketclient.connect();
+		return false;
+	} else {
+		websocketclient.onConnect();
+	}
+
 }
 
 //function unlink(contactId) {
@@ -126,9 +127,10 @@ var websocketclient = {
 console.log("on Connect: " + this.contact.id);
 		if (this.contact.id.length > 0) {
 			var mapFun = function(element, index, array) { 
-				var topic = "/" + this.username + "/" + element;
+				var topic = "/" + this.username + "/" + element.id;
 				this.subscribe(topic); 
 			}.bind(this);
+			this.subscribed = true;
 			this.contacts.map(mapFun);
 			link_header.doLink(this.contact);
 		}

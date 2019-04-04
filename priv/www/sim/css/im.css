@@ -75,7 +75,7 @@ table tr td {
 }
 
 .button {
-  display: block;
+  display: inline; 
   height: 40px;
   width: 50px;
   margin: 10px;
@@ -271,6 +271,19 @@ table tr td {
   font-family: monospace;
   font-style: normal;
   font-weight: normal;
+}
+
+.text-sender {
+  float:left;
+  display:block;
+	text-align: left;
+  padding: 0px 8px;
+  background-color: white;
+  font-size: 10pt;
+  font-family: monospace;
+  font-style: normal;
+  font-weight: normal;
+  cursor: pointer;
 }
 
 .text-timestamp {

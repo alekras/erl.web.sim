@@ -28,25 +28,29 @@ var TopHeader = Class.create({
 var LinkHeader = Class.create({
 	initialize: function() {
 		this.contact = $('contact');
-		this.button = $('button_link');
+//		this.button = $('button_link');
 		this.userId = $('user');
 		this.doUnlink();
 	},
 	
-	doLink: function(contact) {
-		this.button.innerHTML = "Unlink";
-		this.button.style.backgroundColor = "LightSalmon";
+	doLink: function(active_contact) {
+//		this.button.innerHTML = "Unlink";
+//		this.button.style.backgroundColor = "LightSalmon";
 //		this.button.onclick = function() {unlink();};
 //		this.contact.setAttribute("readonly", "readonly");
-		console.log(contact.status);
-		this.contact.style.backgroundColor = "Aquamarine";
+		console.log(active_contact.status);
+		if (active_contact.status == "off") {
+			this.contact.style.backgroundColor = "LightSalmon";
+		} else if (active_contact.status == "on") {
+			this.contact.style.backgroundColor = "Aquamarine";
+		}
 		this.userId.update(user);
-		this.contact.value = contact.id;
+		this.contact.value = active_contact.id;
 	},
 	
 	doUnlink: function() {
-		this.button.innerHTML = "Link to";
-		this.button.style.backgroundColor = "MediumSpringGreen";
+//		this.button.innerHTML = "Link to";
+//		this.button.style.backgroundColor = "MediumSpringGreen";
 //		this.button.onclick = function() {link();};
 //		this.contact.removeAttribute("readonly");
 		this.contact.style.backgroundColor = "White";
@@ -94,14 +98,14 @@ var Board = Class.create({
 		var div = new Element('div', {class: 'right-msg'});
 		var textMsg = new Element('span', {class:'text-msg'});
 		var time = new Element('span', {class:'text-timestamp'});
-		var sender = new Element('span', {class:'text-msg'});
+		var sender = new Element('span', {class:'text-sender', onclick:'change_contact("' + who + '");'});
 		div.insert(sender);
 		div.insert(time);
 		div.insert(textMsg);
 		this.board.insert(div);
 		textMsg.update(payload.msg);
 		time.update(payload.time);
-		sender.update(who);
+		sender.update(who + " :");
 		var isScrolledToBottom = (this.board.scrollHeight - this.board.clientHeight) <= (this.board.scrollTop + 1);
 		if(!isScrolledToBottom) {
 			this.board.scrollTop = this.board.scrollHeight - this.board.clientHeight;
@@ -120,8 +124,7 @@ function render_contacts(contacts) {
 			var contName = new Element('span', {class:'text-msg'});
 			var status = new Element('span', {class:'cont-state'});
 			var remove = new Element('span', {class:'', onclick:'remove_contact("' + element.id + '");'});
-//			var connect = new Element('span', {class:'', onclick:'gotoChat("' + element.id + '");'});
-			var connect = new Element('span', {class:'' });
+			var connect = new Element('span', {class:''});
 			connect.onclick = function(e){gotoChat(element, contacts);};
 			div.insert(status);
 			div.insert(contName);

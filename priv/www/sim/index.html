@@ -84,9 +84,11 @@
       <!--td colspan="1" class="header_1"><button id="button_conn" class="button button_on" onclick="websocketclient.connect();">ON</button></td-->
     </tr>
     <tr>
-      <td colspan="3" class="header_2"><div class="user-id" id="user">You</div></td>
-      <td colspan="2" class="header_2"><button id="button_link" class="button button_link" onclick="link();">Link to</button></td>
-      <td colspan="5" class="header_2"><input size="25" class="text-input" id="contact" type="text" placeholder="Type contact Id"/></td>
+      <td colspan="4" class="header_2"><div class="user-id" id="user">You</div></td>
+      <td colspan="2" class="header_2"><button id="button_send" class="button button_send" onclick="javascript:send();">Send</button>
+        <!--<button id="button_link" class="button button_link" onclick="link();">Link to</button>  -->
+      </td>
+      <td colspan="4" class="header_2"><input size="25" class="text-input" id="contact" type="text" placeholder="Type contact Id"/></td>
     </tr>
 
     <tr>
@@ -100,7 +102,7 @@
       <td colspan="9" class="send_panel">
         <div style="margin: auto; vertical-align: bottom;"><textarea id="text-area" class="text-area" rows="2" placeholder="Type text message" ></textarea></div>
       </td>
-      <td colspan="1" class="send_panel"><button id="button_send" class="button button_send" onclick="javascript:send();">Send</button></td>
+      <td colspan="1" class="send_panel"><!-- <button id="button_send" class="button button_send" onclick="javascript:send();">Send</button--></td>
     </tr>
   </table>
 <!-- ----------------------------------------------------------------------------------------------- -->

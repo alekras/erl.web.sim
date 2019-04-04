@@ -54,6 +54,17 @@ function gotoChat(contact, ContactList) {
 	link(contact, ContactList);
 }
 
+function change_contact(sender) {
+	console.log("change_contact: sender= " + sender);
+	var search = websocketclient.contacts.filter(function(contact){console.log("filter: " + contact); return contact.id === sender});
+	console.log("change_contact: search= " + search);
+	if (search.length == 0) {
+		console.log("change_contact: contact " + sender + " is not in your contact list.");
+	} else {
+		reLink(search[0]);
+	}
+}
+
 function gotoHelp() {
 	$('login-tbl').style.display = 'none';
 	$('reg-tbl').style.display = 'none';

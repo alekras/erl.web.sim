@@ -1,0 +1,5 @@
+1. If connected receipient recieves retained message from not connected contact and send acknowledge message 
+   to this not connected contact then the retained message does not deleted from mqtt server store.
+   Need to review protocol and if it protocol feature then improve it.
+   
+2. Clean board after logout.
