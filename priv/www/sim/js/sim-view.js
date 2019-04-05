@@ -1,7 +1,7 @@
 
 var TopHeader = Class.create({
 	initialize: function() {
-		this.status = $('status_conn');
+//		this.status = $('status_conn');
 //		this.button = $('button_conn');
 		this.disconnect();
 	},
@@ -11,8 +11,8 @@ var TopHeader = Class.create({
 //		this.button.innerHTML = "OFF";
 //		this.button.style.backgroundColor = "LightSalmon";
 //		this.button.onclick = function() {websocketclient.disconnect();};
-		this.status.innerHTML = "O n l i n e";
-		this.status.style.color = "DarkGreen";
+//		this.status.innerHTML = "O n l i n e";
+//		this.status.style.color = "DarkGreen";
 		$('user').update(user);
 	},
 	
@@ -20,8 +20,8 @@ var TopHeader = Class.create({
 //		this.button.innerHTML = "ON";
 //		this.button.style.backgroundColor = "MediumSpringGreen";
 //		this.button.onclick = function() {websocketclient.connect();};
-		this.status.innerHTML = "O f f l i n e";
-		this.status.style.color = "LightCoral";
+//		this.status.innerHTML = "O f f l i n e";
+//		this.status.style.color = "LightCoral";
 	}
 })
 

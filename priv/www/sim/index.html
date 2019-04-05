@@ -80,7 +80,12 @@
 		  <td colspan="1" class="tab_header tab_off" onclick="gotoLogin();"><label class="menu logout">Logout</label></td>
     </tr>
     <tr>
-		  <td colspan="10" class="header_1"><label id = "status_conn" class="status">Offline</label></td>
+      <td colspan="10" class="send_panel">
+        <div style="margin: auto; vertical-align: bottom;">
+          <textarea id="text-area" class="text-area" rows="2" placeholder="Type text message" ></textarea>
+        </div>
+      </td>
+		  <!--td colspan="10" class="header_1"><label id = "status_conn" class="status">Offline</label></td-->
       <!--td colspan="1" class="header_1"><button id="button_conn" class="button button_on" onclick="websocketclient.connect();">ON</button></td-->
     </tr>
     <tr>
@@ -98,12 +103,12 @@
       </td>
     </tr>
 
-    <tr>
+    <!--tr>
       <td colspan="9" class="send_panel">
         <div style="margin: auto; vertical-align: bottom;"><textarea id="text-area" class="text-area" rows="2" placeholder="Type text message" ></textarea></div>
       </td>
-      <td colspan="1" class="send_panel"><!-- <button id="button_send" class="button button_send" onclick="javascript:send();">Send</button--></td>
-    </tr>
+      <td colspan="1" class="send_panel"><button id="button_send" class="button button_send" onclick="javascript:send();">Send</button></td>
+    </tr-->
   </table>
 <!-- ----------------------------------------------------------------------------------------------- -->
   <table id = "contacts-tbl" class="tbl_1" style="background-color: rgba(67,220,165,1);">

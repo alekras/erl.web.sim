@@ -245,7 +245,7 @@ table tr td {
 
 .left-msg {
   float:left;
-  width: 90%;
+  width: 380px; /*90%;*/
   text-align: left;
   margin: 2px 0px 0px 2px;
   padding: 2px;
@@ -255,7 +255,7 @@ table tr td {
 
 .right-msg {
   float:right;
-  width: 90%;
+  width: 380px; /*90%;*/
   text-align: right;
   margin: 2px 2px 0px 0px;
   padding: 2px;
@@ -266,6 +266,7 @@ table tr td {
 .text-msg {
   text-align: left;
   padding: 0px 8px;
+  word-wrap:break-word;
   background-color: white;
   font-size: 10pt;
   font-family: monospace;
@@ -287,6 +288,7 @@ table tr td {
 }
 
 .text-timestamp {
+  display:inline-block;
   text-align: center;
   color: red;
   padding: 0px 5px;
