@@ -192,10 +192,11 @@ table tr td {
 }
 
 .user-id {
-  width: auto;
+  display:inline-block;
+  width: 170px;
   text-align: left;
-  margin: 12px 6px;
-  padding: 2px 12px;
+  margin: 6px 4px;
+  padding: 2px 6px;
   border: 0px;
   background-color: aquamarine;
   font-size: 14pt;
@@ -213,7 +214,7 @@ table tr td {
 }
 
 .board {
-  height: 420px;
+  height: 400px;
   width: auto;
   border: 1px solid black;
   padding: 0px;
@@ -229,13 +230,13 @@ table tr td {
 }
 
 .text-area {
-  display: block;
+  display: inline-block;
   height: 50px;
-  width: 416px;
+  width: 475px;
   resize: none;
 /*  outline: none; */
   overflow: auto;
-  margin: 2px;
+  margin: 4px;
   border: 0px;
   font-size: 14pt;
   font-family: monospace;
@@ -251,6 +252,10 @@ table tr td {
   padding: 2px;
   border: 2px solid green;
   border-radius: 8px;
+}
+
+.contact-list {
+  width: 95%;
 }
 
 .right-msg {
@@ -300,3 +305,15 @@ table tr td {
   font-weight: normal;
 }
 
+.remove-contact {
+  float:right;
+  margin-top:8px;
+  color:red;
+  cursor: pointer;
+}
+
+.connect-contact {
+  font-weight: bold;
+  color:blue;
+  cursor: pointer;
+}

@@ -43,6 +43,19 @@ function gotoContacts() {
 	$('td-cont-error').innerHTML = "Contacts";
 }
 
+function gotoChatbyClick(contact) {
+	console.log("gotoChatbyClick: contact id= " + contact);
+	$('login-tbl').style.display = 'none';
+	$('reg-tbl').style.display = 'none';
+	$('chat-tbl').style.display = 'table';
+	$('contacts-tbl').style.display = 'none';
+	$('help-tbl').style.display = 'none';
+	$('td-chat-error').innerHTML = "Chat";
+	var contacts = $('contacts').contacts;
+	contacts.push({id:contact,status:"on"});
+	link({id:contact,status:"on"}, contacts);
+}
+
 function gotoChat(contact, ContactList) {
 	console.log("gotoChat: contact id= " + contact.id);
 	$('login-tbl').style.display = 'none';

@@ -135,7 +135,7 @@ make_reply_for_add(User, New_Contact, Req) ->
 						sim_web_dets_dao:save(UserRec#user{contacts = NewContacts}),
 						contacts_json(NewContacts);
 				_ ->
-					sim_web_dets_dao:save(#user{contacts = [New_Contact]}),
+					sim_web_dets_dao:save(#user{user_id = User, contacts = [New_Contact]}),
 					"{\"status\":\"ok\",\"contacts\":[{\"id\":\"" ++ New_Contact ++ "\",\"status\":\"" ++ Status ++ "\"}]}"
 				end,
 			cowboy_req:reply(200, #{

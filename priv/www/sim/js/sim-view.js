@@ -45,7 +45,8 @@ var LinkHeader = Class.create({
 			this.contact.style.backgroundColor = "Aquamarine";
 		}
 		this.userId.update(user);
-		this.contact.value = active_contact.id;
+		this.contact.update(active_contact.id);
+//		this.contact.value = active_contact.id;
 	},
 	
 	doUnlink: function() {
@@ -117,22 +118,30 @@ var Board = Class.create({
 function render_contacts(contacts) {
 	var board = $('contacts');
 	board.childElements().forEach(function(child){child.remove()}); // clean up board
+	board.contacts = contacts;
 	contacts.forEach(
 		function(element, index, array)
 		{ 
-			var div = new Element('div', {class: 'left-msg'});
-			var contName = new Element('span', {class:'text-msg'});
-			var status = new Element('span', {class:'cont-state'});
-			var remove = new Element('span', {class:'', onclick:'remove_contact("' + element.id + '");'});
-			var connect = new Element('span', {class:''});
+			var div = new Element('div', {class: 'left-msg contact-list'});
+			var contName = new Element('span', {class:'user-id'});
+//			var status = new Element('span', {class:'cont-state'});
+			var remove = new Element('span', {class:'remove-contact', onclick:'remove_contact("' + element.id + '");'});
+			var connect = new Element('span', {class:'connect-contact'});
 			connect.onclick = function(e){gotoChat(element, contacts);};
-			div.insert(status);
+
+			if (element.status == "off") {
+				contName.style.backgroundColor = "LightSalmon";
+			} else if (element.status == "on") {
+				contName.style.backgroundColor = "Aquamarine";
+			}
+
+//			div.insert(status);
 			div.insert(contName);
 			div.insert(connect);
 			div.insert(remove);
 			board.insert(div);
 			contName.update(element.id);
-			status.update(element.status);
+//			status.update(element.status);
 			remove.update(' (-) ');
 			connect.update(' (-c->) ');
 			var isScrolledToBottom = (board.scrollHeight - board.clientHeight) <= (board.scrollTop + 1);
