@@ -272,6 +272,7 @@ table tr td {
   text-align: left;
   padding: 0px 8px;
   word-wrap:break-word;
+  white-space:pre-line;
   background-color: white;
   font-size: 10pt;
   font-family: monospace;

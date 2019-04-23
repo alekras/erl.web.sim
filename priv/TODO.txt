@@ -2,9 +2,13 @@
    to this not connected contact then the retained message does not deleted from mqtt server store.
    Need to review protocol and if it protocol feature then improve it.
    
+  - does not work retain messages. ?
+   
 2. Clean board after logout.
 
 3. Chat tab:
   - color of contact does not reflect state of the connection;
-  - link button 'Send' with keystroke "Enter";
-4. 
+  - link button 'Send' with keystroke "Enter"; ???
+  - keep \n from textarea
+
+4. Create test suits for multi-client testing. 

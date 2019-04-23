@@ -1,30 +1,4 @@
 
-var TopHeader = Class.create({
-	initialize: function() {
-//		this.status = $('status_conn');
-//		this.button = $('button_conn');
-		this.disconnect();
-	},
-	
-	successConnect: function() {
-		console.log("connected");
-//		this.button.innerHTML = "OFF";
-//		this.button.style.backgroundColor = "LightSalmon";
-//		this.button.onclick = function() {websocketclient.disconnect();};
-//		this.status.innerHTML = "O n l i n e";
-//		this.status.style.color = "DarkGreen";
-		$('user').update(user);
-	},
-	
-	disconnect: function() {
-//		this.button.innerHTML = "ON";
-//		this.button.style.backgroundColor = "MediumSpringGreen";
-//		this.button.onclick = function() {websocketclient.connect();};
-//		this.status.innerHTML = "O f f l i n e";
-//		this.status.style.color = "LightCoral";
-	}
-})
-
 var LinkHeader = Class.create({
 	initialize: function() {
 		this.contact = $('contact');
@@ -38,7 +12,7 @@ var LinkHeader = Class.create({
 //		this.button.style.backgroundColor = "LightSalmon";
 //		this.button.onclick = function() {unlink();};
 //		this.contact.setAttribute("readonly", "readonly");
-		console.log(active_contact.status);
+		console.log("doLink: contact status = " + active_contact.status);
 		if (active_contact.status == "off") {
 			this.contact.style.backgroundColor = "LightSalmon";
 		} else if (active_contact.status == "on") {
@@ -54,6 +28,7 @@ var LinkHeader = Class.create({
 //		this.button.style.backgroundColor = "MediumSpringGreen";
 //		this.button.onclick = function() {link();};
 //		this.contact.removeAttribute("readonly");
+//		this.contact.update("c");
 		this.contact.style.backgroundColor = "White";
 	}
 })
@@ -65,6 +40,7 @@ var SendFooter = Class.create({
 	},
 	
 	payload: function() {
+		console.log("text area = " + this.textArea.value);
 		var timestamp = moment().format('MM-DD-YY HH:mm');
 		var payload = {msg: this.textArea.value, time: timestamp};
 		return payload;
@@ -76,6 +52,10 @@ var Board = Class.create({
 		this.board = $('board');
 	},
 	
+	clear: function() {
+		this.board.childElements().forEach(function(child){child.remove()}); // clean up board
+	},
+	
 	outMessage: function(payload) {
 		var div = new Element('div', {class:'left-msg'});
 		var textMsg = new Element('span', {class:'text-msg'});
@@ -83,7 +63,9 @@ var Board = Class.create({
 		div.insert(textMsg);
 		div.insert(time);
 		this.board.insert(div);
-		textMsg.update(payload.msg);
+		var txt = payload.msg.replace(/ /g, '&nbsp;').replace(/\n/g, '<br>');
+		textMsg.update(txt);
+//		textMsg.update(payload.msg);
 		time.update(payload.time);
 		var isScrolledToBottom = (this.board.scrollHeight - this.board.clientHeight) <= (this.board.scrollTop + 1);
 		if(!isScrolledToBottom) {
@@ -95,7 +77,7 @@ var Board = Class.create({
 	inMessage: function(message) {
 		var payload = JSON.parse(message.payloadString);
 		var who = message.destinationName.split("/")[2];
-		console.log(who);
+//		console.log(who);
 		var div = new Element('div', {class: 'right-msg'});
 		var textMsg = new Element('span', {class:'text-msg'});
 		var time = new Element('span', {class:'text-timestamp'});
@@ -104,7 +86,9 @@ var Board = Class.create({
 		div.insert(time);
 		div.insert(textMsg);
 		this.board.insert(div);
-		textMsg.update(payload.msg);
+		var txt = payload.msg.replace(/ /g, '&nbsp;').replace(/\n/g, '<br>');
+		textMsg.update(txt);
+//		textMsg.update(payload.msg);
 		time.update(payload.time);
 		sender.update(who + " :");
 		var isScrolledToBottom = (this.board.scrollHeight - this.board.clientHeight) <= (this.board.scrollTop + 1);

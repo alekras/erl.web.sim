@@ -1,24 +1,24 @@
 var user, user_password, 
 //	contactId = "", 
 	contactNames, 
-	top_header, link_header, send_footer, board;
+	link_header, send_footer, board;
 
 function send() {
 //	var topic =  "/" + contactId + "/" + user;
-	var payload = send_footer.payload()
-	var stringPayload = JSON.stringify(payload);
 	if (!websocketclient.connected) {
 		websocketclient.connect();
 		$('td-chat-error').innerHTML = "Try to send again."
 		return false;
 	}
 
-	if (!websocketclient.subscribed) {
-		$('td-chat-error').innerHTML = "You are not linked to other contact."
-		return false;
-	}
+//	if (!websocketclient.subscribed) {
+//		$('td-chat-error').innerHTML = "You are not linked to other contact."
+//		return false;
+//	}
 
-	$('td-chat-error').innerHTML = ""
+//	$('td-chat-error').innerHTML = ""
+	var payload = send_footer.payload()
+	var stringPayload = JSON.stringify(payload);
 	websocketclient.send(stringPayload);
 	board.outMessage(payload);
 }
@@ -123,7 +123,7 @@ var websocketclient = {
 
 	'onConnect': function () {
 		this.connected = true;
-		top_header.successConnect();
+//		top_header.successConnect();
 console.log("on Connect: " + this.contact.id);
 		if (this.contact.id.length > 0) {
 			var mapFun = function(element, index, array) { 
@@ -150,7 +150,7 @@ console.log("on Connect: " + this.contact.id);
 		this.subscribed = false;
 		$('td-chat-error').innerHTML = "Connection is broken.";
 		console.log("error: " + message.errorMessage);
-		top_header.disconnect();
+//		top_header.disconnect();
 	},
 
 	'onConnectionLost': function (responseObject) {
@@ -159,11 +159,12 @@ console.log("on Connect: " + this.contact.id);
 			$('td-chat-error').innerHTML = "Cannot establish connection.";
 			console.log("onConnectionLost:" + responseObject.errorMessage);
 		}
-		top_header.disconnect();
+//		top_header.disconnect();
 
 	//Cleanup subscriptions
 		this.subscribed = false;
 		link_header.doUnlink();
+		make_logout();
 //		this.subscriptions = [];
 	},
 
@@ -200,17 +201,17 @@ console.log("on Connect: " + this.contact.id);
 	},
 // do I need it? --Yes!
 	'disconnect': function () {
-		if (!this.connected) {
-			return;
+		if (this.connected) {
+			var topic = "/" + this.username + "/" + this.contactId;
+			this.unsubscribe(topic);
+			this.connected = false;
+			this.contact = {id:"",status:""};
+			console.log("disconnect: " + this.username);
+			this.client.disconnect();
 		}
-		var topic = "/" + this.username + "/" + this.contactId;
-		this.unsubscribe(topic);
 		link_header.doUnlink();
-		this.connected = false;
-		this.contact = {id:"",status:""};
-		console.log("disconnect: " + this.username);
-		this.client.disconnect();
-		top_header.disconnect();
+		make_logout();
+//		top_header.disconnect();
 	}
 
 }

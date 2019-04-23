@@ -1,7 +1,7 @@
 
 function init() {
 	console.log(">>> init()");
-	top_header = new TopHeader();
+//	top_header = new TopHeader();
 	link_header = new LinkHeader();
 	send_footer = new SendFooter();
 	board = new Board();
@@ -76,6 +76,11 @@ function change_contact(sender) {
 	} else {
 		reLink(search[0]);
 	}
+}
+
+function make_logout() {
+	board.clear();
+	
 }
 
 function gotoHelp() {
