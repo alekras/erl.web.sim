@@ -22,7 +22,7 @@ function doLoginRequest() {
 				var user_password = $('f2').value;
 				gotoAfterSuccessLogin(user, user_password);
 			} else {
-				$('td-login-error').innerHTML = "User name or Password are invalid.<br/>Please try again.";
+				$('td-error').innerHTML = "User name or Password are invalid.<br/>Please try again.";
 			}
 		}
 	});
@@ -43,13 +43,13 @@ function doRegisterRequest() {
 			if (transport.responseJSON.status == 'ok') {
 				$('reg-tbl').style.display = 'none';
 				$('login-tbl').style.display = 'table';
-				$('td-login-error').innerHTML = "You are successfully registered";
-				$('td-reg-error').innerHTML = "You are successfully registered";
+				$('td-error').innerHTML = "You are successfully registered";
+				$('td-error').innerHTML = "You are successfully registered";
 			} else {
 				if (transport.responseJSON.reason == 'exist') {
-					$('td-reg-error').innerHTML = "This user name already exists.<br/>Please try another.";
+					$('td-error').innerHTML = "This user name already exists.<br/>Please try another.";
 				} else if (transport.responseJSON.reason == 'password') {
-					$('td-reg-error').innerHTML = "Password is too short or does not fit confirmed one.<br/>Please try again.";
+					$('td-error').innerHTML = "Password is too short or does not fit confirmed one.<br/>Please try again.";
 				}
 			}
 		},
@@ -74,10 +74,10 @@ function add_contact() {
 //				contactNames = parse_contacts(transport.responseJSON.contacts);
 //				contactNames.forEach(function(element, index, array) { console.log(index + ': ' + element);});
 				render_contacts(transport.responseJSON.contacts);
-				$('td-cont-error').innerHTML = "You are successfully add new contact";
+				$('td-error').innerHTML = "You are successfully add new contact";
 			} else {
 				if (transport.responseJSON.reason == 'not_exist') {
-					$('td-cont-error').innerHTML = "This contact name does not exist.<br/>Please try another.";
+					$('td-error').innerHTML = "This contact name does not exist.<br/>Please try another.";
 				}
 			}
 		},
@@ -101,10 +101,10 @@ function get_contacts() {
 //				contactNames = parse_contacts(transport.responseJSON.contacts);
 //				contactNames.forEach(function(element, index, array) { console.log(index + ': ' + element);});
 				render_contacts(transport.responseJSON.contacts);
-				$('td-cont-error').innerHTML = "You are successfully get all your contacts";
+				$('td-error').innerHTML = "You are successfully get all your contacts";
 			} else {
 				if (transport.responseJSON.reason == 'exist') {
-					$('td-cont-error').innerHTML = "Something wrong.";
+					$('td-error').innerHTML = "Something wrong.";
 				}
 			}
 		},
@@ -127,10 +127,10 @@ function remove_contact(contactName) {
 //				contactNames = parse_contacts(transport.responseJSON.contacts);
 //				contactNames.forEach(function(element, index, array) { console.log(index + ': ' + element);});
 				render_contacts(transport.responseJSON.contacts);
-				$('td-cont-error').innerHTML = "You are successfully add new contact";
+				$('td-error').innerHTML = "You are successfully add new contact";
 			} else {
 				if (transport.responseJSON.reason == 'exist') {
-					$('td-cont-error').innerHTML = "This contact name does not exist.<br/>Please try another.";
+					$('td-error').innerHTML = "This contact name does not exist.<br/>Please try another.";
 				}
 			}
 		},

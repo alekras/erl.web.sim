@@ -17,7 +17,7 @@ function gotoLogin() {
 	$('chat-tbl').style.display = 'none';
 	$('contacts-tbl').style.display = 'none';
 	$('help-tbl').style.display = 'none';
-	$('td-login-error').innerHTML = "";
+	$('td-error').innerHTML = "";
 }
 
 function gotoAfterSuccessLogin(p_user, p_user_password) {
@@ -27,10 +27,13 @@ function gotoAfterSuccessLogin(p_user, p_user_password) {
 	gotoContacts();
 }
 
-function gotoReq() {
+function gotoRegister() {
 	$('login-tbl').style.display = 'none';
 	$('reg-tbl').style.display = 'table';
-	$('td-reg-error').innerHTML = "";
+	$('chat-tbl').style.display = 'none';
+	$('contacts-tbl').style.display = 'none';
+	$('help-tbl').style.display = 'none';
+	$('td-error').innerHTML = "";
 }
 
 function gotoContacts() {
@@ -40,7 +43,7 @@ function gotoContacts() {
 	$('chat-tbl').style.display = 'none';
 	$('contacts-tbl').style.display = 'table';
 	$('help-tbl').style.display = 'none';
-	$('td-cont-error').innerHTML = "Contacts";
+	$('td-error').innerHTML = "Contacts";
 }
 
 function gotoChatbyClick(contact) {
@@ -50,7 +53,7 @@ function gotoChatbyClick(contact) {
 	$('chat-tbl').style.display = 'table';
 	$('contacts-tbl').style.display = 'none';
 	$('help-tbl').style.display = 'none';
-	$('td-chat-error').innerHTML = "Chat";
+	$('td-error').innerHTML = "Chat";
 	var contacts = $('contacts').contacts;
 	contacts.push({id:contact,status:"on"});
 	link({id:contact,status:"on"}, contacts);
@@ -63,7 +66,7 @@ function gotoChat(contact, ContactList) {
 	$('chat-tbl').style.display = 'table';
 	$('contacts-tbl').style.display = 'none';
 	$('help-tbl').style.display = 'none';
-	$('td-chat-error').innerHTML = "Chat";
+	$('td-error').innerHTML = "Chat";
 	link(contact, ContactList);
 }
 
@@ -83,13 +86,20 @@ function make_logout() {
 	
 }
 
-function gotoHelp() {
+function gotoHelp(menuIdx) {
 	$('login-tbl').style.display = 'none';
 	$('reg-tbl').style.display = 'none';
 	$('chat-tbl').style.display = 'none';
 	$('contacts-tbl').style.display = 'none';
 	$('help-tbl').style.display = 'table';
-	$('td-help-error').innerHTML = "Help";
+	if (menuIdx == 0) {
+		$('help_menu_1').style.display = "none"
+		$('help_menu_0').style.display = "table-row"
+	} else if(menuIdx == 1) {
+		$('help_menu_1').style.display = "table-row"
+		$('help_menu_0').style.display = "none"
+	}
+	$('td-error').innerHTML = "Help";
 }
 
 function parse_contacts(contacts) {

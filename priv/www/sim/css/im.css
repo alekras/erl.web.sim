@@ -7,16 +7,17 @@ table tr td {
   padding: 0px;
 }
 
-.tbl_1 {
+.tbl_0 {
   border: 2px solid rgba(137,200,205,1);
   width: 500px;
   margin: 50px auto auto;
   border-spacing: 0px;
   font-size: 14pt;
 }
-.etr td {
-  height: 0px;
-  width: 50px
+.tbl_1 {
+  width: 500px;
+  border-spacing: 0px;
+  font-size: 14pt;
 }
 
 .text-cont-r {
@@ -112,6 +113,8 @@ table tr td {
 
 .button_send {
   border: 2px solid rgba(137,200,205,1);
+  height:35px;
+  margin: 5px 8px 5px 8px;
   background-color: yellow;
 }
 
@@ -214,7 +217,7 @@ table tr td {
 }
 
 .board {
-  height: 400px;
+  height: 412px;
   width: auto;
   border: 1px solid black;
   padding: 0px;
@@ -232,11 +235,11 @@ table tr td {
 .text-area {
   display: inline-block;
   height: 50px;
-  width: 475px;
+  width: 485px;
   resize: none;
 /*  outline: none; */
   overflow: auto;
-  margin: 4px;
+  margin: 4px 0px 0px 0px;
   border: 0px;
   font-size: 14pt;
   font-family: monospace;

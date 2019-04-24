@@ -19,6 +19,7 @@ var LinkHeader = Class.create({
 			this.contact.style.backgroundColor = "Aquamarine";
 		}
 		this.userId.update(user);
+		this.userId.style.backgroundColor = "Aquamarine";
 		this.contact.update(active_contact.id);
 //		this.contact.value = active_contact.id;
 	},
@@ -30,6 +31,7 @@ var LinkHeader = Class.create({
 //		this.contact.removeAttribute("readonly");
 //		this.contact.update("c");
 		this.contact.style.backgroundColor = "White";
+		this.userId.style.backgroundColor = "LightSalmon";
 	}
 })
 

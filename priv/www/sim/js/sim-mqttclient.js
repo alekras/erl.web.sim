@@ -7,16 +7,16 @@ function send() {
 //	var topic =  "/" + contactId + "/" + user;
 	if (!websocketclient.connected) {
 		websocketclient.connect();
-		$('td-chat-error').innerHTML = "Try to send again."
+		$('td-error').innerHTML = "Try to send again."
 		return false;
 	}
 
 //	if (!websocketclient.subscribed) {
-//		$('td-chat-error').innerHTML = "You are not linked to other contact."
+//		$('td-error').innerHTML = "You are not linked to other contact."
 //		return false;
 //	}
 
-//	$('td-chat-error').innerHTML = ""
+//	$('td-error').innerHTML = ""
 	var payload = send_footer.payload()
 	var stringPayload = JSON.stringify(payload);
 	websocketclient.send(stringPayload);
@@ -148,7 +148,7 @@ console.log("on Connect: " + this.contact.id);
 	'onFail': function (message) {
 		this.connected = false;
 		this.subscribed = false;
-		$('td-chat-error').innerHTML = "Connection is broken.";
+		$('td-error').innerHTML = "Connection is broken.";
 		console.log("error: " + message.errorMessage);
 //		top_header.disconnect();
 	},
@@ -156,7 +156,7 @@ console.log("on Connect: " + this.contact.id);
 	'onConnectionLost': function (responseObject) {
 		this.connected = false;
 		if (responseObject.errorCode !== 0) {
-			$('td-chat-error').innerHTML = "Cannot establish connection.";
+			$('td-error').innerHTML = "Cannot establish connection.";
 			console.log("onConnectionLost:" + responseObject.errorMessage);
 		}
 //		top_header.disconnect();
