@@ -8,7 +8,7 @@
 %% ====================================================================
 %% API functions
 %% ====================================================================
--export([init/2]).
+-export([init/2, contacts_json/1]).
 
 init(Req0, Opts) ->
 	lager:info("get sim/contacts: ~120p\n~120p", [Req0, Opts]),

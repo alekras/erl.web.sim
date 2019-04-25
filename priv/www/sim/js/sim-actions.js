@@ -5,6 +5,7 @@ function init() {
 	link_header = new LinkHeader();
 	send_footer = new SendFooter();
 	board = new Board();
+	contacts_board = new Contacts();
 	websocketclient.create("localhost", 8880, user, user_password);
 }
 
@@ -54,7 +55,7 @@ function gotoChatbyClick(contact) {
 	$('contacts-tbl').style.display = 'none';
 	$('help-tbl').style.display = 'none';
 	$('td-error').innerHTML = "Chat";
-	var contacts = $('contacts').contacts;
+	var contacts = contacts_board.contacts;
 	contacts.push({id:contact,status:"on"});
 	link({id:contact,status:"on"}, contacts);
 }
@@ -72,7 +73,7 @@ function gotoChat(contact, ContactList) {
 
 function change_contact(sender) {
 	console.log("change_contact: sender= " + sender);
-	var search = websocketclient.contacts.filter(function(contact){console.log("filter: " + contact); return contact.id === sender});
+	var search = websocketclient.contacts.filter(function(contact){/*console.log("filter: " + contact);*/ return contact.id === sender});
 	console.log("change_contact: search= " + search);
 	if (search.length == 0) {
 		console.log("change_contact: contact " + sender + " is not in your contact list.");
@@ -83,7 +84,7 @@ function change_contact(sender) {
 
 function make_logout() {
 	board.clear();
-	
+	contacts_board.clear();
 }
 
 function gotoHelp(menuIdx) {

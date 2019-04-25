@@ -97,42 +97,50 @@ var Board = Class.create({
 		if(!isScrolledToBottom) {
 			this.board.scrollTop = this.board.scrollHeight - this.board.clientHeight;
 		}
-	}
-	
+	}	
 })
 
-function render_contacts(contacts) {
-	var board = $('contacts');
-	board.childElements().forEach(function(child){child.remove()}); // clean up board
-	board.contacts = contacts;
-	contacts.forEach(
-		function(element, index, array)
-		{ 
-			var div = new Element('div', {class: 'left-msg contact-list'});
-			var contName = new Element('span', {class:'user-id'});
-//			var status = new Element('span', {class:'cont-state'});
-			var remove = new Element('span', {class:'remove-contact', onclick:'remove_contact("' + element.id + '");'});
-			var connect = new Element('span', {class:'connect-contact'});
-			connect.onclick = function(e){gotoChat(element, contacts);};
+var Contacts = Class.create({
+	initialize: function() {
+		this.board = $('contacts');
+		this.contacts = [];
+	},
 
-			if (element.status == "off") {
-				contName.style.backgroundColor = "LightSalmon";
-			} else if (element.status == "on") {
-				contName.style.backgroundColor = "Aquamarine";
-			}
+	clear: function() {
+		this.board.childElements().forEach(function(child){child.remove()}); // clean up board
+	},
+	
+	render_contacts: function(contacts) {
+		this.board.childElements().forEach(function(child){child.remove()}); // clean up board
+		this.contacts = contacts;
+		contacts.forEach(
+			function(element, index, array) { 
+				var div = new Element('div', {class: 'left-msg contact-list'});
+				var contName = new Element('span', {class:'user-id'});
+//			var status = new Element('span', {class:'cont-state'});
+				var remove = new Element('span', {class:'remove-contact', onclick:'remove_contact("' + element.id + '");'});
+				var connect = new Element('span', {class:'connect-contact'});
+				connect.onclick = function(e){gotoChat(element, contacts);};
+
+				if (element.status == "off") {
+					contName.style.backgroundColor = "LightSalmon";
+				} else if (element.status == "on") {
+					contName.style.backgroundColor = "Aquamarine";
+				}
 
 //			div.insert(status);
-			div.insert(contName);
-			div.insert(connect);
-			div.insert(remove);
-			board.insert(div);
-			contName.update(element.id);
+				div.insert(contName);
+				div.insert(connect);
+				div.insert(remove);
+				this.board.insert(div);
+				contName.update(element.id);
 //			status.update(element.status);
-			remove.update(' (-) ');
-			connect.update(' (-c->) ');
-			var isScrolledToBottom = (board.scrollHeight - board.clientHeight) <= (board.scrollTop + 1);
-			if(!isScrolledToBottom) {
-				board.scrollTop = board.scrollHeight - board.clientHeight;
-			}
-		});
-}
+				remove.update(' (-) ');
+				connect.update(' (-c->) ');
+		}.bind(this));
+		var isScrolledToBottom = (this.board.scrollHeight - this.board.clientHeight) <= (this.board.scrollTop + 1);
+		if(!isScrolledToBottom) {
+			this.board.scrollTop = this.board.scrollHeight - this.board.clientHeight;
+		}
+	}
+})

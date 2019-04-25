@@ -1,7 +1,7 @@
 var user, user_password, 
 //	contactId = "", 
 	contactNames, 
-	link_header, send_footer, board;
+	link_header, send_footer, board, contacts_board;
 
 function send() {
 //	var topic =  "/" + contactId + "/" + user;

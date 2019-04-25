@@ -13,4 +13,4 @@
 
 4. Create test suits for multi-client testing.
 
-5. Check after login if user present in dest? If not - create him. 
+5. Check after login if user presents in dets? If not - create him. 

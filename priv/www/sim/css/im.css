@@ -272,6 +272,7 @@ table tr td {
 }
 
 .text-msg {
+  display:block;
   text-align: left;
   padding: 0px 8px;
   word-wrap:break-word;

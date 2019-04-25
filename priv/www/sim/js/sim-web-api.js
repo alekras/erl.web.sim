@@ -73,7 +73,7 @@ function add_contact() {
 			if (transport.responseJSON.status == 'ok') {
 //				contactNames = parse_contacts(transport.responseJSON.contacts);
 //				contactNames.forEach(function(element, index, array) { console.log(index + ': ' + element);});
-				render_contacts(transport.responseJSON.contacts);
+				contacts_board.render_contacts(transport.responseJSON.contacts);
 				$('td-error').innerHTML = "You are successfully add new contact";
 			} else {
 				if (transport.responseJSON.reason == 'not_exist') {
@@ -95,12 +95,12 @@ function get_contacts() {
 		requestHeaders: {Accept: 'application/json'},
 		postBody: "",
 		onSuccess: function(transport){
-			console.log(transport.responseText);
+			console.log(contacts_board + " -:- " + transport.responseText);
 //			console.log(transport.responseJSON.status + " | " + transport.responseJSON.contacts);
 			if (transport.responseJSON.status == 'ok') {
 //				contactNames = parse_contacts(transport.responseJSON.contacts);
 //				contactNames.forEach(function(element, index, array) { console.log(index + ': ' + element);});
-				render_contacts(transport.responseJSON.contacts);
+				contacts_board.render_contacts(transport.responseJSON.contacts);
 				$('td-error').innerHTML = "You are successfully get all your contacts";
 			} else {
 				if (transport.responseJSON.reason == 'exist') {
@@ -126,7 +126,7 @@ function remove_contact(contactName) {
 			if (transport.responseJSON.status == 'ok') {
 //				contactNames = parse_contacts(transport.responseJSON.contacts);
 //				contactNames.forEach(function(element, index, array) { console.log(index + ': ' + element);});
-				render_contacts(transport.responseJSON.contacts);
+				contacts_board.render_contacts(transport.responseJSON.contacts);
 				$('td-error').innerHTML = "You are successfully add new contact";
 			} else {
 				if (transport.responseJSON.reason == 'exist') {

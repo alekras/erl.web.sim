@@ -45,10 +45,20 @@ make_reply(User, Password, Req) ->
 			Enc_Password = crypto:hash(md5, Password),
 			Body1 = re:replace(Body, "\r|\n", "", [global, {return, binary}]),
 			if Enc_Password =:= Body1 ->
+%% Check User in local sim-web database. If not create new one.
+					L =
+					case sim_web_dets_dao:get(User) of
+						#user{user_id = User, contacts = Contacts} ->
+							Contacts;
+						_ ->
+							sim_web_dets_dao:save(#user{user_id = User, contacts = []}),
+							[]
+					end,
+
 					cowboy_req:reply(200, #{
 						<<"content-type">> => <<"application/json">>
-					}, <<"{\"status\":\"ok\"}">>, Req);
-				 true ->
+					}, sim_web_handler_cont:contacts_json(L), Req);
+				true ->
 					cowboy_req:reply(200, #{
 						<<"content-type">> => <<"application/json">>
 					}, <<"{\"status\":\"fail\"}">>, Req)
