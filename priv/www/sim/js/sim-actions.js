@@ -43,7 +43,7 @@ function gotoContacts() {
 	$('chat-tbl').style.display = 'none';
 	$('contacts-tbl').style.display = 'table';
 	$('help-tbl').style.display = 'none';
-	$('td-error').innerHTML = "Contacts";
+//	$('td-error').innerHTML = "Contacts";
 }
 
 function gotoChatbyClick(contact) {

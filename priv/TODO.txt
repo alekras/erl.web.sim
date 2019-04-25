@@ -4,11 +4,13 @@
    
   - does not work retain messages. ?
    
-2. Clean board after logout.
+2. Clean message board and contacts board after logout.
 
 3. Chat tab:
   - color of contact does not reflect state of the connection;
   - link button 'Send' with keystroke "Enter"; ???
   - keep \n from textarea
 
-4. Create test suits for multi-client testing. 
+4. Create test suits for multi-client testing.
+
+5. Check after login if user present in dest? If not - create him. 
