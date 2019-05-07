@@ -1,4 +1,4 @@
-1. If connected receipient recieves retained message from not connected contact and send acknowledge message 
+1. If connected receipient receives retained message from not connected contact and send acknowledge message 
    to this not connected contact then the retained message does not deleted from mqtt server store.
    Need to review protocol and if it protocol feature then improve it.
    
@@ -13,4 +13,6 @@
 
 4. Create test suits for multi-client testing.
 
-5. Check after login if user presents in dets? If not - create him. 
+5. Check after login if user presents in dets? If not - create him.
+
+6 Avoid duplicate contact names.

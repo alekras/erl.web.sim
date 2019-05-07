@@ -56,13 +56,6 @@ table tr td {
   font-weight: normal;
 }
 
-.text-open {
-  height: 25px;
-  padding: 12px;
-  background-color: white;
-  text-align:center;
-}
-
 .text-error {
   height: 50px;
   padding: 0px;
@@ -101,16 +94,6 @@ table tr td {
   font-weight: bold;
 }
 
-.button_on {
-  border: 2px solid rgba(137,200,205,1);
-}
-
-.button_link {
-  width: 70px; 
-  border: 2px solid rgba(137,200,205,1);
-  background-color: yellow;
-}
-
 .button_send {
   border: 2px solid rgba(137,200,205,1);
   height:35px;
@@ -120,9 +103,14 @@ table tr td {
 
 .button-add {
   padding: 0px;
-  height: 30px;
-  background-color: rgba(67,220,165,1);
-  text-align:center;
+  width: 40px;
+  height: 40px;
+  
+  background-color: rgba(87,220,165,1);
+  background-image: url("/sim/img/add-user.png");
+  background-repeat:no-repeat;
+  background-size:cover;
+  cursor: pointer;
 }
 
 .button-cont {
@@ -185,15 +173,6 @@ table tr td {
   text-align:center;
 }
 
-.status {
-  text-align: center;
-  background-color: transparent;
-  font-size: 12pt;
-  font-family: monospace;
-  font-style: normal;
-  font-weight: bold;
-}
-
 .user-id {
   display:inline-block;
   width: 170px;
@@ -206,14 +185,8 @@ table tr td {
   font-family: monospace;
   font-style: normal;
   font-weight: normal;
-}
-
-.header_2 {
-  border: 0px solid black;
-  height: 50px;
-  padding: 0px;
-  background-color: rgba(167,220,205,1);
-  text-align:center;
+  vertical-align: middle;
+  
 }
 
 .board {
@@ -252,13 +225,14 @@ table tr td {
   width: 380px; /*90%;*/
   text-align: left;
   margin: 2px 0px 0px 2px;
-  padding: 2px;
+  padding: 5px;
   border: 2px solid green;
   border-radius: 8px;
 }
 
 .contact-list {
   width: 95%;
+  height:40px;
 }
 
 .right-msg {
@@ -266,7 +240,7 @@ table tr td {
   width: 380px; /*90%;*/
   text-align: right;
   margin: 2px 2px 0px 0px;
-  padding: 2px;
+  padding: 5px;
   border: 2px solid blue;
   border-radius: 8px;
 }
@@ -274,10 +248,12 @@ table tr td {
 .text-msg {
   display:block;
   text-align: left;
-  padding: 0px 8px;
+  padding: 0px 5px;
   word-wrap:break-word;
   white-space:pre-line;
   background-color: white;
+  border: 2px solid white;
+  border-radius: 8px;
   font-size: 10pt;
   font-family: monospace;
   font-style: normal;
@@ -285,11 +261,11 @@ table tr td {
 }
 
 .text-sender {
-  float:left;
+  float:right;
   display:block;
-	text-align: left;
-  padding: 0px 8px;
-  background-color: white;
+  text-align: right;
+  padding: 0px 4px;
+  background-color: transparent;
   font-size: 10pt;
   font-family: monospace;
   font-style: normal;
@@ -312,13 +288,24 @@ table tr td {
 
 .remove-contact {
   float:right;
-  margin-top:8px;
-  color:red;
+  width: 40px;
+  height: 40px;
+  vertical-align: middle;
+  background-image: url("/sim/img/remove-user.png");
+  background-repeat:no-repeat;
+  background-size:cover;
   cursor: pointer;
 }
 
 .connect-contact {
-  font-weight: bold;
-  color:blue;
+  display:inline;
+  width: 40px;
+  height: 40px;
+  vertical-align: middle;
+  
+  background-color: rgba(67,200,165,1);
+/*  background-image: url("/sim/img/connect.png");
+  background-repeat:no-repeat;
+  background-size:cover;*/
   cursor: pointer;
 }

@@ -2,7 +2,6 @@
 var LinkHeader = Class.create({
 	initialize: function() {
 		this.contact = $('contact');
-//		this.button = $('button_link');
 		this.userId = $('user');
 		this.doUnlink();
 	},
@@ -80,14 +79,17 @@ var Board = Class.create({
 		var payload = JSON.parse(message.payloadString);
 		var who = message.destinationName.split("/")[2];
 //		console.log(who);
+		var rowDiv = new Element('div', {class: ''});
 		var div = new Element('div', {class: 'right-msg'});
 		var textMsg = new Element('span', {class:'text-msg'});
 		var time = new Element('span', {class:'text-timestamp'});
 		var sender = new Element('span', {class:'text-sender', onclick:'change_contact("' + who + '");'});
-		div.insert(sender);
-		div.insert(time);
+//		div.insert(sender);
 		div.insert(textMsg);
-		this.board.insert(div);
+		div.insert(time);
+		rowDiv.insert(div);
+		rowDiv.insert(sender);
+		this.board.insert(rowDiv);
 		var txt = payload.msg.replace(/ /g, '&nbsp;').replace(/\n/g, '<br>');
 		textMsg.update(txt);
 //		textMsg.update(payload.msg);
@@ -116,10 +118,11 @@ var Contacts = Class.create({
 		contacts.forEach(
 			function(element, index, array) { 
 				var div = new Element('div', {class: 'left-msg contact-list'});
-				var contName = new Element('span', {class:'user-id'});
+				var contName = new Element('span', {class:'user-id', style:'width: 250px'});
 //			var status = new Element('span', {class:'cont-state'});
 				var remove = new Element('span', {class:'remove-contact', onclick:'remove_contact("' + element.id + '");'});
-				var connect = new Element('span', {class:'connect-contact'});
+//				var connect = new Element('span', {class:'connect-contact'});
+				var connect = new Element('img', {src:'/sim/img/connect.png', class:'connect-contact'});
 				connect.onclick = function(e){gotoChat(element, contacts);};
 
 				if (element.status == "off") {
@@ -135,8 +138,8 @@ var Contacts = Class.create({
 				this.board.insert(div);
 				contName.update(element.id);
 //			status.update(element.status);
-				remove.update(' (-) ');
-				connect.update(' (-c->) ');
+//				remove.update(' (-) ');
+//				connect.update(' >>> ');
 		}.bind(this));
 		var isScrolledToBottom = (this.board.scrollHeight - this.board.clientHeight) <= (this.board.scrollTop + 1);
 		if(!isScrolledToBottom) {
