@@ -48,6 +48,7 @@ table tr td {
 .text-input {
   width: 226px; /* 50*5=250-24 */
   text-align: left;
+  vertical-align: middle;
   margin: 12px 6px;
   border: 0px;
   font-size: 14pt;
@@ -105,9 +106,23 @@ table tr td {
   padding: 0px;
   width: 40px;
   height: 40px;
+  vertical-align: middle;
   
   background-color: rgba(87,220,165,1);
   background-image: url("/sim/img/add-user.png");
+  background-repeat:no-repeat;
+  background-size:cover;
+  cursor: pointer;
+}
+
+.button-refresh {
+  padding: 0px;
+  width: 40px;
+  height: 40px;
+  vertical-align: middle;
+  
+  background-color: rgba(87,220,165,1);
+  background-image: url("/sim/img/refresh.png");
   background-repeat:no-repeat;
   background-size:cover;
   cursor: pointer;

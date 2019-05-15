@@ -38,6 +38,19 @@ function gotoRegister() {
 }
 
 function gotoContacts() {
+	var contact = {id:user,status:"on"};
+	first_time_link(contact);
+
+	get_contacts();
+	$('login-tbl').style.display = 'none';
+	$('reg-tbl').style.display = 'none';
+	$('chat-tbl').style.display = 'none';
+	$('contacts-tbl').style.display = 'table';
+	$('help-tbl').style.display = 'none';
+//	$('td-error').innerHTML = "Contacts";
+}
+
+function refresh_contacts() {
 	get_contacts();
 	$('login-tbl').style.display = 'none';
 	$('reg-tbl').style.display = 'none';

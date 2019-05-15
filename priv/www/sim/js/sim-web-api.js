@@ -95,7 +95,7 @@ function get_contacts() {
 		requestHeaders: {Accept: 'application/json'},
 		postBody: "",
 		onSuccess: function(transport){
-			console.log(contacts_board + " -:- " + transport.responseText);
+//			console.log(contacts_board + " -:- " + transport.responseText);
 //			console.log(transport.responseJSON.status + " | " + transport.responseJSON.contacts);
 			if (transport.responseJSON.status == 'ok') {
 //				contactNames = parse_contacts(transport.responseJSON.contacts);

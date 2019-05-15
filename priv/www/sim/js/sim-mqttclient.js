@@ -34,7 +34,18 @@ function link(contact, contactList) {
 	} else {
 		websocketclient.onConnect();
 	}
+}
 
+function first_time_link(contact) {
+	websocketclient.contact = contact;
+	console.log("first time link: contact id= '" + contact.id + "'");
+
+	if (!websocketclient.connected) {
+		websocketclient.contacts = [];
+		websocketclient.connect();
+	} else {
+//		websocketclient.onConnect();
+	}
 }
 
 function reLink(contact) {
@@ -170,13 +181,13 @@ console.log("on Connect: " + this.contact.id);
 
 	'subscribe': function (topic) {
 		if (this.subscriptions.some(function (element, index, array) { return (element.topic == topic);})) {
-			console.log("You are already linked to this contact.");
+//			console.log("You are already linked to this contact.");
 			return;
 		}
 		this.client.subscribe(topic, {qos: 2});
 		this.subscriptions.push({'topic': topic, 'qos': 2});
 		this.subscribed = true;
-		console.log("Subscribed topic " + topic);
+//		console.log("Subscribed topic " + topic);
 	},
 
 	'unsubscribe': function (topic) {

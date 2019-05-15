@@ -11,7 +11,7 @@ var LinkHeader = Class.create({
 //		this.button.style.backgroundColor = "LightSalmon";
 //		this.button.onclick = function() {unlink();};
 //		this.contact.setAttribute("readonly", "readonly");
-		console.log("doLink: contact status = " + active_contact.status);
+//		console.log("doLink: contact status = " + active_contact.status);
 		if (active_contact.status == "off") {
 			this.contact.style.backgroundColor = "LightSalmon";
 		} else if (active_contact.status == "on") {
