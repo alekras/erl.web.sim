@@ -96,13 +96,22 @@ table tr td {
 }
 
 .button_send {
-  border: 2px solid rgba(137,200,205,1);
-  height:35px;
-  margin: 5px 8px 5px 8px;
-  background-color: yellow;
+	display:inline-block;
+  padding: 0px;
+  width: 55px;
+  height: 40px;
+  vertical-align: middle;
+  text-align:center;
+  background-color: rgba(160, 221, 228,1);
+  background-image: url("/sim/img/send0.png");
+  background-repeat:no-repeat;
+  background-size:cover;
+  cursor: pointer;
+  font-size: 10pt;
 }
 
 .button-add {
+	display:inline;
   padding: 0px;
   width: 40px;
   height: 40px;
@@ -116,6 +125,7 @@ table tr td {
 }
 
 .button-refresh {
+  float:right;
   padding: 0px;
   width: 40px;
   height: 40px;
@@ -185,7 +195,7 @@ table tr td {
   height: 50px;
   padding: 0px;
   background-color: rgba(67,220,165,1);
-  text-align:center;
+  text-align:left;
 }
 
 .user-id {
@@ -313,14 +323,14 @@ table tr td {
 }
 
 .connect-contact {
-  display:inline;
+  display:inline-block;
   width: 40px;
   height: 40px;
   vertical-align: middle;
   
   background-color: rgba(67,200,165,1);
-/*  background-image: url("/sim/img/connect.png");
+  background-image: url("/sim/img/connect.png");
   background-repeat:no-repeat;
-  background-size:cover;*/
+  background-size:cover;
   cursor: pointer;
 }

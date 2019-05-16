@@ -119,10 +119,9 @@ var Contacts = Class.create({
 			function(element, index, array) { 
 				var div = new Element('div', {class: 'left-msg contact-list'});
 				var contName = new Element('span', {class:'user-id', style:'width: 250px'});
-//			var status = new Element('span', {class:'cont-state'});
 				var remove = new Element('span', {class:'remove-contact', onclick:'remove_contact("' + element.id + '");'});
-//				var connect = new Element('span', {class:'connect-contact'});
-				var connect = new Element('img', {src:'/sim/img/connect.png', class:'connect-contact'});
+				var connect = new Element('span', {class:'connect-contact'});
+//				var connect = new Element('img', {src:'/sim/img/connect.png', class:'connect-contact'});
 				connect.onclick = function(e){gotoChat(element, contacts);};
 
 				if (element.status == "off") {
@@ -131,15 +130,11 @@ var Contacts = Class.create({
 					contName.style.backgroundColor = "Aquamarine";
 				}
 
-//			div.insert(status);
 				div.insert(contName);
 				div.insert(connect);
 				div.insert(remove);
 				this.board.insert(div);
 				contName.update(element.id);
-//			status.update(element.status);
-//				remove.update(' (-) ');
-//				connect.update(' >>> ');
 		}.bind(this));
 		var isScrolledToBottom = (this.board.scrollHeight - this.board.clientHeight) <= (this.board.scrollTop + 1);
 		if(!isScrolledToBottom) {
