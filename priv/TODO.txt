@@ -8,11 +8,13 @@
 
 3. Contact tab:
   - Avoid duplicate contact names.
+  - check name format to avoid 500 error. (spaces in name?)
   - Confirmation of removing contact.
+  - button to refresh view.
   
 4. Chat tab:
   - color of contact does not reflect state of the connection;
-  - link button 'Send' with keystroke "Enter"; ???
+???  - link button 'Send' with keystroke "Enter"; ???
   - keep \n from textarea
 
 5. Create test suits for multi-client testing.

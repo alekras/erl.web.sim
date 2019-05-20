@@ -62,6 +62,15 @@ function doRegisterRequest() {
 
 function add_contact() {
 	var new_contact = $('contact_add').value;
+	if(new_contact.trim().length == 0) {
+		console.log("Empty field.");
+		return;
+	}
+	if (contacts_board.contacts.some(function (element, index, array) { return (element.id == new_contact);})) {
+		console.log("Contact duplicate.");
+		return;
+	}
+
 	new Ajax.Request("/sim/contacts/" + user + "/add/" + new_contact, {
 		method: 'post',
 		parameters: {},

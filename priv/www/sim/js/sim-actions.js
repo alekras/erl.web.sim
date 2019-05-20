@@ -60,6 +60,17 @@ function refresh_contacts() {
 //	$('td-error').innerHTML = "Contacts";
 }
 
+//function confirm_contact_remove(contact_id) {
+//	if (confirm("Do you want to remove '" + contact_id + "' from your contacts list?")) {
+//		remove_contact(contact_id);
+//	} else {
+//		return;
+//	}
+//}
+function confirm_contact_remove(contact_id) {
+	var box = new ConfirmBox();
+}
+
 function gotoChatbyClick(contact) {
 	console.log("gotoChatbyClick: contact id= " + contact);
 	$('login-tbl').style.display = 'none';

@@ -119,7 +119,7 @@ var Contacts = Class.create({
 			function(element, index, array) { 
 				var div = new Element('div', {class: 'left-msg contact-list'});
 				var contName = new Element('span', {class:'user-id', style:'width: 250px'});
-				var remove = new Element('span', {class:'remove-contact', onclick:'remove_contact("' + element.id + '");'});
+				var remove = new Element('span', {class:'remove-contact', onclick:'confirm_contact_remove("' + element.id + '");'});
 				var connect = new Element('span', {class:'connect-contact'});
 //				var connect = new Element('img', {src:'/sim/img/connect.png', class:'connect-contact'});
 				connect.onclick = function(e){gotoChat(element, contacts);};
@@ -141,4 +141,45 @@ var Contacts = Class.create({
 			this.board.scrollTop = this.board.scrollHeight - this.board.clientHeight;
 		}
 	}
+})
+
+var ConfirmBox = Class.create({
+	initialize: function() {
+		this.box = this.create();
+	},
+	
+	create: function() {
+		var parent = $('contacts-tbl');
+		var par_layout = parent.getLayout();
+		var x = par_layout.get('left');
+		var y = par_layout.get('top');
+		var w = par_layout.get('width');
+		var h = par_layout.get('height');
+		
+		console.log("x= " + par_layout.get('left') 
+				+ " y= " + par_layout.get('top') 
+				+ "\n w= " + par_layout.get('width') 
+				+ " h= " + par_layout.get('height') );
+		var tbox = new Element('div', {class:'confirm-box'});
+		var inside = new Element('div', {class:'confirm-inside'});
+		tbox.insert(inside);
+		parent.insert(tbox);
+		var layout = tbox.getLayout();
+		var w1 = layout.get('width');
+		var h1 = layout.get('height');
+		var x1 = x + (w - w1) / 2;
+		var y1 = y + (h - h1) / 2;
+
+		console.log("x= " + x1 
+				+ " y= " + y1 
+				+ "\n w= " + w1 
+				+ " h= " + h1 );
+		tbox.setStyle({top: y1 + 'px', left: x1 + 'px'});
+		return tbox;
+	},
+	
+	destroy: function() {
+		
+	}
+
 })
