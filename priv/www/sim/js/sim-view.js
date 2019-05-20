@@ -144,8 +144,9 @@ var Contacts = Class.create({
 })
 
 var ConfirmBox = Class.create({
-	initialize: function() {
-		this.box = this.create();
+	initialize: function(contct_id) {
+		this.contact_id = contct_id;
+		this.mask = this.create();
 	},
 	
 	create: function() {
@@ -156,30 +157,46 @@ var ConfirmBox = Class.create({
 		var w = par_layout.get('width');
 		var h = par_layout.get('height');
 		
-		console.log("x= " + par_layout.get('left') 
-				+ " y= " + par_layout.get('top') 
-				+ "\n w= " + par_layout.get('width') 
-				+ " h= " + par_layout.get('height') );
+//		console.log("x= " + par_layout.get('left') 
+//				+ " y= " + par_layout.get('top') 
+//				+ "\n w= " + par_layout.get('width') 
+//				+ " h= " + par_layout.get('height') );
+		var mask = new Element('div', {class:'confirm-mask'});
+		mask.setStyle({width: w + 'px', height: h + 'px', top: y + 'px', left: x + 'px'});
 		var tbox = new Element('div', {class:'confirm-box'});
+		
 		var inside = new Element('div', {class:'confirm-inside'});
+		var message = new Element('div', {class:'confirm-msg'});
+		var yes = new Element('span', {class:'confirm-btn'});
+		yes.onclick = function(e){confirm_yes(this.contact_id); this.destroy()}.bind(this);
+		var no = new Element('span', {class:'confirm-btn'});
+		no.onclick = function(e){confirm_no(); this.destroy()}.bind(this);
+		inside.insert(message);
+		inside.insert(yes);
+		inside.insert(no);
+		yes.update('Yes');
+		no.update('No');
+		message.update("Do you want to remove '<b>" + this.contact_id + "</b>' from your contacts list?");
+
 		tbox.insert(inside);
-		parent.insert(tbox);
+		mask.insert(tbox);
+		parent.insert(mask);
 		var layout = tbox.getLayout();
 		var w1 = layout.get('width');
 		var h1 = layout.get('height');
-		var x1 = x + (w - w1) / 2;
-		var y1 = y + (h - h1) / 2;
+		var x1 = (w - w1) / 2;
+		var y1 = (h - h1) / 2;
 
-		console.log("x= " + x1 
-				+ " y= " + y1 
-				+ "\n w= " + w1 
-				+ " h= " + h1 );
+//		console.log("x= " + x1 
+//				+ " y= " + y1 
+//				+ "\n w= " + w1 
+//				+ " h= " + h1 );
 		tbox.setStyle({top: y1 + 'px', left: x1 + 'px'});
-		return tbox;
+		return mask;
 	},
 	
 	destroy: function() {
-		
+		this.mask.remove();
 	}
 
 })

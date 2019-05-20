@@ -335,18 +335,50 @@ table tr td {
   cursor: pointer;
 }
 
+.confirm-mask {
+  width: 300px;
+  height: 200px;
+	position:absolute;
+	background-color:rgba(200,200,200,0.35);
+	top: 50px;
+	left: 50px;
+}
+
 .confirm-box {
   border: 4px solid yellow;
   padding:4px;
   width: 300px;
   height: 200px;
-	position:absolute;
+	position:relative;
 	top: 50px;
 	left: 50px;
 }
 
 .confirm-inside {
-	display:block;
-	background-color: yellow;
+	background-color:yellow;
 	height: 100%;
+}
+
+.confirm-msg {
+ color: red;
+  position: relative;
+  margin:0px;
+  padding-left:20px;
+  padding-right:20px;
+  top: 40px;
+  left: 0px;
+}
+
+.confirm-btn {
+  position: relative;
+  width: 50px;
+  border: 1px solid red;
+  
+	top: 100px;
+	padding-left:25px;
+  padding-right:25px;
+	margin-left: 10px;
+	margin-right: 10px;
+	cursor: pointer;
+	
 }

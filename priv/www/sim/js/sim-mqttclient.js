@@ -26,7 +26,7 @@ function send() {
 function link(contact, contactList) {
 	websocketclient.contact = contact;
 	websocketclient.contacts = contactList;
-	console.log("link: contact id= '" + contact.id + "'");
+	console.log("link: contact id= '" + contact.id + "'\n" + JSON.stringify(contactList));
 
 	if (!websocketclient.connected) {
 		websocketclient.connect();
@@ -61,16 +61,9 @@ function reLink(contact) {
 
 }
 
-//function unlink(contactId) {
-//	var topic = "/" + user + "/" + contactId;
-//	websocketclient.unsubscribe(topic);
-//	link_header.doUnlink();
-////	contactId = "";
-//}
-
 var websocketclient = {
 	'client': null,
-	'subscriptions': [],
+//	'subscriptions': [],
 	'contacts': [],
 	'messages': [], // ???
 	'connected': false,
@@ -135,25 +128,9 @@ var websocketclient = {
 	'onConnect': function () {
 		this.connected = true;
 //		top_header.successConnect();
-console.log("on Connect: " + this.contact.id);
-		if (this.contact.id.length > 0) {
-			var mapFun = function(element, index, array) { 
-				var topic = "/" + this.username + "/" + element.id;
-				this.subscribe(topic); 
-			}.bind(this);
-			this.subscribed = true;
-			this.contacts.map(mapFun);
-			link_header.doLink(this.contact);
-		}
-	},
-
-	'send': function (payload) {
-		var topic =  "/" + this.contact.id + "/" + this.username;
-		var message = new Messaging.Message(payload);
-		message.destinationName = topic;
-		message.qos = 2;
-		message.retained = true;
-		this.client.send(message);
+console.log("on Connect: " + this.contact.id + "\n" + JSON.stringify(this.contacts));
+		this.subscribe(); 
+		link_header.doLink(this.contact);
 	},
 
 	'onFail': function (message) {
@@ -179,21 +156,34 @@ console.log("on Connect: " + this.contact.id);
 //		this.subscriptions = [];
 	},
 
-	'subscribe': function (topic) {
-		if (this.subscriptions.some(function (element, index, array) { return (element.topic == topic);})) {
+	'subscribe': function () {
+//		if (this.subscriptions.some(function (element, index, array) { return (element.topic == topic);})) {
 //			console.log("You are already linked to this contact.");
-			return;
-		}
-		this.client.subscribe(topic, {qos: 2});
-		this.subscriptions.push({'topic': topic, 'qos': 2});
+//			return;
+//		}
+		var mapFun = function(element, index, array) { 
+			var topic = "/" + this.username + "/" + element.id;
+			this.client.subscribe(topic, {qos: 2});
+			console.log("Subscribed topic: " + topic);
+		}.bind(this);
+		this.contacts.map(mapFun);
+//		this.subscriptions.push({'topic': topic, 'qos': 2});
 		this.subscribed = true;
-//		console.log("Subscribed topic " + topic);
 	},
 
 	'unsubscribe': function (topic) {
 		this.client.unsubscribe(topic);
-		this.subscriptions = this.subscriptions.filter(function (element, index, array) { return element.topic != topic;});
-		this.subscribed = false;
+//		this.subscriptions = this.subscriptions.filter(function (element, index, array) { return element.topic != topic;});
+//		this.subscribed = false;
+	},
+
+	'send': function (payload) {
+		var topic =  "/" + this.contact.id + "/" + this.username;
+		var message = new Messaging.Message(payload);
+		message.destinationName = topic;
+		message.qos = 2;
+		message.retained = true;
+		this.client.send(message);
 	},
 
 	'onMessageArrived': function (message) {
@@ -201,20 +191,24 @@ console.log("on Connect: " + this.contact.id);
 				+ " qos: " + message.qos + " retained: " + message.retained);
 		board.inMessage(message);
 // Acknowledge endpoint to delete retain message as already delivered. 
-//		if (message.retained) {
+		if (message.retained) {
+			var who = message.destinationName.split("/")[2];
 			var messageAck = new Messaging.Message('');
-			var topic = "/" + this.username + "/" + this.contact.id;
+//			var topic = "/" + this.username + "/" + this.contact.id;
+			var topic = "/" + this.username + "/" + who;
 			messageAck.destinationName = topic;
 			messageAck.qos = 2;
 			messageAck.retained = true;
 			this.client.send(messageAck);
-//		}
+			console.log("Empty message sent: " + messageAck.payloadString + " topic: " + messageAck.destinationName 
+					+ " qos: " + messageAck.qos + " retained: " + message.retained);
+		}
 	},
 // do I need it? --Yes!
 	'disconnect': function () {
 		if (this.connected) {
-			var topic = "/" + this.username + "/" + this.contactId;
-			this.unsubscribe(topic);
+//			var topic = "/" + this.username + "/" + this.contactId;
+//			this.unsubscribe(topic);
 			this.connected = false;
 			this.contact = {id:"",status:""};
 			console.log("disconnect: " + this.username);

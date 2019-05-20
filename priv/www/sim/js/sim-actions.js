@@ -60,15 +60,17 @@ function refresh_contacts() {
 //	$('td-error').innerHTML = "Contacts";
 }
 
-//function confirm_contact_remove(contact_id) {
-//	if (confirm("Do you want to remove '" + contact_id + "' from your contacts list?")) {
-//		remove_contact(contact_id);
-//	} else {
-//		return;
-//	}
-//}
 function confirm_contact_remove(contact_id) {
-	var box = new ConfirmBox();
+	var box = new ConfirmBox(contact_id);
+}
+
+function confirm_yes(contact_id) {
+//	alert("Remove "+contact_id);
+	remove_contact(contact_id);
+	websocketclient.unsubscribe(contact_id);
+}
+
+function confirm_no() {	
 }
 
 function gotoChatbyClick(contact) {
@@ -80,7 +82,9 @@ function gotoChatbyClick(contact) {
 	$('help-tbl').style.display = 'none';
 	$('td-error').innerHTML = "Chat";
 	var contacts = contacts_board.contacts;
-	contacts.push({id:contact,status:"on"});
+	if (!contacts.some(function (element, index, array) { return (element.id == contact);})) {
+		contacts.push({id:contact,status:"on"});
+	}
 	link({id:contact,status:"on"}, contacts);
 }
 
