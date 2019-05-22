@@ -39,7 +39,7 @@ function doRegisterRequest() {
 		requestHeaders: {Accept: 'application/json'},
 		postBody: "",
 		onSuccess: function(transport){
-			console.log(transport.responseJSON.status + " | " + transport.responseJSON.reason);
+			console.log("Register request. status: " + transport.responseJSON.status + " | reason: " + transport.responseJSON.reason);
 			if (transport.responseJSON.status == 'ok') {
 				$('reg-tbl').style.display = 'none';
 				$('login-tbl').style.display = 'table';

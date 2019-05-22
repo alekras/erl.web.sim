@@ -82,7 +82,9 @@ make_reply_get_all(User, Req) ->
 	end.
 
 rest_req_isconnected(User) ->
-	ReqTo0 = {?URL ++ "/rest/user/" ++ User ++ "/isconnected", [{"X-Forwarded-For", "localhost"}, {"Accept", "application/json"}]},
+	Url = string:replace(?URL ++ "/rest/user/" ++ User ++ "/isconnected", " ", "%20", all),
+%%	lager:info("URL encoded: ~p", [Url]),
+	ReqTo0 = {Url, [{"X-Forwarded-For", "localhost"}, {"Accept", "application/json"}]},
 	ConnStatus =
 	case httpc:request(get, ReqTo0, [], []) of
 		{ok, {{_Pr, Status, _}, _Headers, Body}} ->
@@ -95,9 +97,11 @@ rest_req_isconnected(User) ->
 				404 -> undefined
 			end;
 		{error, _Reason} ->
-%			lager:error("Conection error: ~p", [_Reason]),
+			lager:error("Conection error: ~p", [_Reason]),
 			"off";
-		_ -> "off"
+		_R -> 
+			lager:error("Conection error. Responce: ~p", [_R]),
+			"off"
 	end,
 	lager:info("get /rest/user/:user_name/isconnected, user_name: ~p Connection status: ~p", [User, ConnStatus]),
 	ConnStatus.

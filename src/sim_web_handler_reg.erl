@@ -36,7 +36,8 @@ register(_, _, Req) ->
 	cowboy_req:reply(405, Req).
 
 make_reply(User, Password1, Password2, Req1) ->
-	if (Password1 =:= Password2) and (length(Password1) > 3) ->
+	lager:info("Registration: /~p/~p/~p/~n", [User, Password1, Password2]),
+	if (Password1 =:= Password2) and (size(Password1) > 3) ->
 			ReqTo0 = {?URL ++ "/rest/user/" ++ User, [{"X-Forwarded-For", "localhost"}, {"Accept", "application/json"}]},
 			Response0 = httpc:request(get, ReqTo0, [], []),
 			{ok, {{_Pr, Status, _}, _Headers, _Body}} = Response0,
@@ -46,9 +47,10 @@ make_reply(User, Password1, Password2, Req1) ->
 						<<"content-type">> => <<"application/json">>
 					}, <<"{\"status\":\"fail\", \"reason\":\"exist\"}">>, Req1);
 				404 ->
-					ReqTo1 = {?URL ++ "/rest/user/" ++ User ++ "/pswd/" ++ binary:bin_to_list(Password1), [{"X-Forwarded-For", "localhost"}], "application/json", []},
-					Response1 = httpc:request(post, ReqTo1, [{ssl, [{verify, 0}]}], []),
-					io:format(user, "Response #1: ~p~n", [Response1]),
+					ReqTo1 = {?URL ++ "/rest/user/" ++ User ++ "/pswd/" ++ binary:bin_to_list(Password1), 
+										[{"X-Forwarded-For", "localhost"}, {"content-type", "application/json"}], "application/json", []},
+					Response1 = httpc:request(post, ReqTo1, [], []),
+					lager:info("Response #1: ~p~n", [Response1]),
 					cowboy_req:reply(200, #{
 						<<"content-type">> => <<"application/json">>
 					}, <<"{\"status\":\"ok\"}">>, Req1)

@@ -9,6 +9,7 @@
 3. Contact tab:
 ##  - Avoid duplicate contact names.
   - check name format to avoid 500 error. (spaces in name?)
+ -- check for add new contact is it exist?
 ##  - Confirmation of removing contact.
 ##  - button to refresh view.
   
@@ -30,3 +31,4 @@
 12. Add subscribe(Array) to mqtt client.
 
 13. Do unsubscribe after removing contact.
+
