@@ -1,6 +1,13 @@
 
 body {
-/*	margin: 15px;*/
+	margin: 0px; 
+	align-content: center;
+}
+
+#info {
+	margin: 2px; 
+	border: 2px solid green; 
+	text-align:center;
 }
 
 table tr td {

@@ -14,8 +14,8 @@
 <script src="/sim/js/sim-mqttclient.js" type="text/javascript"></script>
 <title>SIM4U</title>
 </head>
-<body style="margin: 0px; align-content: center;" onload="start();" >
-	<div id="info" style="margin: 2px; border: 2px solid green; text-align:center;">
+<body onload="start();" >
+	<div id="info">
 	<table class="tbl_0">
 		<tr id="error">
 			<td id="td-error" colspan="10" class="text-error"></td>
@@ -158,8 +158,15 @@
 			  your user name and password (two times for confirmation). Your partner needs to register too and 
 			  to share his/her user name with you. 
 			</p>
+				You need to login after registration. Use 'Login' tab for this.
 			<p>
-				
+				After successful login you come to 'Contacts' tab. Now you need to add your partner user name
+				to the contacts list. Type the user name in text box and click <img src="/sim/img/add-user.png" style="height: 25px;vertical-align: middle;"> button.
+				This is important to create contacts list. You can send or receive messages from your partner only if the partner was added to contact list.
+			</p>
+			<p>
+				Now you can send messages to your partner. Click <img src="/sim/img/connect.png" style="height: 25px;vertical-align: middle;"> button 
+				following contact's name and messenger will switch to 'Chat' tab.
 			</p>
 			</div>
 			</td>
@@ -212,7 +219,7 @@ function start() {
 // Initial:
 	log_tbl.style.display = 'none'; //'table';
 	reg_tbl.style.display = 'none';
-	user = "tom"; user_password = "tom";
+	user = "tom"; user_password = "tom";  // only for testing
 	chat_tbl.style.display = 'table'; //'none';
 	contacts_tbl.style.display = 'none';
 	help_tbl.style.display = 'none';

@@ -8,8 +8,8 @@
 
 3. Contact tab:
 ##  - Avoid duplicate contact names.
-  - check name format to avoid 500 error. (spaces in name?)
- -- check for add new contact is it exist?
+##  - check name format to avoid 500 error. (spaces in name?)
+## -- check for add new contact is it exist?
 ##  - Confirmation of removing contact.
 ##  - button to refresh view.
   
@@ -30,5 +30,17 @@
 
 12. Add subscribe(Array) to mqtt client.
 
-13. Do unsubscribe after removing contact.
+### 13. Do unsubscribe after removing contact.
+
+14. Complete Help.
+
+15. Test mobile CSS.
+
+16. Modify Tabs menu
+  -- decrease heigth
+  -- move from table to div
+
+17 Remove upper error box.
+  -- direct error messages to warning popup box
+  
 
