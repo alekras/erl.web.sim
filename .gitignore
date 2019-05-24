@@ -13,3 +13,4 @@ rel/example_project
 /_build/
 /common.log.txt
 /.DS_Store
+/rebar.lock
