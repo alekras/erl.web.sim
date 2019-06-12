@@ -43,4 +43,5 @@
 17 Remove upper error box.
   -- direct error messages to warning popup box
   
+18 Switch to chat tab if message arrived.
 
