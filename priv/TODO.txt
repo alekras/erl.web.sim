@@ -45,4 +45,5 @@
   
 18. Redesign send function. Make reconnection if not connected.
 
+19 Switch to chat tab if message arrived.
 
