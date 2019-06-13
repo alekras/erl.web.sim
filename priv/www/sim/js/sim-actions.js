@@ -47,7 +47,6 @@ function gotoContacts() {
 	$('chat-tbl').style.display = 'none';
 	$('contacts-tbl').style.display = 'table';
 	$('help-tbl').style.display = 'none';
-//	$('td-error').innerHTML = "Contacts";
 }
 
 function refresh_contacts() {
@@ -57,7 +56,6 @@ function refresh_contacts() {
 	$('chat-tbl').style.display = 'none';
 	$('contacts-tbl').style.display = 'table';
 	$('help-tbl').style.display = 'none';
-//	$('td-error').innerHTML = "Contacts";
 }
 
 function confirm_contact_remove(contact_id) {

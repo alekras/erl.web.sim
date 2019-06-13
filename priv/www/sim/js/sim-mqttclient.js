@@ -1,5 +1,4 @@
 var user, user_password, 
-//	contactId = "", 
 	contactNames, 
 	link_header, send_footer, board, contacts_board;
 
@@ -33,6 +32,7 @@ function link(contact, contactList) {
 		return false;
 	} else {
 		websocketclient.onConnect();
+		return true;
 	}
 }
 

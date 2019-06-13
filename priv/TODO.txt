@@ -22,7 +22,7 @@
 
 ## 6. Check after login if user presents in dets? If not - create him.
 
-9. Implement session mechanizm.
+9. Implement session mechanism.
 
 ## 10. Connect before enter contact tab.
 
@@ -37,10 +37,12 @@
 15. Test mobile CSS.
 
 16. Modify Tabs menu
-  -- decrease heigth
+  -- decrease height
   -- move from table to div
 
 17 Remove upper error box.
   -- direct error messages to warning popup box
   
+18. Redesign send function. Make reconnection if not connected.
+
 
