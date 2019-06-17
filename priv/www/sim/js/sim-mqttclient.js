@@ -6,7 +6,8 @@ function send() {
 //	var topic =  "/" + contactId + "/" + user;
 	if (!websocketclient.connected) {
 		websocketclient.connect();
-		$('td-error').innerHTML = "Try to send again."
+//		$('td-error').innerHTML = "Try to send again."
+		new WarningBox("Cannot send message.<br/>Try to send again.");
 		return false;
 	}
 
@@ -136,7 +137,8 @@ console.log("on Connect: " + this.contact.id + "\n" + JSON.stringify(this.contac
 	'onFail': function (message) {
 		this.connected = false;
 		this.subscribed = false;
-		$('td-error').innerHTML = "Connection is broken.";
+//		$('td-error').innerHTML = "Connection is broken.";
+		new WarningBox("Connection is broken.");
 		console.log("error: " + message.errorMessage);
 //		top_header.disconnect();
 	},
@@ -144,7 +146,8 @@ console.log("on Connect: " + this.contact.id + "\n" + JSON.stringify(this.contac
 	'onConnectionLost': function (responseObject) {
 		this.connected = false;
 		if (responseObject.errorCode !== 0) {
-			$('td-error').innerHTML = "Cannot establish connection.";
+//			$('td-error').innerHTML = "Cannot establish connection.";
+			new WarningBox("Cannot establish connection.");
 			console.log("onConnectionLost:" + responseObject.errorMessage);
 		}
 //		top_header.disconnect();

@@ -15,22 +15,59 @@
 <title>SIM4U</title>
 </head>
 <body onload="start();" >
-	<div id="info">
-	<table class="tbl_0">
-		<tr id="error">
-			<td id="td-error" colspan="10" class="text-error"></td>
+	<div id="main">
+	<div id="container">
+	<table id="menu_temp" class="tbl_1">
+		<tr id="login_menu">
+			<td>
+				<span class="tab_header_t tab_on_t"><label class="menu">Login</label></span>
+				<span class="tab_header_t tab_off_t" onclick="gotoRegister();"><label class="menu">Register</label></span>
+				<span class="tab_header_t tab_off_t" onclick="gotoHelp(0);"><label class="menu">Help</label></span>
+				<span class="tab_header_t tab_off_t"><label class="menu">Logout</label></span>
+			</td>
+			<!--td colspan="3" class="tab_header tab_on"                           ><label class="menu">Login</label></td>
+			<td colspan="2" class="tab_header tab_off" onclick="gotoRegister();"><label class="menu">Register</label></td>
+			<td colspan="2" class="tab_header tab_off" onclick="gotoHelp(0);"   ><label class="menu">Help</label></td>
+			<td colspan="3" class="tab_header tab_off"                          ><label class="menu logout"></label></td-->
+		</tr>
+	
+		<tr id="register_menu">
+			<td colspan="3" class="tab_header tab_off" onclick="gotoLogin();"><label class="menu">Login</label></td>
+			<td colspan="2" class="tab_header tab_on"                        ><label class="menu">Register</label></td>
+			<td colspan="2" class="tab_header tab_off" onclick="gotoHelp(0);"><label class="menu">Help</label></td>
+			<td colspan="3" class="tab_header tab_off"                       ><label class="menu logout"></label></td>
+		</tr>
+		
+		<tr id="chat_menu">
+			<td colspan="3" class="tab_header tab_off" onclick="gotoContacts();"><label class="menu">Contacts</label></td>
+			<td colspan="2" class="tab_header tab_on"                           ><label class="menu">Chat</label></td>
+			<td colspan="2" class="tab_header tab_off" onclick="gotoHelp(1);"   ><label class="menu">Help</label></td>
+			<td colspan="3" class="tab_header tab_off" onclick="gotoLogin();"   ><label class="menu logout">Logout</label></td>
+		</tr>
+		
+		<tr id="contacts_menu">
+			<td colspan="3" class="tab_header tab_on"                                  ><label class="menu">Contacts</label></td>
+			<td colspan="2" class="tab_header tab_off" onclick="gotoChatbyClick(user);"><label class="menu">Chat</label></td>
+			<td colspan="2" class="tab_header tab_off" onclick="gotoHelp(1);"           ><label class="menu">Help</label></td>
+			<td colspan="3" class="tab_header tab_off" onclick="gotoLogin();"           ><label class="menu logout">Logout</label></td>
 		</tr>
 
-		<tr>
-		<td>
+		<tr id="help_menu_1">
+			<td colspan="3" class="tab_header tab_off" onclick="gotoContacts();"       ><label class="menu">Contacts</label></td>
+			<td colspan="2" class="tab_header tab_off" onclick="gotoChatbyClick(user);"><label class="menu">Chat</label></td>
+			<td colspan="2" class="tab_header tab_on"                                  ><label class="menu">Help</label></td>
+			<td colspan="3" class="tab_header tab_off" onclick="gotoLogin();"          ><label class="menu logout">Logout</label></td>
+		</tr>
+		<tr id="help_menu_0">
+			<td colspan="3" class="tab_header tab_off" onclick="gotoLogin();"   ><label class="menu">Login</label></td>
+			<td colspan="2" class="tab_header tab_off" onclick="gotoRegister();"><label class="menu">Register</label></td>
+			<td colspan="2" class="tab_header tab_on"                           ><label class="menu">Help</label></td>
+			<td colspan="3" class="tab_header tab_off"                          ><label class="menu logout"></label></td>
+		</tr>
+		
+	</table>
 <!-- ----------------------------------------------------------------------------------------------- -->
 	<table id = "login-tbl" class="tbl_1">
-		<tr>
-			<td colspan="3" class="tab_header tab_on" ><label class="menu">Login</label></td>
-			<td colspan="2" class="tab_header tab_off" onclick="gotoRegister();"><label class="menu">Register</label></td>
-			<td colspan="2" class="tab_header tab_off" onclick="gotoHelp(0);"><label class="menu">Help</label></td>
-			<td colspan="3" class="tab_header tab_off" ><label class="menu logout"></label></td>
-		</tr>
 		<tr>
 			<td colspan="3" class="text-cont-r"><label class="label">User name:</label></td>
 			<td colspan="7" class="text-cont-l"><input size="25" class="text-input" id="f1" name="user" type="text" placeholder="User name"/></td>
@@ -47,12 +84,6 @@
 	</table>
 <!-- ----------------------------------------------------------------------------------------------- -->
 	<table id = "reg-tbl" class="tbl_1">
-		<tr>
-			<td colspan="3" class="tab_header tab_off" onclick="gotoLogin();"><label class="menu">Login</label></td>
-			<td colspan="2" class="tab_header tab_on"><label class="menu">Register</label></td>
-			<td colspan="2" class="tab_header tab_off" onclick="gotoHelp(0);"><label class="menu">Help</label></td>
-			<td colspan="3" class="tab_header tab_off" ><label class="menu logout"></label></td>
-		</tr>
 		<tr>
 			<td colspan="3" class="text-cont-r"><label class="label">User name:</label></td>
 			<td colspan="7" class="text-cont-l"><input size="25" class="text-input" id="f3" name="user" type="text" placeholder="User name"/></td>
@@ -73,12 +104,6 @@
 	</table>
 <!-- ----------------------------------------------------------------------------------------------- -->
 	<table id = "chat-tbl" class="tbl_1" style="background-color: rgba(67,220,165,1);">
-		<tr>
-			<td colspan="3" class="tab_header tab_off" onclick="gotoContacts();"><label class="menu">Contacts</label></td>
-			<td colspan="2" class="tab_header tab_on"><label class="menu">Chat</label></td>
-			<td colspan="2" class="tab_header tab_off" onclick="gotoHelp(1);"><label class="menu">Help</label></td>
-			<td colspan="3" class="tab_header tab_off" onclick="gotoLogin();"><label class="menu logout">Logout</label></td>
-		</tr>
 		<tr>
 			<td colspan="10" class="send_panel">
 				<div style="margin:auto; vertical-align:bottom; text-align: center;">
@@ -106,12 +131,6 @@
 	<!--div w3-include-html="/sim/contacts-tbl.html"></div-->
 	<table id = "contacts-tbl" class="tbl_1" style="background-color: rgba(67,220,165,1);">
 		<tr>
-			<td colspan="3" class="tab_header tab_on"><label class="menu">Contacts</label></td>
-			<td colspan="2" class="tab_header tab_off" onclick="gotoChatbyClick(user);"><label class="menu">Chat</label></td>
-			<td colspan="2" class="tab_header tab_off" onclick="gotoHelp(1);"><label class="menu">Help</label></td>
-			<td colspan="3" class="tab_header tab_off" onclick="gotoLogin();"><label class="menu logout">Logout</label></td>
-		</tr>
-		<tr>
 			<td colspan="10" class="header_1">
 				<input id="contact_add" size="25" class="text-input" style="width: 256px; margin: 6px 6px 6px 18px;" type="text" placeholder="Type contact Id" />
 				<span id="button_add" class="button-add" onclick="add_contact();"></span>
@@ -132,19 +151,6 @@
 	</table>
 <!-- ----------------------------------------------------------------------------------------------- -->
 	<table id = "help-tbl" class="tbl_1" style="background-color: rgba(67,220,165,1);">
-		<tr id="help_menu_1">
-			<td colspan="3" class="tab_header tab_off" onclick="gotoContacts();"><label class="menu">Contacts</label></td>
-			<td colspan="2" class="tab_header tab_off" onclick="gotoChatbyClick(user);"><label class="menu">Chat</label></td>
-			<td colspan="2" class="tab_header tab_on" ><label class="menu">Help</label></td>
-			<td colspan="3" class="tab_header tab_off" onclick="gotoLogin();"><label class="menu logout">Logout</label></td>
-		</tr>
-		<tr id="help_menu_0">
-			<td colspan="3" class="tab_header tab_off" onclick="gotoLogin();"><label class="menu">Login</label></td>
-			<td colspan="2" class="tab_header tab_off" onclick="gotoRegister();"><label class="menu">Register</label></td>
-			<td colspan="2" class="tab_header tab_on" ><label class="menu">Help</label></td>
-			<td colspan="3" class="tab_header tab_off" ><label class="menu logout"></label></td>
-		</tr>
-		
 		<tr>
 			<td colspan="10" class="header_1" style="height: 5px;"></td>
 		</tr>
@@ -182,10 +188,8 @@
 			</td>
 		</tr>
 	</table>
-		</td>
-		</tr>
-	</table>
 
+	</div>
 	</div>
 </body>
 
@@ -193,8 +197,9 @@
 function start() {
 	var ismobile = (navigator.userAgent.match(/(iPad)|(iPhone)|(iPod)|(android)|(webOS)/i)) ? true : false;
 	var w = window.innerWidth, 
-	h = window.innerHeight;
-	var div = $('info');
+		h = window.innerHeight;
+	console.log(">> start. h=" + h + "; w=" + w);
+	var div = $('main');
 	var log_tbl = $('login-tbl'), 
 			reg_tbl = $('reg-tbl'),
 			chat_tbl = $('chat-tbl'),
@@ -212,8 +217,10 @@ function start() {
 		help_tbl.setStyle({width: (w - 8) + 'px'});
 	} else {
 		changeLayout('default');
-		div.style.height = (h - 8)	+ 'px';
-		div.style.width = (w - 8) + 'px';
+//		div.style.height = (h - 8)	+ 'px';
+//		div.style.width = (w - 8) + 'px';
+//		div.setStyle({height: (h - 20)	+ 'px'});
+		div.setStyle({width: 500 + 'px'});
 
 		log_tbl.setStyle({width: 500 + 'px'}); // ?????
 		reg_tbl.setStyle({width: 500 + 'px'});
@@ -223,16 +230,8 @@ function start() {
 	}
 	var hdiv = div.offsetHeight, wdiv = div.offsetWidth;
 	
-	var div1 = $('td-error');
+//	var div1 = $('td-error');
 //	div1.innerHTML = ' w= ' + w + ' h= ' + h + ' tbl.w= ' + log_tbl.offsetWidth;
-
-// Initial:
-	log_tbl.style.display = 'none'; //'table';
-	reg_tbl.style.display = 'none';
-	user = "tom"; user_password = "tom";  // only for testing
-	chat_tbl.style.display = 'table'; //'none';
-	contacts_tbl.style.display = 'none';
-	help_tbl.style.display = 'none';
 	
 	init();
 }

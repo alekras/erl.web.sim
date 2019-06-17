@@ -22,7 +22,8 @@ function doLoginRequest() {
 				var user_password = $('f2').value;
 				gotoAfterSuccessLogin(user, user_password);
 			} else {
-				$('td-error').innerHTML = "User name or Password are invalid.<br/>Please try again.";
+//				$('td-error').innerHTML = "User name or Password are invalid.<br/>Please try again.";
+				new WarningBox("User name or Password are invalid.<br/>Please try again.");
 			}
 		}
 	});
@@ -43,13 +44,16 @@ function doRegisterRequest() {
 			if (transport.responseJSON.status == 'ok') {
 				$('reg-tbl').style.display = 'none';
 				$('login-tbl').style.display = 'table';
-				$('td-error').innerHTML = "You are successfully registered";
-				$('td-error').innerHTML = "You are successfully registered";
+//				$('td-error').innerHTML = "You are successfully registered";
+//				$('td-error').innerHTML = "You are successfully registered";
+				new WarningBox("You are successfully registered.");
 			} else {
 				if (transport.responseJSON.reason == 'exist') {
-					$('td-error').innerHTML = "This user name already exists.<br/>Please try another.";
+//					$('td-error').innerHTML = "This user name already exists.<br/>Please try another.";
+					new WarningBox("This user name already exists.<br/>Please try another.");
 				} else if (transport.responseJSON.reason == 'password') {
-					$('td-error').innerHTML = "Password is too short or does not fit confirmed one.<br/>Please try again.";
+//					$('td-error').innerHTML = "Password is too short or does not fit confirmed one.<br/>Please try again.";
+					new WarningBox("Password is too short or does not fit confirmed one.<br/>Please try again.");
 				}
 			}
 		},
@@ -64,10 +68,12 @@ function add_contact() {
 	var new_contact = $('contact_add').value;
 	if(new_contact.trim().length == 0) {
 		console.log("Empty field.");
+		new WarningBox("Contact name to add is empty.");
 		return;
 	}
 	if (contacts_board.contacts.some(function (element, index, array) { return (element.id == new_contact);})) {
 		console.log("Contact duplicate.");
+		new WarningBox("Contact name to add is duplicate.");
 		return;
 	}
 
@@ -83,10 +89,12 @@ function add_contact() {
 //				contactNames = parse_contacts(transport.responseJSON.contacts);
 //				contactNames.forEach(function(element, index, array) { console.log(index + ': ' + element);});
 				contacts_board.render_contacts(transport.responseJSON.contacts);
-				$('td-error').innerHTML = "You are successfully add new contact";
+//				$('td-error').innerHTML = "You are successfully add new contact";
+				new WarningBox("You are successfully add new contact.");
 			} else {
 				if (transport.responseJSON.reason == 'not_exist') {
-					$('td-error').innerHTML = "This contact name does not exist.<br/>Please try another.";
+//					$('td-error').innerHTML = "This contact name does not exist.<br/>Please try another.";
+					new WarningBox("This contact name does not exist.<br/>Please try another.");
 				}
 			}
 		},
@@ -110,10 +118,11 @@ function get_contacts() {
 //				contactNames = parse_contacts(transport.responseJSON.contacts);
 //				contactNames.forEach(function(element, index, array) { console.log(index + ': ' + element);});
 				contacts_board.render_contacts(transport.responseJSON.contacts);
-				$('td-error').innerHTML = "You are successfully get all your contacts";
+//				$('td-error').innerHTML = "You are successfully get all your contacts";
 			} else {
 				if (transport.responseJSON.reason == 'exist') {
-					$('td-error').innerHTML = "Something wrong.";
+//					$('td-error').innerHTML = "Something wrong.";
+					new WarningBox("Something wrong.");
 				}
 			}
 		},
@@ -136,10 +145,11 @@ function remove_contact(contactName) {
 //				contactNames = parse_contacts(transport.responseJSON.contacts);
 //				contactNames.forEach(function(element, index, array) { console.log(index + ': ' + element);});
 				contacts_board.render_contacts(transport.responseJSON.contacts);
-				$('td-error').innerHTML = "You are successfully add new contact";
+//				$('td-error').innerHTML = "You are successfully remove contact";
+				new WarningBox("You are successfully remove contact.");
 			} else {
 				if (transport.responseJSON.reason == 'exist') {
-					$('td-error').innerHTML = "This contact name does not exist.<br/>Please try another.";
+//					$('td-error').innerHTML = "This contact name does not exist.<br/>Please try another.";
 				}
 			}
 		},

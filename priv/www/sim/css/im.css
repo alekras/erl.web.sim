@@ -4,10 +4,12 @@ body {
 	align-content: center;
 }
 
-#info {
-	margin: 2px; 
+#main {
+/*	margin: 2px; */ 
+  margin: 50px auto 50px auto;
 	border: 2px solid green; 
 	text-align:center;
+	align-content: center;
 }
 
 table tr td {
@@ -19,13 +21,6 @@ p {
 	text-indent: 20px;
 	padding-left: 10px;
 	padding-right: 10px;
-}
-.tbl_0 {
-  border: 2px solid rgba(137,200,205,1);
-  width: 500px;
-  margin: 50px auto auto;
-  border-spacing: 0px;
-  font-size: 14pt;
 }
 .tbl_1 {
   width: 500px;
@@ -173,6 +168,37 @@ p {
   font-family: serif;
   font-stretch: ultra-condensed;
 }
+
+/************************* temp ******************/
+.tab_header_t {
+	display:inline-block;
+  height: 50px;
+  width: 50px;
+  padding: 0px;
+  background-color: rgba(67,220,165,1);
+  text-align:center;
+  cursor: pointer;
+}
+
+.tab_on_t {
+  color: graytext;
+  border-left: 1px solid black;
+  border-right:  1px solid black;
+  border-bottom:  0px solid black;
+  border-top:  1px solid black;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  cursor: default;
+}
+
+.tab_off_t {
+  background-color: rgba(167,220,205,1);
+  border-left: 0px solid black;
+  border-right:  0px solid black;
+  border-bottom:  1px solid black;
+  border-top:  0px solid black;
+}
+
 
 .tab_header {
   height: 50px;
@@ -349,8 +375,6 @@ p {
 }
 
 .confirm-mask {
-  width: 300px;
-  height: 200px;
 	position:absolute;
 	background-color:rgba(200,200,200,0.35);
 	top: 50px;
