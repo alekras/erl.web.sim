@@ -22,14 +22,16 @@ p {
 	padding-left: 10px;
 	padding-right: 10px;
 }
+
 .tbl_1 {
-  width: 500px;
+  width: 500px; /* set */
   border-spacing: 0px;
   font-size: 14pt;
 }
 
 .text-cont-r {
-  height: 50px;
+  height: 50px; /* set */
+  width:30%;
   padding: 0px;
   background-color: rgba(67,220,165,1);
   text-align:right;
@@ -47,14 +49,15 @@ p {
 }
 
 .text-cont-l {
-  height: 50px;
+  height: 50px; /* set */
+  width:70%;
   padding: 0px;
   background-color: rgba(67,220,165,1);
   text-align:left;
 }
 
 .text-input {
-  width: 226px; /* 50*5=250-24 */
+  width: 90%; /* 50*5=250-24 */  /* set */
   text-align: left;
   vertical-align: middle;
   margin: 12px 6px;
@@ -65,20 +68,13 @@ p {
   font-weight: normal;
 }
 
-.text-error {
-  height: 50px;
-  padding: 0px;
-  background-color: white;
-  color: red;
-  text-align:center;
-  font-size: 10pt;
-  font-family: monospace;
-  font-style: normal;
-  font-weight: normal;
+.text-input-contacts {
+  width: 50%;  /* set */
+  margin: 6px 6px 6px 18px;
 }
 
 .button {
-  display: inline; 
+  display: inline;
   height: 40px;
   width: 50px;
   margin: 10px;
@@ -124,7 +120,6 @@ p {
   width: 40px;
   height: 40px;
   vertical-align: middle;
-  
   background-color: rgba(87,220,165,1);
   background-image: url("/sim/img/add-user.png");
   background-repeat:no-repeat;
@@ -146,15 +141,10 @@ p {
   cursor: pointer;
 }
 
-.button-cont {
-  padding: 0px;
-  background-color: rgba(67,220,165,1);
-  text-align:center;
-}
-
 /* Contacts page */
 .menu {
-  text-align: center;
+	color:white;
+	text-align: center;
   background-color: transparent;
   font-size: 12pt;
   font-family: monospace;
@@ -163,53 +153,27 @@ p {
   cursor: inherit;
 }
 
+.menu_on {
+  color: blue;
+}
+
 .logout {
-  color: red;
+  color: rgba(255,200,200,1);
   font-family: serif;
   font-stretch: ultra-condensed;
 }
 
-/************************* temp ******************/
-.tab_header_t {
-	display:inline-block;
-  height: 50px;
-  width: 50px;
-  padding: 0px;
-  background-color: rgba(67,220,165,1);
-  text-align:center;
-  cursor: pointer;
-}
-
-.tab_on_t {
-  color: graytext;
-  border-left: 1px solid black;
-  border-right:  1px solid black;
-  border-bottom:  0px solid black;
-  border-top:  1px solid black;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-  cursor: default;
-}
-
-.tab_off_t {
-  background-color: rgba(167,220,205,1);
-  border-left: 0px solid black;
-  border-right:  0px solid black;
-  border-bottom:  1px solid black;
-  border-top:  0px solid black;
-}
-
-
 .tab_header {
-  height: 50px;
+  height: 40px;
+  width:25%;
   padding: 0px;
-  background-color: rgba(67,220,165,1);
   text-align:center;
   cursor: pointer;
 }
 
 .tab_on {
   color: graytext;
+  background-color: rgba(67,220,165,1);
   border-left: 1px solid black;
   border-right:  1px solid black;
   border-bottom:  0px solid black;
@@ -220,7 +184,7 @@ p {
 }
 
 .tab_off {
-  background-color: rgba(167,220,205,1);
+/*  background-color: rgba(167,220,205,1);*/
   border-left: 0px solid black;
   border-right:  0px solid black;
   border-bottom:  1px solid black;
@@ -239,7 +203,7 @@ p {
 
 .user-id {
   display:inline-block;
-  width: 170px;
+  width: 50%; /* set */
   text-align: left;
   margin: 6px 4px;
   padding: 2px 6px;
@@ -250,11 +214,14 @@ p {
   font-style: normal;
   font-weight: normal;
   vertical-align: middle;
-  
+}
+
+.user-id-chat {
+  width: 35%; /* set */
 }
 
 .board {
-  height: 412px;
+  height: auto; /* set */
   width: auto;
   border: 1px solid black;
   padding: 0px;
@@ -272,7 +239,7 @@ p {
 .text-area {
   display: inline-block;
   height: 50px;
-  width: 485px;
+  width: 485px; /* set */
   resize: none;
 /*  outline: none; */
   overflow: auto;
@@ -286,7 +253,7 @@ p {
 
 .left-msg {
   float:left;
-  width: 380px; /*90%;*/
+  width: 90%;  /* set */
   text-align: left;
   margin: 2px 0px 0px 2px;
   padding: 5px;
@@ -301,7 +268,7 @@ p {
 
 .right-msg {
   float:right;
-  width: 380px; /*90%;*/
+  width: 80%;  /* set */
   text-align: right;
   margin: 2px 2px 0px 0px;
   padding: 5px;
@@ -325,7 +292,8 @@ p {
 }
 
 .text-sender {
-  float:right;
+  float:left;
+  width: 15%;  /* set */
   display:block;
   text-align: right;
   padding: 0px 4px;
@@ -335,6 +303,8 @@ p {
   font-style: normal;
   font-weight: normal;
   cursor: pointer;
+  overflow: hidden;
+  white-space:nowrap;
 }
 
 .text-timestamp {
@@ -384,8 +354,8 @@ p {
 .confirm-box {
   border: 4px solid yellow;
   padding:4px;
-  width: 300px;
-  height: 200px;
+  width: 50%;
+  height: 50%;
 	position:relative;
 	top: 50px;
 	left: 50px;
@@ -410,12 +380,11 @@ p {
   position: relative;
   width: 50px;
   border: 1px solid red;
-  
 	top: 100px;
 	padding-left:25px;
   padding-right:25px;
 	margin-left: 10px;
 	margin-right: 10px;
-	cursor: pointer;
-	
+	cursor: pointer;	
 }
+

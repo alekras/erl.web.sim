@@ -79,22 +79,21 @@ var Board = Class.create({
 		var payload = JSON.parse(message.payloadString);
 		var who = message.destinationName.split("/")[2];
 //		console.log(who);
-		var rowDiv = new Element('div', {class: ''});
+		var rowDiv = new Element('div', {class: '', style:'display:block;'});
 		var div = new Element('div', {class: 'right-msg'});
 		var textMsg = new Element('span', {class:'text-msg'});
 		var time = new Element('span', {class:'text-timestamp'});
 		var sender = new Element('span', {class:'text-sender', onclick:'change_contact("' + who + '");'});
-//		div.insert(sender);
 		div.insert(textMsg);
 		div.insert(time);
 		rowDiv.insert(div);
+		sender.update(who + " :");
 		rowDiv.insert(sender);
 		this.board.insert(rowDiv);
 		var txt = payload.msg.replace(/ /g, '&nbsp;').replace(/\n/g, '<br>');
 		textMsg.update(txt);
 //		textMsg.update(payload.msg);
 		time.update(payload.time);
-		sender.update(who + " :");
 		var isScrolledToBottom = (this.board.scrollHeight - this.board.clientHeight) <= (this.board.scrollTop + 1);
 		if(!isScrolledToBottom) {
 			this.board.scrollTop = this.board.scrollHeight - this.board.clientHeight;
@@ -118,7 +117,7 @@ var Contacts = Class.create({
 		contacts.forEach(
 			function(element, index, array) { 
 				var div = new Element('div', {class: 'left-msg contact-list'});
-				var contName = new Element('span', {class:'user-id', style:'width: 250px'});
+				var contName = new Element('span', {class:'user-id'});
 				var remove = new Element('span', {class:'remove-contact', onclick:'confirm_contact_remove("' + element.id + '");'});
 				var connect = new Element('span', {class:'connect-contact'});
 //				var connect = new Element('img', {src:'/sim/img/connect.png', class:'connect-contact'});
