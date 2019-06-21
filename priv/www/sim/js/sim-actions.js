@@ -1,3 +1,4 @@
+var mqtt_host = "lucky3p.com", mqtt_port = 8880;
 
 function init() {
 	console.log(">>> init()");
@@ -6,10 +7,10 @@ function init() {
 	send_footer = new SendFooter();
 	board = new Board();
 	contacts_board = new Contacts();
-	user = "tom"; user_password = "tom";  // only for testing !!!
-	websocketclient.create("192.168.1.71", 8880, user, user_password); // only for testing !!!
-	gotoChatTest(); // only for testing !!!
-//	gotoLogin();
+//	user = "tom"; user_password = "tom";  // only for testing !!!
+//	websocketclient.create("192.168.1.71", 8880, user, user_password); // only for testing !!!
+//	gotoChatTest(); // only for testing !!!
+	gotoLogin();
 }
 
 function gotoLogin() {
@@ -34,7 +35,7 @@ function gotoLogin() {
 function gotoAfterSuccessLogin(p_user, p_user_password) {
 	user = p_user;
 	user_password = p_user_password;
-	websocketclient.create("192.168.1.71", 8880, user, user_password);
+	websocketclient.create(mqtt_host, mqtt_port, user, user_password);
 	gotoContacts();
 }
 

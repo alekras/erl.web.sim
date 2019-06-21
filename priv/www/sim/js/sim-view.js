@@ -127,6 +127,8 @@ var Contacts = Class.create({
 					contName.style.backgroundColor = "LightSalmon";
 				} else if (element.status == "on") {
 					contName.style.backgroundColor = "Aquamarine";
+				} else if (element.status == "undefined") {
+					contName.style.backgroundColor = "white";
 				}
 
 				div.insert(contName);

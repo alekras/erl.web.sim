@@ -7,4 +7,5 @@
 ).
 
 %%-define(URL, "http://192.168.1.75:8880").
--define(URL, "http://localhost:8880"). % @todo move to config
+%%-define(URL, "http://localhost:8880"). % @todo move to config
+-define(URL, "http://lucky3p.com:8880"). % @todo move to config
