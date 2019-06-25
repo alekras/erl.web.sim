@@ -216,10 +216,10 @@ var WarningBox = Class.create({
 		var w = par_layout.get('width');
 		var h = par_layout.get('height');
 		
-		console.log("x= " + par_layout.get('left') 
-				+ " y= " + par_layout.get('top') 
-				+ "\n w= " + par_layout.get('width') 
-				+ " h= " + par_layout.get('height') );
+//		console.log("x= " + par_layout.get('left') 
+//				+ " y= " + par_layout.get('top') 
+//				+ "\n w= " + par_layout.get('width') 
+//				+ " h= " + par_layout.get('height') );
 		var mask = new Element('div', {class:'confirm-mask'});
 		mask.setStyle({width: w + 'px', height: h + 'px', top: y + 'px', left: x + 'px'});
 		var tbox = new Element('div', {class:'confirm-box'});
