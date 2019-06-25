@@ -1,7 +1,3 @@
-var user, user_password, 
-	contactNames, 
-	link_header, send_footer, board, contacts_board;
-
 function send() {
 //	var topic =  "/" + contactId + "/" + user;
 	if (!websocketclient.connected) {
@@ -181,27 +177,40 @@ console.log("on Connect: " + this.contact.id + "\n" + JSON.stringify(this.contac
 	},
 
 	'send': function (payload) {
-		var topic =  "/" + this.contact.id + "/" + this.username;
+		var contact_id = this.contact.id;
+		var topic =  "/" + contact_id + "/" + this.username;
 		var message = new Messaging.Message(payload);
 		message.destinationName = topic;
 		message.qos = 2;
-		message.retained = true;
+		var send_contact = this.contacts.filter(function(contact){return contact.id === contact_id;});
+//		console.log("filter: " + JSON.stringify(send_contact)); 
+		if (send_contact[0].status == "off") {
+			message.retained = true;
+		} else if (send_contact[0].status == "on") {
+			message.retained = false;
+		} else if (send_contact[0].status == "undefined") {
+			message.retained = true;
+		}
 		this.client.send(message);
+		console.log("Message sent: " + payload + " topic: " + topic 
+				+ " qos: " + message.qos + " retained: " + message.retained + " to contact: " + send_contact[0].id);
 	},
 
 	'onMessageArrived': function (message) {
 		console.log("Message arrives: " + message.payloadString + " topic: " + message.destinationName 
 				+ " qos: " + message.qos + " retained: " + message.retained);
+		var who = message.destinationName.split("/")[2];
+		var contact = this.contacts.filter(function(contact){return contact.id === who;})[0];
+		gotoChat(contact, this.contacts);
 		board.inMessage(message);
 // Acknowledge endpoint to delete retain message as already delivered. 
 		if (message.retained) {
-			var who = message.destinationName.split("/")[2];
 			var messageAck = new Messaging.Message('');
 //			var topic = "/" + this.username + "/" + this.contact.id;
 			var topic = "/" + this.username + "/" + who;
 			messageAck.destinationName = topic;
 			messageAck.qos = 2;
-			messageAck.retained = true;
+			messageAck.retained = true;  // ? false ?
 			this.client.send(messageAck);
 			console.log("Empty message sent: " + messageAck.payloadString + " topic: " + messageAck.destinationName 
 					+ " qos: " + messageAck.qos + " retained: " + message.retained);

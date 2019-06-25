@@ -35,13 +35,14 @@
 14. Complete Help.
 
 15. Test and update/modify mobile CSS.
+  -- extract common part of both.
 
 16. Modify Tabs menu
   -- decrease height
   -- move from table to div
 
-17 Remove upper error box.
-  -- direct error messages to warning popup box
+### 17 Remove upper error box.
+###  -- direct error messages to warning popup box
   
 18. Redesign send function. Make reconnection if not connected.
 
@@ -49,5 +50,15 @@
 
 20. If connection to MQTT server is broken (from web-sim server) - return error response to web client from web-sim server.
 
-21. Bug: when user sent message to himself it is come as retained when user to reconnect to other user.
+### 21. Bug: when user sent message to himself it is come as retained when user to reconnect to other user.
+
+22. Change format contacts list that returns from server to client. (from list to object: [{id:name, status:st},...] -> {name: {status:st}} )
+
+23. Change mechanizm of obtaining connection status (without mqtt server involved).
+  -- send Connect/Disconnect events to sim-web server  
+  -- thing about notification of changing status with websocket connection ?
+
+24. Change function gotoChat/2.
+  
+25. Keep connection to mqtt server all time to allow messages come from contacts.
 
