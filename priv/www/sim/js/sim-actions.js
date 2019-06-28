@@ -1,4 +1,4 @@
-var  mqtt_host = "localhost", // mqtt_host = "lucky3p.com",
+var mqtt_host = "lucky3p.com",
 	mqtt_port = 8880;
 var user,
 	user_password, 
