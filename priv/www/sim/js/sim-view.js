@@ -78,6 +78,12 @@ var Board = Class.create({
 	inMessage: function(message) {
 		var payload = JSON.parse(message.payloadString);
 		var who = message.destinationName.split("/")[2];
+		var sound = $('audio-newmsg');
+		try {
+			sound.play();			
+		} catch (e) {
+			console.log(e);
+		}
 //		console.log(who);
 		var rowDiv = new Element('div', {class: '', style:'display:block;'});
 		var div = new Element('div', {class: 'right-msg'});

@@ -29,6 +29,7 @@ start(_Type, _Args) ->
 			{"/sim/js/[...]", cowboy_static, {priv_dir, sim_web, "www/sim/js", [{mimetypes, cow_mimetypes, all}]}},
 			{"/sim/css/[...]", cowboy_static, {priv_dir, sim_web, "www/sim/css", [{mimetypes, cow_mimetypes, all}]}},
 			{"/sim/img/[...]", cowboy_static, {priv_dir, sim_web, "www/sim/img", [{mimetypes, cow_mimetypes, all}]}},
+			{"/sim/audio/[...]", cowboy_static, {priv_dir, sim_web, "www/sim/audio", [{mimetypes, cow_mimetypes, all}]}},
 			{"/sim/login", sim_web_handler_log, []},
 			{"/sim/register", sim_web_handler_reg, []},
 			{"/sim/contacts/:user_name/get_all", sim_web_handler_cont, [get_all]},
