@@ -150,6 +150,7 @@ function remove_contact(contactName) {
 			} else {
 				if (transport.responseJSON.reason == 'exist') {
 //					$('td-error').innerHTML = "This contact name does not exist.<br/>Please try another.";
+					new WarningBox("This contact name does not exist.<br/>Please try another.");
 				}
 			}
 		},

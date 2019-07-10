@@ -120,13 +120,13 @@ var Contacts = Class.create({
 	render_contacts: function(contacts) {
 		this.board.childElements().forEach(function(child){child.remove()}); // clean up board
 		this.contacts = contacts;
+		console.log('reformat= ' + JSON.stringify(this.reformat_contacts(contacts)));
 		contacts.forEach(
 			function(element, index, array) { 
 				var div = new Element('div', {class: 'left-msg contact-list'});
 				var contName = new Element('span', {class:'user-id'});
 				var remove = new Element('span', {class:'remove-contact', onclick:'confirm_contact_remove("' + element.id + '");'});
 				var connect = new Element('span', {class:'connect-contact'});
-//				var connect = new Element('img', {src:'/sim/img/connect.png', class:'connect-contact'});
 				connect.onclick = function(e){gotoChat(element, contacts);};
 
 				if (element.status == "off") {
@@ -147,6 +147,21 @@ var Contacts = Class.create({
 		if(!isScrolledToBottom) {
 			this.board.scrollTop = this.board.scrollHeight - this.board.clientHeight;
 		}
+	},
+	
+	reformat_contacts(contacts) {
+		try {
+			var accum = {};
+			contacts.forEach(function(element) {accum[element.id] = {'status': element.status};});
+			return accum;
+		} catch (e) {
+			console.log(e);
+		}
+//		try {
+//			return contacts.reduce(function(accum, element) {accum[element.id] = {'status': element.status};}, new Object());
+//		} catch (e) {
+//			console.log(e);
+//		}
 	}
 })
 
