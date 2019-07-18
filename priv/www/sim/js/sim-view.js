@@ -7,28 +7,19 @@ var LinkHeader = Class.create({
 	},
 	
 	doLink: function(active_contact) {
-//		this.button.innerHTML = "Unlink";
-//		this.button.style.backgroundColor = "LightSalmon";
-//		this.button.onclick = function() {unlink();};
-//		this.contact.setAttribute("readonly", "readonly");
-//		console.log("doLink: contact status = " + active_contact.status);
-		if (active_contact.status == "off") {
+		var contacts = contacts_board.contacts;
+		if (contacts[active_contact].status == "off") {
 			this.contact.style.backgroundColor = "LightSalmon";
-		} else if (active_contact.status == "on") {
+		} else if (contacts[active_contact].status == "on") {
 			this.contact.style.backgroundColor = "Aquamarine";
 		}
 		this.userId.update(user);
 		this.userId.style.backgroundColor = "Aquamarine";
-		this.contact.update(active_contact.id);
+		this.contact.update(active_contact);
 //		this.contact.value = active_contact.id;
 	},
 	
 	doUnlink: function() {
-//		this.button.innerHTML = "Link to";
-//		this.button.style.backgroundColor = "MediumSpringGreen";
-//		this.button.onclick = function() {link();};
-//		this.contact.removeAttribute("readonly");
-//		this.contact.update("c");
 		this.contact.style.backgroundColor = "White";
 		this.userId.style.backgroundColor = "LightSalmon";
 	}
@@ -37,7 +28,6 @@ var LinkHeader = Class.create({
 var SendFooter = Class.create({
 	initialize: function() {
 		this.textArea = $('text-area');
-//		this.button = $('button_send');
 	},
 	
 	payload: function() {
@@ -66,7 +56,6 @@ var Board = Class.create({
 		this.board.insert(div);
 		var txt = payload.msg.replace(/ /g, '&nbsp;').replace(/\n/g, '<br>');
 		textMsg.update(txt);
-//		textMsg.update(payload.msg);
 		time.update(payload.time);
 		var isScrolledToBottom = (this.board.scrollHeight - this.board.clientHeight) <= (this.board.scrollTop + 1);
 		if(!isScrolledToBottom) {
@@ -80,7 +69,7 @@ var Board = Class.create({
 		var who = message.destinationName.split("/")[2];
 		var sound = $('audio-newmsg');
 		try {
-			sound.play();			
+			sound.play();
 		} catch (e) {
 			console.log(e);
 		}
@@ -98,7 +87,6 @@ var Board = Class.create({
 		this.board.insert(rowDiv);
 		var txt = payload.msg.replace(/ /g, '&nbsp;').replace(/\n/g, '<br>');
 		textMsg.update(txt);
-//		textMsg.update(payload.msg);
 		time.update(payload.time);
 		var isScrolledToBottom = (this.board.scrollHeight - this.board.clientHeight) <= (this.board.scrollTop + 1);
 		if(!isScrolledToBottom) {
@@ -120,20 +108,21 @@ var Contacts = Class.create({
 	render_contacts: function(contacts) {
 		this.board.childElements().forEach(function(child){child.remove()}); // clean up board
 		this.contacts = contacts;
-		console.log('reformat= ' + JSON.stringify(this.reformat_contacts(contacts)));
-		contacts.forEach(
-			function(element, index, array) { 
+//		console.log('reformat= ' + JSON.stringify(this.reformat_contacts(contacts)));
+//		Object.entries(contacts).forEach(([key, value]) => console.log('key=' + key + ', value=' + value));
+		Object.entries(contacts).forEach(
+			function([id, value]) { 
 				var div = new Element('div', {class: 'left-msg contact-list'});
 				var contName = new Element('span', {class:'user-id'});
-				var remove = new Element('span', {class:'remove-contact', onclick:'confirm_contact_remove("' + element.id + '");'});
+				var remove = new Element('span', {class:'remove-contact', onclick:'confirm_contact_remove("' + id + '");'});
 				var connect = new Element('span', {class:'connect-contact'});
-				connect.onclick = function(e){gotoChat(element, contacts);};
+				connect.onclick = function(e){gotoChat(id, contacts);};
 
-				if (element.status == "off") {
+				if (value.status == "off") {
 					contName.style.backgroundColor = "LightSalmon";
-				} else if (element.status == "on") {
+				} else if (value.status == "on") {
 					contName.style.backgroundColor = "Aquamarine";
-				} else if (element.status == "undefined") {
+				} else if (value.status == "undefined") {
 					contName.style.backgroundColor = "white";
 				}
 
@@ -141,7 +130,7 @@ var Contacts = Class.create({
 				div.insert(connect);
 				div.insert(remove);
 				this.board.insert(div);
-				contName.update(element.id);
+				contName.update(id);
 		}.bind(this));
 		var isScrolledToBottom = (this.board.scrollHeight - this.board.clientHeight) <= (this.board.scrollTop + 1);
 		if(!isScrolledToBottom) {
@@ -149,20 +138,20 @@ var Contacts = Class.create({
 		}
 	},
 	
-	reformat_contacts(contacts) {
-		try {
-			var accum = {};
-			contacts.forEach(function(element) {accum[element.id] = {'status': element.status};});
-			return accum;
-		} catch (e) {
-			console.log(e);
-		}
+//	reformat_contacts(contacts) {
 //		try {
-//			return contacts.reduce(function(accum, element) {accum[element.id] = {'status': element.status};}, new Object());
+//			var accum = {};
+//			contacts.forEach(function(element) {accum[element.id] = {'status': element.status};});
+//			return accum;
 //		} catch (e) {
 //			console.log(e);
 //		}
-	}
+//		try {
+//			return contacts.reduce(function(accum, element) {accum[element.id] = {'status': element.status}; return accum;}, new Object());
+//		} catch (e) {
+//			console.log(e);
+//		}
+//	}
 })
 
 var ConfirmBox = Class.create({

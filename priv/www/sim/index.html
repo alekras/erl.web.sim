@@ -14,7 +14,8 @@
 <script src="/sim/js/sim-mqttclient.js" type="text/javascript"></script>
 <title>SIM4U</title>
 </head>
-<body onload="start();" onfocus="console.log('onfocus');" onfocusin="console.log('onfocus in');" onfocusout="console.log('onfocus out');">
+<!--body onload="start();" onfocus="console.log('onfocus');" onfocusin="console.log('onfocus in');" onfocusout="console.log('onfocus out');"-->
+<body onload="start();">
 	<div id="main">
 	<div id="container">
 	<!--table id="menu_temp" class="tbl_1" style="background-color: rgba(167,220,205,1);"-->
@@ -181,11 +182,11 @@
 
 	</div>
 	</div>
-	<audio id="audio-notify">
-		<source src="/sim/audio/notify.wav" type="audio/wav"/>
+	<audio id="audio-notify" src="/sim/audio/notify.wav">
+		<!--source src="/sim/audio/notify.wav" type="audio/wav"/-->
 	</audio>
-	<audio id="audio-newmsg">
-		<source src="/sim/audio/new-msg.wav" type="audio/wav"/>
+	<audio id="audio-newmsg" src="/sim/audio/new-msg.wav">
+		<!--source src="/sim/audio/new-msg.wav" type="audio/wav"/-->
 	</audio>
 </body>
 

@@ -1,18 +1,10 @@
 function send() {
-//	var topic =  "/" + contactId + "/" + user;
 	if (!websocketclient.connected) {
 		websocketclient.connect();
-//		$('td-error').innerHTML = "Try to send again."
 		new WarningBox("Cannot send message.<br/>Try to send again.");
 		return false;
 	}
 
-//	if (!websocketclient.subscribed) {
-//		$('td-error').innerHTML = "You are not linked to other contact."
-//		return false;
-//	}
-
-//	$('td-error').innerHTML = ""
 	var payload = send_footer.payload()
 	var stringPayload = JSON.stringify(payload);
 	websocketclient.send(stringPayload);
@@ -21,8 +13,8 @@ function send() {
 
 function link(contact, contactList) {
 	websocketclient.contact = contact;
-	websocketclient.contacts = contactList;
-	console.log("link: contact id= '" + contact.id + "'\n" + JSON.stringify(contactList));
+	websocketclient.contactsUpdate(contactList);
+	console.log("link: contact id= '" + contact + "'\n" + JSON.stringify(contactList));
 
 	if (!websocketclient.connected) {
 		websocketclient.connect();
@@ -35,10 +27,10 @@ function link(contact, contactList) {
 
 function first_time_link(contact) {
 	websocketclient.contact = contact;
-	console.log("first time link: contact id= '" + contact.id + "'");
+	console.log("first time link: contact id= '" + contact + "'");
 
 	if (!websocketclient.connected) {
-		websocketclient.contacts = [];
+		websocketclient.contactsUpdate({});
 		websocketclient.connect();
 	} else {
 //		websocketclient.onConnect();
@@ -47,7 +39,7 @@ function first_time_link(contact) {
 
 function reLink(contact) {
 	websocketclient.contact = contact;
-	console.log("reLink: contact id= '" + contact.id + "'");
+	console.log("reLink: contact id= '" + contact + "'");
 
 	if (!websocketclient.connected) {
 		websocketclient.connect();
@@ -123,9 +115,11 @@ var websocketclient = {
 	},
 
 	'onConnect': function () {
+		console.log("on Connect. contact: " + this.contact + "; contacts: " + JSON.stringify(this.contacts));
+		if (this.connected) {
+			return;
+		}
 		this.connected = true;
-//		top_header.successConnect();
-console.log("on Connect: " + this.contact.id + "\n" + JSON.stringify(this.contacts));
 		this.subscribe(); 
 		link_header.doLink(this.contact);
 	},
@@ -133,20 +127,16 @@ console.log("on Connect: " + this.contact.id + "\n" + JSON.stringify(this.contac
 	'onFail': function (message) {
 		this.connected = false;
 		this.subscribed = false;
-//		$('td-error').innerHTML = "Connection is broken.";
 		new WarningBox("Connection is broken.");
 		console.log("error: " + message.errorMessage);
-//		top_header.disconnect();
 	},
 
 	'onConnectionLost': function (responseObject) {
 		this.connected = false;
 		if (responseObject.errorCode !== 0) {
-//			$('td-error').innerHTML = "Cannot establish connection.";
 			new WarningBox("Cannot establish connection.");
 			console.log("onConnectionLost:" + responseObject.errorMessage);
 		}
-//		top_header.disconnect();
 
 	//Cleanup subscriptions
 		this.subscribed = false;
@@ -160,53 +150,59 @@ console.log("on Connect: " + this.contact.id + "\n" + JSON.stringify(this.contac
 //			console.log("You are already linked to this contact.");
 //			return;
 //		}
-		var mapFun = function(element, index, array) { 
-			var topic = "/" + this.username + "/" + element.id;
+		var mapFun = function([key, value]) { 
+			var topic = "/" + this.username + "/" + key;
 			this.client.subscribe(topic, {qos: 2});
 			console.log("Subscribed topic: " + topic);
 		}.bind(this);
-		this.contacts.map(mapFun);
+		Object.entries(this.contacts).map(mapFun);
 //		this.subscriptions.push({'topic': topic, 'qos': 2});
 		this.subscribed = true;
 	},
 
-	'unsubscribe': function (topic) {
+	'unsubscribe': function (contact) {
+		var topic = "/" + this.username + "/" + contact;
+		console.log("Unsubscribed topic: " + topic);
 		this.client.unsubscribe(topic);
 //		this.subscriptions = this.subscriptions.filter(function (element, index, array) { return element.topic != topic;});
 //		this.subscribed = false;
 	},
-
+	
+	'contactsUpdate' : function (newContacts) {
+		
+		this.contacts = newContacts;
+	},
+	
 	'send': function (payload) {
-		var contact_id = this.contact.id;
+		var contact_id = this.contact;
 		var topic =  "/" + contact_id + "/" + this.username;
 		var message = new Messaging.Message(payload);
 		message.destinationName = topic;
 		message.qos = 2;
-		var send_contact = this.contacts.filter(function(contact){return contact.id === contact_id;});
+		var send_contact = this.contacts[contact_id];
 //		console.log("filter: " + JSON.stringify(send_contact)); 
-		if (send_contact[0].status == "off") {
+		if (send_contact.status == "off") {
 			message.retained = true;
-		} else if (send_contact[0].status == "on") {
+		} else if (send_contact.status == "on") {
 			message.retained = false;
-		} else if (send_contact[0].status == "undefined") {
+		} else if (send_contact.status == "undefined") {
 			message.retained = true;
 		}
 		this.client.send(message);
 		console.log("Message sent: " + payload + " topic: " + topic 
-				+ " qos: " + message.qos + " retained: " + message.retained + " to contact: " + send_contact[0].id);
+				+ " qos: " + message.qos + " retained: " + message.retained + " to contact: " + contact_id);
 	},
 
 	'onMessageArrived': function (message) {
 		console.log("Message arrives: " + message.payloadString + " topic: " + message.destinationName 
 				+ " qos: " + message.qos + " retained: " + message.retained);
 		var who = message.destinationName.split("/")[2];
-		var contact = this.contacts.filter(function(contact){return contact.id === who;})[0];
-		gotoChat(contact, this.contacts);
+		var contact = this.contacts[who];
+		gotoChat(who, this.contacts);
 		board.inMessage(message);
 // Acknowledge endpoint to delete retain message as already delivered. 
 		if (message.retained) {
 			var messageAck = new Messaging.Message('');
-//			var topic = "/" + this.username + "/" + this.contact.id;
 			var topic = "/" + this.username + "/" + who;
 			messageAck.destinationName = topic;
 			messageAck.qos = 2;
@@ -219,16 +215,13 @@ console.log("on Connect: " + this.contact.id + "\n" + JSON.stringify(this.contac
 // do I need it? --Yes!
 	'disconnect': function () {
 		if (this.connected) {
-//			var topic = "/" + this.username + "/" + this.contactId;
-//			this.unsubscribe(topic);
 			this.connected = false;
-			this.contact = {id:"",status:""};
+			this.contact = {"":{status:""}};
 			console.log("disconnect: " + this.username);
 			this.client.disconnect();
 		}
 		link_header.doUnlink();
 		make_logout();
-//		top_header.disconnect();
 	}
 
 }

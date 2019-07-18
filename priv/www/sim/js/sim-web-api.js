@@ -86,14 +86,10 @@ function add_contact() {
 //			console.log("add contact: " + transport.responseJSON.status + " | " + transport.responseJSON.reason);
 //			console.log(transport.responseText);
 			if (transport.responseJSON.status == 'ok') {
-//				contactNames = parse_contacts(transport.responseJSON.contacts);
-//				contactNames.forEach(function(element, index, array) { console.log(index + ': ' + element);});
 				contacts_board.render_contacts(transport.responseJSON.contacts);
-//				$('td-error').innerHTML = "You are successfully add new contact";
 				new WarningBox("You are successfully add new contact.");
 			} else {
 				if (transport.responseJSON.reason == 'not_exist') {
-//					$('td-error').innerHTML = "This contact name does not exist.<br/>Please try another.";
 					new WarningBox("This contact name does not exist.<br/>Please try another.");
 				}
 			}
@@ -115,13 +111,9 @@ function get_contacts() {
 //			console.log(contacts_board + " -:- " + transport.responseText);
 //			console.log(transport.responseJSON.status + " | " + transport.responseJSON.contacts);
 			if (transport.responseJSON.status == 'ok') {
-//				contactNames = parse_contacts(transport.responseJSON.contacts);
-//				contactNames.forEach(function(element, index, array) { console.log(index + ': ' + element);});
 				contacts_board.render_contacts(transport.responseJSON.contacts);
-//				$('td-error').innerHTML = "You are successfully get all your contacts";
 			} else {
 				if (transport.responseJSON.reason == 'exist') {
-//					$('td-error').innerHTML = "Something wrong.";
 					new WarningBox("Something wrong.");
 				}
 			}
@@ -139,17 +131,13 @@ function remove_contact(contactName) {
 		requestHeaders: {Accept: 'application/json'},
 		postBody: "",
 		onSuccess: function(transport){
-//			console.log("remove contact: " + transport.responseJSON.status + " | " + transport.responseJSON.reason);
+//		console.log("remove contact: " + transport.responseJSON.status + " | " + transport.responseJSON.reason);
 //		console.log(transport.responseText);
 			if (transport.responseJSON.status == 'ok') {
-//				contactNames = parse_contacts(transport.responseJSON.contacts);
-//				contactNames.forEach(function(element, index, array) { console.log(index + ': ' + element);});
 				contacts_board.render_contacts(transport.responseJSON.contacts);
-//				$('td-error').innerHTML = "You are successfully remove contact";
 				new WarningBox("You are successfully remove contact.");
 			} else {
 				if (transport.responseJSON.reason == 'exist') {
-//					$('td-error').innerHTML = "This contact name does not exist.<br/>Please try another.";
 					new WarningBox("This contact name does not exist.<br/>Please try another.");
 				}
 			}

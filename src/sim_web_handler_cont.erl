@@ -110,16 +110,12 @@ contacts_json(Contacts_list) ->
 	L = [ 
 		begin
 			Status = rest_req_isconnected(Contact),
-			lists:concat([
-				"{\"id\":\"", Contact, "\"",
-				",\"status\":\"", Status, 
-				"\"}"
-			]) 
+			lists:concat(["\"", Contact, "\":{\"status\":\"", Status, "\"}"]) 
 		end	|| Contact <- Contacts_list
 	],
-	"{\"status\":\"ok\",\"contacts\":["
+	"{\"status\":\"ok\",\"contacts\":{"
 		++ lists:flatten(lists:join(",", L))
-		++ "]}".
+		++ "}}".
 
 make_reply_for_add(User, New_Contact, Req) ->
 	case rest_req_isconnected(New_Contact) of

@@ -2,7 +2,6 @@ var mqtt_host = "lucky3p.com",
 	mqtt_port = 8880;
 var user,
 	user_password, 
-	contactNames, 
 	link_header, 
 	send_footer, 
 	board, 
@@ -10,7 +9,6 @@ var user,
 
 function init() {
 	console.log(">>> init()");
-//	top_header = new TopHeader();
 	link_header = new LinkHeader();
 	send_footer = new SendFooter();
 	board = new Board();
@@ -37,7 +35,6 @@ function gotoLogin() {
 	$('chat-tbl').style.display = 'none';
 	$('contacts-tbl').style.display = 'none';
 	$('help-tbl').style.display = 'none';
-//	$('td-error').innerHTML = "";
 }
 
 function gotoAfterSuccessLogin(p_user, p_user_password) {
@@ -60,11 +57,10 @@ function gotoRegister() {
 	$('chat-tbl').style.display = 'none';
 	$('contacts-tbl').style.display = 'none';
 	$('help-tbl').style.display = 'none';
-//	$('td-error').innerHTML = "";
 }
 
 function gotoContacts() {
-	var contact = {id:user,status:"on"};
+	var contact = user;
 	first_time_link(contact);
 	refresh_contacts();
 }
@@ -101,18 +97,11 @@ function confirm_no() {
 
 function gotoChatbyClick(contact) {
 	console.log("gotoChatbyClick: contact id= " + contact);
-//	$('login-tbl').style.display = 'none';
-//	$('reg-tbl').style.display = 'none';
-//	$('chat-tbl').style.display = 'table';
-//	$('contacts-tbl').style.display = 'none';
-//	$('help-tbl').style.display = 'none';
-//	$('td-error').innerHTML = "Chat";
 	var contacts = contacts_board.contacts;
-	if (!contacts.some(function (element, index, array) { return (element.id == contact);})) {
-		contacts.push({id:contact,status:"on"});
+	if (!contacts[contact]) {
+		contacts.push({contact:{status:"on"}});
 	}
-//	link({id:contact,status:"on"}, contacts);
-	gotoChat({id:contact,status:"on"}, contacts)
+	gotoChat(contact, contacts)
 }
 
 function gotoChatTest() {
@@ -132,7 +121,7 @@ function gotoChatTest() {
 }
 
 function gotoChat(contact, ContactList) {
-	console.log("gotoChat: contact id= " + contact.id);
+	console.log("gotoChat: contact id= " + contact);
 
 	$('login_menu').style.display = 'none';
 	$('register_menu').style.display = 'none';
@@ -146,18 +135,17 @@ function gotoChat(contact, ContactList) {
 	$('chat-tbl').style.display = 'table';
 	$('contacts-tbl').style.display = 'none';
 	$('help-tbl').style.display = 'none';
-//	$('td-error').innerHTML = "Chat";
 	link(contact, ContactList);
 }
 
 function change_contact(sender) {
 	console.log("change_contact: sender= " + sender);
-	var search = websocketclient.contacts.filter(function(contact){/*console.log("filter: " + contact);*/ return contact.id === sender});
+	var search = websocketclient.contacts[sender];
 	console.log("change_contact: search= " + search);
-	if (search.length == 0) {
+	if (!search) {
 		console.log("change_contact: contact " + sender + " is not in your contact list.");
 	} else {
-		reLink(search[0]);
+		reLink(sender);
 	}
 }
 
@@ -184,9 +172,8 @@ function gotoHelp(menuIdx) {
 	$('chat-tbl').style.display = 'none';
 	$('contacts-tbl').style.display = 'none';
 	$('help-tbl').style.display = 'table';
-//	$('td-error').innerHTML = "Help";
 }
 
-function parse_contacts(contacts) {
-	return contacts.map(function(element, index, array) { return element.id;});
-}
+//function parse_contacts(contacts) {
+//	return contacts.map(function(element, index, array) { return element.id;});
+//}
