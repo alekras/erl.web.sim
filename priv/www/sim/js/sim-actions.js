@@ -1,5 +1,5 @@
 var mqtt_host = "lucky3p.com",
-	mqtt_port = 8880;
+	mqtt_port = 4443; //8880;
 var user,
 	user_password, 
 	link_header, 

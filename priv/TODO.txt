@@ -58,7 +58,14 @@
   -- send Connect/Disconnect events to sim-web server  
   -- thing about notification of changing status with websocket connection ?
 
-24. Change function gotoChat/2.
+24. Change function gotoChat/2. ???
   
 25. Keep connection to mqtt server all time to allow messages come from contacts.
+
+26. Change subscription routine - incapsulate it in updateContacts.
+
+27. Change mechanism monitoring connected/not connected state.
+
+28. Add to sent message information about to whom this message.
+
 
