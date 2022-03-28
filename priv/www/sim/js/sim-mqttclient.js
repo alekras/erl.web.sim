@@ -60,15 +60,9 @@ var websocketclient = {
 	'contact': {},
 	
 	'create': function(host, port, user, password) {
-//		var host = "192.168.1.75";
-//		var host = "lucky3p.com";
 		this.host = host; //"localhost";
 		this.port = port; //8880;
-//		var ssl = false;
-//		var host = "192.168.1.71";
-//		var port = 4443;
 		var ssl = true;
-//		this.clientId = user;
 		this.username = user;
 		this.password = password;
 		
@@ -115,10 +109,7 @@ var websocketclient = {
 	},
 
 	'onConnect': function () {
-		console.log("on Connect. contact: " + this.contact + "; contacts: " + JSON.stringify(this.contacts));
-		if (this.connected) {
-			return;
-		}
+		console.log("on Connect. contact: " + this.contact + "; is connected: " + this.connected + "; contacts: " + JSON.stringify(this.contacts));
 		this.connected = true;
 		this.subscribe(); 
 		link_header.doLink(this.contact);
