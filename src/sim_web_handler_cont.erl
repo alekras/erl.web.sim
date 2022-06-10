@@ -110,7 +110,7 @@ contacts_json(Contacts_list) ->
 	L = [ 
 		begin
 			Status = rest_req_isconnected(Contact),
-			lists:concat(["\"", Contact, "\":{\"status\":\"", Status, "\"}"]) 
+			lists:concat(["\"", Contact, "\":{\"status\":\"", Status, "\"}"])
 		end	|| Contact <- Contacts_list
 	],
 	"{\"status\":\"ok\",\"contacts\":{"
