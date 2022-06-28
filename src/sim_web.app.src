@@ -1,18 +1,20 @@
-{application, sim_web,
- [
-  {description, "Web server for SIM (simple instant messenger)."},
-  {vsn, "0.1"},
-  {modules, [
-             ]},
-  {registered, []},
-  {applications, [
-                  kernel,
-                  stdlib,
-                  sasl,
-                  inets
-                 ]},
-  {mod, {sim_web, []}},
-  {env, [
+{application, sim_web, [
+	{description, "Web server for SIM (simple instant messenger)."},
+	{vsn, "0.1"},
+	{modules, [
+	]},
+	{registered, []},
+	{applications, [
+		kernel,
+		stdlib,
+		sasl,
+		inets,
+		lager,
+		cowboy,
+		ranch
+	]},
+	{mod, {sim_web, []}},
+	{env, [
 		{storage, dets},
 		{dets_home_folder, "test"}
 	]}

@@ -11,10 +11,8 @@ function send() {
 	board.outMessage(payload);
 }
 
-function link(contact, contactList) {
+function link(contact) {
 	websocketclient.contact = contact;
-	websocketclient.contactsUpdate(contactList);
-	console.log("link: contact id= '" + contact + "'\n" + JSON.stringify(contactList));
 
 	if (!websocketclient.connected) {
 		websocketclient.connect();
@@ -30,7 +28,7 @@ function first_time_link(contact) {
 	console.log("first time link: contact id= '" + contact + "'");
 
 	if (!websocketclient.connected) {
-		websocketclient.contactsUpdate({});
+		contacts_board.contacts = {};
 		websocketclient.connect();
 	} else {
 //		websocketclient.onConnect();
@@ -53,16 +51,15 @@ function reLink(contact) {
 var websocketclient = {
 	'client': null,
 //	'subscriptions': [],
-	'contacts': [],
 	'messages': [], // ???
 	'connected': false,
 	'subscribed': false,
 	'contact': {},
 	
-	'create': function(host, port, user, password) {
+	'create': function(host, port, ssl, user, password) {
 		this.host = host; //"localhost";
 		this.port = port; //8880;
-		var ssl = true;
+//		var ssl = ssl;
 		this.username = user;
 		this.password = password;
 		
@@ -109,7 +106,7 @@ var websocketclient = {
 	},
 
 	'onConnect': function () {
-		console.log("on Connect. contact: " + this.contact + "; is connected: " + this.connected + "; contacts: " + JSON.stringify(this.contacts));
+		console.log("on Connect. contact: " + this.contact + "; is connected: " + this.connected + "; contacts: " + JSON.stringify(contacts_board.contacts));
 		this.connected = true;
 		this.subscribe(); 
 		link_header.doLink(this.contact);
@@ -146,7 +143,7 @@ var websocketclient = {
 			this.client.subscribe(topic, {qos: 2});
 			console.log("Subscribed topic: " + topic);
 		}.bind(this);
-		Object.entries(this.contacts).map(mapFun);
+		Object.entries(contacts_board.contacts).map(mapFun);
 //		this.subscriptions.push({'topic': topic, 'qos': 2});
 		this.subscribed = true;
 	},
@@ -159,19 +156,15 @@ var websocketclient = {
 //		this.subscribed = false;
 	},
 	
-	'contactsUpdate' : function (newContacts) {
-		
-		this.contacts = newContacts;
-	},
-	
 	'send': function (payload) {
 		var contact_id = this.contact;
 		var topic =  "/" + contact_id + "/" + this.username;
 		var message = new Messaging.Message(payload);
 		message.destinationName = topic;
 		message.qos = 2;
-		var send_contact = this.contacts[contact_id];
-//		console.log("filter: " + JSON.stringify(send_contact)); 
+		var send_contact = contacts_board.contacts[contact_id];
+		console.log("contacts: " + JSON.stringify(contacts_board.contacts)); 
+		console.log("send_contact: " + JSON.stringify(send_contact)); 
 		if (send_contact.status == "off") {
 			message.retained = true;
 		} else if (send_contact.status == "on") {
@@ -188,8 +181,7 @@ var websocketclient = {
 		console.log("Message arrives: " + message.payloadString + " topic: " + message.destinationName 
 				+ " qos: " + message.qos + " retained: " + message.retained);
 		var who = message.destinationName.split("/")[2];
-		var contact = this.contacts[who];
-		gotoChat(who, this.contacts);
+		gotoChat(who);
 		board.inMessage(message);
 // Acknowledge endpoint to delete retain message as already delivered. 
 		if (message.retained) {

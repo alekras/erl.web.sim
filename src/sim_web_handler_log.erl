@@ -37,14 +37,24 @@ login(_, _, Req) ->
 	cowboy_req:reply(405, Req).
 
 make_reply(User, Password, Req) ->
-	ReqTo0 = {?URL ++ "/rest/user/" ++ User, [{"X-Forwarded-For", "localhost"}, {"Accept", "application/json"}]},
+	ReqTo0 = {
+		?URL ++ "/rest/user/" ++ User, 
+		[
+		 {"X-Forwarded-For", "localhost"},
+		 {"Accept", "application/json"},
+		 {"X-API-Key", "mqtt-rest-api"}
+		]
+	},
 	Response0 = httpc:request(get, ReqTo0, [], []),
 	{ok, {{_Pr, Status, _}, _Headers, Body}} = Response0,
 	case Status of
 		200 ->
-			Enc_Password = crypto:hash(md5, Password),
-			Body1 = re:replace(Body, "\r|\n", "", [global, {return, binary}]),
-			if Enc_Password =:= Body1 ->
+			lager:info("Body from MQTT: ~p~n", [Body]),
+			Enc_Password = list_to_binary(binary_to_hex(crypto:hash(md5, Password))),
+			Json_Body = jsx:decode(binary:list_to_bin(Body), [return_maps]),
+			Password_From_DB = maps:get(<<"password">>, Json_Body, <<"">>),
+			lager:info("Passwords: ~p/~p~n", [Enc_Password, Password_From_DB]),
+			if Enc_Password =:= Password_From_DB ->
 %% Check User in local sim-web database. If not create new one.
 					L =
 					case sim_web_dets_dao:get(User) of
@@ -64,7 +74,12 @@ make_reply(User, Password, Req) ->
 					}, <<"{\"status\":\"fail\"}">>, Req)
 			end;
 		_ ->
-			cowboy_req:reply(200, #{
+			cowboy_req:reply(400, #{
 				<<"content-type">> => <<"application/json">>
-			}, <<"{\"status\":\"fail\"}">>, Req)
+			}, <<"{\"status\":\"bad request\"}">>, Req)
 	end.
+
+binary_to_hex(Binary) -> [conv(N) || <<N:4>> <= Binary].
+
+conv(N) when N < 10 -> N + 48; 
+conv(N) -> N + 87. 

@@ -77,6 +77,12 @@
 				<button class="button button_first" id="login" type="button" onclick="doLoginRequest();" title="log in">Login</button>
 			</td>
 		</tr>
+		<tr>
+			<td colspan="2" align="center">
+			<div id="login-footer" class="footer" style="height: 350px;">
+			</div>
+			</td>
+		</tr>
 	</table>
 <!-- ----------------------------------------------------------------------------------------------- -->
 	<table id = "reg-tbl" class="tbl_1">
@@ -95,6 +101,12 @@
 		<tr>
 			<td colspan="2" align="center" class="button-cont">
 				<button class="button button_first" id="register" type="button" onclick="doRegisterRequest();">Register</button>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2" align="center">
+			<div id="reg-footer" class="footer" style="height: 300px;">
+			</div>
 			</td>
 		</tr>
 	</table>
@@ -222,6 +234,8 @@ function start() {
 	contacts_tbl.setStyle({width: w + 'px'});
 	help_tbl.setStyle({width: w + 'px'});
 	
+	$('login-footer').setStyle({height: (h - 40 - 50 - 50 - 60 - 2) + 'px'});
+	$('reg-footer').setStyle({height: (h - 40 - 50 - 50 - 50 - 60 - 2) + 'px'});
 	$('contacts').setStyle({height: (h - 40 - 50 - 2) + 'px'});
 	$('help').setStyle({height: (h - 40 - 5 - 2) + 'px'});
 	$('board').setStyle({height: (h - 40 - 63 - 40 - 2) + 'px'});

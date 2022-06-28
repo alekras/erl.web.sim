@@ -160,6 +160,15 @@ p {
   cursor: pointer;
 }
 
+.footer {
+  height: auto; /* set */
+  width: auto;
+  border: 1px solid white;
+  padding: 0px;
+  background-color: white;
+  overflow: auto;
+}
+
 /* Contacts page */
 .menu {
 	color:white;

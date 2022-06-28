@@ -82,26 +82,28 @@ make_reply_get_all(User, Req) ->
 	end.
 
 rest_req_isconnected(User) ->
-	Url = string:replace(?URL ++ "/rest/user/" ++ User ++ "/isconnected", " ", "%20", all),
+	Url = string:replace(?URL ++ "/rest/user/" ++ User ++ "/status", " ", "%20", all),
 %%	lager:info("URL encoded: ~p", [Url]),
-	ReqTo0 = {Url, [{"X-Forwarded-For", "localhost"}, {"Accept", "application/json"}]},
+	ReqTo0 = {Url, [{"X-Forwarded-For", "localhost"}, {"Accept", "application/json"}, {"X-API-Key", "mqtt-rest-api"}]},
 	ConnStatus =
 	case httpc:request(get, ReqTo0, [], []) of
 		{ok, {{_Pr, Status, _}, _Headers, Body}} ->
 			case Status of
-				200 -> case Body of
-									"online" -> "on";
-									"offline" -> "off";
-									_ -> "off"
-					 		end;
+				200 -> 
+					lager:debug("Body from MQTT: ~p~n",[Body]),
+					Json_Body = jsx:decode(binary:list_to_bin(Body), [return_maps]),
+					case maps:get(<<"status">>, Json_Body, <<"notFound">>) of
+						Con_Status -> binary:bin_to_list(Con_Status);
+						_ -> "notFound"
+					end;
 				404 -> undefined
 			end;
 		{error, _Reason} ->
 			lager:error("Conection error: ~p", [_Reason]),
-			"off";
+			"notFound";
 		_R -> 
 			lager:error("Conection error. Responce: ~p", [_R]),
-			"off"
+			"notFound"
 	end,
 	lager:info("get /rest/user/:user_name/isconnected, user_name: ~p Connection status: ~p", [User, ConnStatus]),
 	ConnStatus.
@@ -134,8 +136,8 @@ make_reply_for_add(User, New_Contact, Req) ->
 							end,
 						sim_web_dets_dao:save(UserRec#user{contacts = NewContacts}),
 						contacts_json(NewContacts);
-				_ ->
-					sim_web_dets_dao:save(#user{user_id = User, contacts = [New_Contact]}),
+					_ ->
+						sim_web_dets_dao:save(#user{user_id = User, contacts = [New_Contact]}),
 					"{\"status\":\"ok\",\"contacts\":[{\"id\":\"" ++ New_Contact ++ "\",\"status\":\"" ++ Status ++ "\"}]}"
 				end,
 			cowboy_req:reply(200, #{

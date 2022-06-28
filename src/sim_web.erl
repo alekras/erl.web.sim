@@ -15,14 +15,6 @@
 ]).
 
 start(_Type, _Args) ->
-	lager:start(),
-	S1 = application:start(ranch),
-	lager:info("App started : ~p", [S1]),
-	S2 = application:start(cowlib),
-	lager:info("App started : ~p", [S2]),
-	S3 = application:start(cowboy),
-	lager:info("App started : ~p", [S3]),
-	lager:info("App started !", []),
 	Dispatch = cowboy_router:compile([
 		{'_', [
 			{"/sim", cowboy_static, {priv_file, sim_web, "www/sim/index.html"}},
@@ -37,13 +29,16 @@ start(_Type, _Args) ->
 			{"/sim/contacts/:user_name/remove/:contact_name", sim_web_handler_cont, [remove]}
 		]}
 	]),
-	{ok, _} = cowboy:start_clear(http, [{port, 8000}], #{
+	Port = application:get_env(sim_web, port, 8001),
+	{ok, _} = cowboy:start_clear(http, [{port, Port}], #{
 		env => #{dispatch => Dispatch}
 	}),
 	sim_web_dets_dao:start(),
+	lager:info("Sim_web application is starting on port:~p~n", [Port]),
 	sim_web_sup:start_link().
 
 stop(_State) ->
+	sim_web_dets_dao:close(),
 	ok.
 
 test_setup() ->

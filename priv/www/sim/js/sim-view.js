@@ -8,10 +8,12 @@ var LinkHeader = Class.create({
 	
 	doLink: function(active_contact) {
 		var contacts = contacts_board.contacts;
-		if (contacts[active_contact].status == "off") {
-			this.contact.style.backgroundColor = "LightSalmon";
-		} else if (contacts[active_contact].status == "on") {
-			this.contact.style.backgroundColor = "Aquamarine";
+		if (contacts[active_contact]) {
+			if (contacts[active_contact].status == "off") {
+				this.contact.style.backgroundColor = "LightSalmon";
+			} else if (contacts[active_contact].status == "on") {
+				this.contact.style.backgroundColor = "Aquamarine";
+			}
 		}
 		this.userId.update(user);
 		this.userId.style.backgroundColor = "Aquamarine";
@@ -98,7 +100,7 @@ var Board = Class.create({
 var Contacts = Class.create({
 	initialize: function() {
 		this.board = $('contacts');
-		this.contacts = [];
+		this.contacts = {};
 	},
 
 	clear: function() {
@@ -108,7 +110,6 @@ var Contacts = Class.create({
 	render_contacts: function(contacts) {
 		this.board.childElements().forEach(function(child){child.remove()}); // clean up board
 		this.contacts = contacts;
-//		console.log('reformat= ' + JSON.stringify(this.reformat_contacts(contacts)));
 //		Object.entries(contacts).forEach(([key, value]) => console.log('key=' + key + ', value=' + value));
 		Object.entries(contacts).forEach(
 			function([id, value]) { 
@@ -116,7 +117,7 @@ var Contacts = Class.create({
 				var contName = new Element('span', {class:'user-id'});
 				var remove = new Element('span', {class:'remove-contact', onclick:'confirm_contact_remove("' + id + '");'});
 				var connect = new Element('span', {class:'connect-contact'});
-				connect.onclick = function(e){gotoChat(id, contacts);};
+				connect.onclick = function(e){gotoChat(id);};
 
 				if (value.status == "off") {
 					contName.style.backgroundColor = "LightSalmon";
@@ -136,6 +137,7 @@ var Contacts = Class.create({
 		if(!isScrolledToBottom) {
 			this.board.scrollTop = this.board.scrollHeight - this.board.clientHeight;
 		}
+		console.log('contacts= ' + JSON.stringify(this.contacts));
 	},
 	
 //	reformat_contacts(contacts) {

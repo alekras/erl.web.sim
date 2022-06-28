@@ -1,5 +1,9 @@
-var mqtt_host = "lucky3p.com",
-	mqtt_port = 4443; //8880;
+//var mqtt_host = "lucky3p.com",
+//	mqtt_port = 4443,
+//	mqtt_ssl = true;
+var mqtt_host = "localhost",
+	mqtt_port = 8880,
+	mqtt_ssl = false;
 var user,
 	user_password, 
 	link_header, 
@@ -40,7 +44,7 @@ function gotoLogin() {
 function gotoAfterSuccessLogin(p_user, p_user_password) {
 	user = p_user;
 	user_password = p_user_password;
-	websocketclient.create(mqtt_host, mqtt_port, user, user_password);
+	websocketclient.create(mqtt_host, mqtt_port, mqtt_ssl, user, user_password);
 	gotoContacts();
 }
 
@@ -99,9 +103,9 @@ function gotoChatbyClick(contact) {
 	console.log("gotoChatbyClick: contact id= " + contact);
 	var contacts = contacts_board.contacts;
 	if (!contacts[contact]) {
-		contacts.push({contact:{status:"on"}});
+//		contacts.push(contact);
 	}
-	gotoChat(contact, contacts)
+	gotoChat(contact)
 }
 
 function gotoChatTest() {
@@ -120,7 +124,7 @@ function gotoChatTest() {
 	$('help-tbl').style.display = 'none';
 }
 
-function gotoChat(contact, ContactList) {
+function gotoChat(contact) {
 	console.log("gotoChat: contact id= " + contact);
 
 	$('login_menu').style.display = 'none';
@@ -135,7 +139,7 @@ function gotoChat(contact, ContactList) {
 	$('chat-tbl').style.display = 'table';
 	$('contacts-tbl').style.display = 'none';
 	$('help-tbl').style.display = 'none';
-	link(contact, ContactList);
+	link(contact);
 }
 
 function change_contact(sender) {

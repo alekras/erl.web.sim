@@ -14,3 +14,4 @@ rel/example_project
 /common.log.txt
 /.DS_Store
 /rebar.lock
+/src-old/

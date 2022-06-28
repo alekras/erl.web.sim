@@ -38,7 +38,14 @@ register(_, _, Req) ->
 make_reply(User, Password1, Password2, Req1) ->
 	lager:info("Registration: /~p/~p/~p/~n", [User, Password1, Password2]),
 	if (Password1 =:= Password2) and (size(Password1) > 3) ->
-			ReqTo0 = {?URL ++ "/rest/user/" ++ User, [{"X-Forwarded-For", "localhost"}, {"Accept", "application/json"}]},
+			ReqTo0 = {
+				?URL ++ "/rest/user/" ++ User,
+				[
+				 {"X-Forwarded-For", "localhost"},
+				 {"Accept", "application/json"},
+				 {"X-API-Key", "mqtt-rest-api"}
+				]
+			},
 			Response0 = httpc:request(get, ReqTo0, [], []),
 			{ok, {{_Pr, Status, _}, _Headers, _Body}} = Response0,
 			case Status of
@@ -47,10 +54,20 @@ make_reply(User, Password1, Password2, Req1) ->
 						<<"content-type">> => <<"application/json">>
 					}, <<"{\"status\":\"fail\", \"reason\":\"exist\"}">>, Req1);
 				404 ->
-					ReqTo1 = {?URL ++ "/rest/user/" ++ User ++ "/pswd/" ++ binary:bin_to_list(Password1), 
-										[{"X-Forwarded-For", "localhost"}, {"content-type", "application/json"}], "application/json", []},
+					Json_Body =#{<<"password">> => Password1, <<"roles">> => [<<"USER">>]},
+					lager:info("JSON Body: ~p~nJSON string:~p~n", [Json_Body, jsx:encode(Json_Body)]),
+					ReqTo1 = {
+						?URL ++ "/rest/user/" ++ User, 
+						[
+						 {"X-Forwarded-For", "localhost"},
+						 {"content-type", "application/json"},
+		 				 {"X-API-Key", "mqtt-rest-api"}
+						],
+						"application/json",
+						jsx:encode(Json_Body)
+					},
 					Response1 = httpc:request(post, ReqTo1, [], []),
-					lager:info("Response #1: ~p~n", [Response1]),
+					lager:info("Response from MQTT: ~p~n", [Response1]),
 					cowboy_req:reply(200, #{
 						<<"content-type">> => <<"application/json">>
 					}, <<"{\"status\":\"ok\"}">>, Req1)

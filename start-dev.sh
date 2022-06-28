@@ -9,5 +9,5 @@ erl -pa _build/default/lib/*/ebin \
   -s ssl \
   -s inets \
   -name sim_web_server@localhost \
-  -eval "application:start(sim_web)" \
+  -eval "application:ensure_all_started(sim_web)" \
   -setcookie 'web'

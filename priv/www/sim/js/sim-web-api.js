@@ -71,7 +71,10 @@ function add_contact() {
 		new WarningBox("Contact name to add is empty.");
 		return;
 	}
-	if (contacts_board.contacts.some(function (element, index, array) { return (element.id == new_contact);})) {
+		console.log(" ??? contacts_board: " + contacts_board);
+		console.log(" ??? contacts_board.contacts is Array: " + (contacts_board.contacts instanceof Array));
+		console.log(" ??? contacts_board.contacts is Array: " + contacts_board.contacts.constructor.name);
+	if (contacts_board.contacts[new_contact]) {
 		console.log("Contact duplicate.");
 		new WarningBox("Contact name to add is duplicate.");
 		return;
@@ -109,7 +112,7 @@ function get_contacts() {
 		postBody: "",
 		onSuccess: function(transport){
 //			console.log(contacts_board + " -:- " + transport.responseText);
-//			console.log(transport.responseJSON.status + " | " + transport.responseJSON.contacts);
+			console.log(transport.responseJSON.status + " | " + JSON.stringify(transport.responseJSON.contacts));
 			if (transport.responseJSON.status == 'ok') {
 				contacts_board.render_contacts(transport.responseJSON.contacts);
 			} else {

@@ -1,5 +1,5 @@
 %%
-%% Copyright (C) 2016-2016 by krasnop@bellsouth.net (Alexei Krasnopolski)
+%% Copyright (C) 2016-2022 by krasnop@bellsouth.net (Alexei Krasnopolski)
 %%
 %% Licensed under the Apache License, Version 2.0 (the "License");
 %% you may not use this file except in compliance with the License.
@@ -13,6 +13,9 @@
 %% See the License for the specific language governing permissions and
 %% limitations under the License. 
 %%
+
+-define(TEST_SERVER_HOST_NAME, "MacBook-Pro").
+-define(TEST_REST_SERVER_URL, "http://" ++ ?TEST_SERVER_HOST_NAME ++ ":8000").
 
 -define(debug_Msg(S),
 	(begin
