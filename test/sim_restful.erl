@@ -129,8 +129,9 @@ post_remove_contact() ->
 	?PASSED.
 
 delete_mqtt_user(User) ->
+	Host = application:get_env(sim_web, mqtt_rest_url, "http://localhost:18080"),
 	ReqTo0 = {
-		?URL ++ "/rest/user/" ++ User, 
+		Host ++ "/rest/user/" ++ User, 
 		[
 		 {"X-Forwarded-For", "localhost"},
 		 {"Accept", "application/json"},

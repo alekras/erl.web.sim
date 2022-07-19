@@ -38,8 +38,9 @@ register(_, _, Req) ->
 make_reply(User, Password1, Password2, Req1) ->
 	lager:info("Registration: /~p/~p/~p/~n", [User, Password1, Password2]),
 	if (Password1 =:= Password2) and (size(Password1) > 3) ->
+			Host = application:get_env(sim_web, mqtt_rest_url, "http://localhost:18080"),
 			ReqTo0 = {
-				?URL ++ "/rest/user/" ++ User,
+				Host ++ "/rest/user/" ++ User,
 				[
 				 {"X-Forwarded-For", "localhost"},
 				 {"Accept", "application/json"},
@@ -56,8 +57,9 @@ make_reply(User, Password1, Password2, Req1) ->
 				404 ->
 					Json_Body =#{<<"password">> => Password1, <<"roles">> => [<<"USER">>]},
 					lager:info("JSON Body: ~p~nJSON string:~p~n", [Json_Body, jsx:encode(Json_Body)]),
+					Host = application:get_env(sim_web, mqtt_rest_url, "http://localhost:18080"),
 					ReqTo1 = {
-						?URL ++ "/rest/user/" ++ User, 
+						Host ++ "/rest/user/" ++ User, 
 						[
 						 {"X-Forwarded-For", "localhost"},
 						 {"content-type", "application/json"},

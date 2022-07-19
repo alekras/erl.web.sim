@@ -37,8 +37,9 @@ login(_, _, Req) ->
 	cowboy_req:reply(405, Req).
 
 make_reply(User, Password, Req) ->
+	Host = application:get_env(sim_web, mqtt_rest_url, "http://localhost:18080"),
 	ReqTo0 = {
-		?URL ++ "/rest/user/" ++ User, 
+		Host ++ "/rest/user/" ++ User, 
 		[
 		 {"X-Forwarded-For", "localhost"},
 		 {"Accept", "application/json"},

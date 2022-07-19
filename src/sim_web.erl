@@ -18,6 +18,7 @@ start(_Type, _Args) ->
 	Dispatch = cowboy_router:compile([
 		{'_', [
 			{"/sim", cowboy_static, {priv_file, sim_web, "www/sim/index.html"}},
+			{"/sim-r", cowboy_static, {priv_file, sim_web, "www/sim/index-react.html"}},
 			{"/sim/js/[...]", cowboy_static, {priv_dir, sim_web, "www/sim/js", [{mimetypes, cow_mimetypes, all}]}},
 			{"/sim/css/[...]", cowboy_static, {priv_dir, sim_web, "www/sim/css", [{mimetypes, cow_mimetypes, all}]}},
 			{"/sim/img/[...]", cowboy_static, {priv_dir, sim_web, "www/sim/img", [{mimetypes, cow_mimetypes, all}]}},
@@ -30,11 +31,12 @@ start(_Type, _Args) ->
 		]}
 	]),
 	Port = application:get_env(sim_web, port, 8001),
+	Host = application:get_env(sim_web, mqtt_rest_url, "http://localhost:18080"),
 	{ok, _} = cowboy:start_clear(http, [{port, Port}], #{
 		env => #{dispatch => Dispatch}
 	}),
 	sim_web_dets_dao:start(),
-	lager:info("Sim_web application is starting on port:~p~n", [Port]),
+	lager:info("Sim_web application is starting on port:~p; Rest Host url:~p~n", [Port, Host]),
 	sim_web_sup:start_link().
 
 stop(_State) ->

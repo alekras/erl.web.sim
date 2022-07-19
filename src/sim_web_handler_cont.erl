@@ -82,7 +82,8 @@ make_reply_get_all(User, Req) ->
 	end.
 
 rest_req_isconnected(User) ->
-	Url = string:replace(?URL ++ "/rest/user/" ++ User ++ "/status", " ", "%20", all),
+	Host = application:get_env(sim_web, mqtt_rest_url, "http://localhost:18080"),
+	Url = string:replace(Host ++ "/rest/user/" ++ User ++ "/status", " ", "%20", all),
 %%	lager:info("URL encoded: ~p", [Url]),
 	ReqTo0 = {Url, [{"X-Forwarded-For", "localhost"}, {"Accept", "application/json"}, {"X-API-Key", "mqtt-rest-api"}]},
 	ConnStatus =
