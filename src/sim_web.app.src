@@ -1,6 +1,6 @@
 {application, sim_web, [
 	{description, "Web server for SIM (simple instant messenger)."},
-	{vsn, "0.1"},
+	{vsn, "1.1.0"},
 	{modules, [
 	]},
 	{registered, []},
@@ -10,8 +10,11 @@
 		sasl,
 		inets,
 		lager,
+		jsx,
 		cowboy,
 		ranch
+	]},
+	{included_applications, [
 	]},
 	{mod, {sim_web, []}},
 	{env, [

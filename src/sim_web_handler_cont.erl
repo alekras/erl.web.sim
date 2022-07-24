@@ -93,11 +93,8 @@ rest_req_isconnected(User) ->
 				200 -> 
 					lager:debug("Body from MQTT: ~p~n",[Body]),
 					Json_Body = jsx:decode(binary:list_to_bin(Body), [return_maps]),
-					case maps:get(<<"status">>, Json_Body, <<"notFound">>) of
-						Con_Status -> binary:bin_to_list(Con_Status);
-						_ -> "notFound"
-					end;
-				404 -> undefined
+					binary:bin_to_list(maps:get(<<"status">>, Json_Body, <<"notFound">>));
+				404 -> "notFound"
 			end;
 		{error, _Reason} ->
 			lager:error("Conection error: ~p", [_Reason]),
