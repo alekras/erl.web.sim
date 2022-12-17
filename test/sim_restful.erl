@@ -19,7 +19,7 @@
 %% @copyright 2015-2022 Alexei Krasnopolski
 %% @author Alexei Krasnopolski <krasnop@bellsouth.net> [http://krasnopolski.org/]
 %% @version {@version}
-%% @doc This module implements a tesing of MQTT restful service.
+%% @doc This module implements a testing of MQTT restful service.
 
 -module(sim_restful).
 

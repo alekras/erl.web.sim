@@ -17,8 +17,8 @@
 start(_Type, _Args) ->
 	Dispatch = cowboy_router:compile([
 		{'_', [
-			{"/sim", cowboy_static, {priv_file, sim_web, "www/sim/index.html"}},
-			{"/sim-r", cowboy_static, {priv_file, sim_web, "www/sim/index-react.html"}},
+			{"/sim-o", cowboy_static, {priv_file, sim_web, "www/sim/index.html"}},
+			{"/sim", cowboy_static, {priv_file, sim_web, "www/sim/index-react.html"}},
 			{"/sim/js/[...]", cowboy_static, {priv_dir, sim_web, "www/sim/js", [{mimetypes, cow_mimetypes, all}]}},
 			{"/sim/css/[...]", cowboy_static, {priv_dir, sim_web, "www/sim/css", [{mimetypes, cow_mimetypes, all}]}},
 			{"/sim/img/[...]", cowboy_static, {priv_dir, sim_web, "www/sim/img", [{mimetypes, cow_mimetypes, all}]}},

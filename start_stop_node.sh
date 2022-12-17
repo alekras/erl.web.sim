@@ -8,15 +8,15 @@ $REBAR3 do version
 
 case "$1" in
 	dev)
-		cd _build/default/rel/sim_web_dev/bin
-		SCRIPT_NAME="./sim_web_dev"
+		cd _build/default/rel/sim_web_dev
+		SCRIPT_NAME="./bin/sim_web_dev"
 		;;
 	prod)
-		cd _build/default/rel/sim_web/bin
-		SCRIPT_NAME="./sim_web"
+		cd _build/default/rel/sim_web
+		SCRIPT_NAME="./bin/sim_web"
 		;;
 	*)
-		echo "Usage: $0 [dev|prod] [start|stop]"
+		echo "Usage: $0 [dev|prod] [start|stop|console]"
 		;;
 esac
 
@@ -28,11 +28,12 @@ case "$2" in
 	stop)
 		$SCRIPT_NAME stop
 		;;
+	console)
+		$SCRIPT_NAME console
+		;;
 	*)
-		echo "Usage: $0 [dev|prod] [start|stop]"
+		echo "Usage: $0 [dev|prod] [start|stop|console]"
 		;;
 esac
-
-exit 0
 
 exit 0

@@ -119,10 +119,10 @@ contacts_json(Contacts_list) ->
 
 make_reply_for_add(User, New_Contact, Req) ->
 	case rest_req_isconnected(New_Contact) of
-		undefined ->
+		"notFound" ->
 			cowboy_req:reply(200, #{
 						<<"content-type">> => <<"application/json">>
-					}, <<"{\"status\":\"fail\", \"reason\":\"not_exist\"}">>, Req);
+					}, <<"{\"status\":\"fail\", \"reason\":\"notFound\"}">>, Req);
 		Status ->
 			L =
 				case sim_web_dets_dao:get(User) of

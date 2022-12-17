@@ -68,4 +68,7 @@
 
 28. Add to sent message information about to whom this message.
 
-
+Problems:
+1. Client does not know that receipient is online or offline so retained field set unproperly 
+	if reciepient disconnected unexpectedly 
+2. When unsubscribe contact it still got messages
