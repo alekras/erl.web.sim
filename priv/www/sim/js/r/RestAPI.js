@@ -4,8 +4,6 @@ class RestAPI {
 
 	constructor() {
 	}
-
-	static {}
 	
 	static loginRequest(state, handleSuccess, handleError) {
 		let myHeaders = new Headers();
