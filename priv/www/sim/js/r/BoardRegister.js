@@ -58,7 +58,7 @@ class BoardRegister extends React.Component {
 			e(
 			'table',
 			{
-				className:'tbl_1',key:1
+				key:1
 			}, [
 				e('tbody', {key:1}, [
 					e('tr', {key:1}, [e(TextInput, {key:1,label:'User name:',onChange:(e)=>this.handleChange(e),inpName:'user',inpType:'text'})]),

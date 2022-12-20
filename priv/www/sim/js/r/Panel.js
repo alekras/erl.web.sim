@@ -17,8 +17,11 @@ class Panel extends React.Component {
 	handleMouseClickMenu(event, command) {
 		console.log('Click on ' + command);
 		if (command == 'Logout') {
-			BoardChat.mqttClient.disconnect();
-			delete BoardChat.mqttClient;
+			if (BoardChat.mqttClient) {
+				BoardChat.mqttClient.disconnect();
+				delete BoardChat.mqttClient;
+			}
+			BoardChat.messageList = [];
 			this.setState({
 				auth:false,
 				activeMenu:'Land',
@@ -144,7 +147,7 @@ class Panel extends React.Component {
 					})
 				]),
 				e('tr', {align:"center", key: 3}, [
-					e('td', {key: 1, colSpan:'4'}, [
+					e('td', {key: 1, className:'board-container', colSpan:'4'}, [
 						board
 					])
 				]),

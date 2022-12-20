@@ -103,12 +103,12 @@ class BoardChat extends React.Component {
 				//style:{maxWidth:this.props.w}
 			}, 
 			e('tbody', {key:1}, [
-				e('tr', {key:1, colSpan:'2'}, [
-					e('td', {key:1, colSpan:'2', style:{maxWidth:this.props.w}}, 
+				e('tr', {key:1}, [
+					e('td', {key:1, colSpan:'2', style:{height:'100%'}}, 
 						[e('div', {key:1, className:'board_chat'}, rows)])
 				]),
 				e('tr', {key:0}, [
-					e('td', {key:1, colSpan:'2', style:{height:'15px'}}, [
+					e('td', {key:1, colSpan:'2', style:{height:'15px', backgroundColor:'white'}}, [
 						e('span', {key:1, style:{paddingLeft:'20px', fontWeight: 'bold'}}, 'Sending message to '),
 						e('span', {key:2, style:{backgroundColor:bgColor}}, this.state.currentContact)
 					])
