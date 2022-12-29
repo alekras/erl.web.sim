@@ -22,7 +22,8 @@ class MQTTClient {
 		this.options.willMessage.destinationName = '';
 		this.options.willMessage.retained = false;
 		
-		this.afterMsgArrive = config.afterArrive,
+		this.afterMsgArrive = config.afterArrive,					// ?? remove ??
+		this.afterConnectionStateChanged = config.connectionChange,	// ?? remove ??
 		
 		this.connected = false;
 		this.contact = '';
@@ -37,6 +38,7 @@ class MQTTClient {
 			+ "; is connected: " + this.connected 
 		);
 		this.onReady(true);
+		this.afterConnectionStateChanged(true);
 	}
 
 	onReady = (msg) => {
@@ -56,6 +58,7 @@ class MQTTClient {
 		this.connected = false;
 //		new WarningBox("Connection is broken.");
 		console.log("MQTT client onFailure error: " + errorMsg.errorMessage);
+		this.afterConnectionStateChanged(false);
 	//Cleanup subscriptions
 		this.topics.clear();
 	}
@@ -63,6 +66,7 @@ class MQTTClient {
 	onConnectionLost = (responseMsg) => {
 		this.connected = false;
 		console.log("MQTT client onConnectionLost error:" + responseMsg.errorMessage + ' code:' + responseMsg.errorCode);
+		this.afterConnectionStateChanged(false);
 
 	//Cleanup subscriptions
 		this.topics.clear();
@@ -109,7 +113,7 @@ class MQTTClient {
 			this.contact = '';
 	//Cleanup subscriptions
 			this.topics.clear();
-			console.log("disconnect: " + this.username);
+			console.log("disconnect: " + this.options.userName);
 			this.client.disconnect();
 		}
 	}

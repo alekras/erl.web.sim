@@ -6,7 +6,6 @@
 class BoardContacts extends React.Component {
 	constructor(props) {
 		super(props);
-		this.parentTable = React.createRef();
 		this.state = {
 			newContact:''
 		};
@@ -49,11 +48,19 @@ class BoardContacts extends React.Component {
 	
 	clickToAdd = (event) => {
 		if(this.state.newContact.trim().length == 0) {
-			this.warnBoxRef.setLayout('warn', 'Contact name to add is empty.', this.parentTable.current.getBoundingClientRect());
+			this.props.warnBox.setLayout(
+				'warn',
+				'Contact name to add is empty.',
+				this.props.parent.current.getBoundingClientRect()
+			);
 			return;
 		}
 		if (BoardContacts.contacts[this.state.newContact]) {
-			this.warnBoxRef.setLayout('warn', 'Contact name "' + this.state.newContact + '" to add is duplicate.', this.parentTable.current.getBoundingClientRect());
+			this.props.warnBox.setLayout(
+				'warn',
+				'Contact name "' + this.state.newContact + '" to add is duplicate.',
+				this.props.parent.current.getBoundingClientRect()
+			);
 			return;
 		}
 		
@@ -69,20 +76,20 @@ class BoardContacts extends React.Component {
 		console.log('Response Add -> contacts:: ' + JSON.stringify(json));
 		if (json.status == 'ok') {
 			BoardContacts.contacts = json.contacts;
-			this.warnBoxRef.setLayout(
+			this.props.warnBox.setLayout(
 				'warn',
 				'You are successfully add new contact "' + this.state.newContact + '".',
-				this.parentTable.current.getBoundingClientRect()
+				this.props.parent.current.getBoundingClientRect()
 			);
 //			console.log('Successfully add new contact')
 			BoardChat.mqttClient.subscribe(newContact);
 			this.setState({newContact:''});
 		} 
 		if (json.status == 'fail' && json.reason == 'notFound') {
-			this.warnBoxRef.setLayout(
+			this.props.warnBox.setLayout(
 				'warn',
 				'This contact name "' + this.state.newContact + '"does not exist. Please try another.',
-				this.parentTable.current.getBoundingClientRect()
+				this.props.parent.current.getBoundingClientRect()
 			);
 		}
 	}
@@ -97,10 +104,10 @@ class BoardContacts extends React.Component {
 	}
 	
 	clickToRemove = (event, contactName) => {
-		this.warnBoxRef.setLayout(
+		this.props.warnBox.setLayout(
 			'confirm',
 			'Do you want to remove "' + contactName + '" from your contacts list?',
-			this.parentTable.current.getBoundingClientRect(),
+			this.props.parent.current.getBoundingClientRect(),
 			(arg) => {
 				if (arg) {
 					RestAPI.remove_contact(
@@ -187,21 +194,11 @@ class BoardContacts extends React.Component {
 		return e(
 			'table',
 			{
-				className:'tbl_contacts',
-				ref:this.parentTable
+				className:'tbl_contacts'
 			}, 
 			e('tbody', {key:1}, [
 				this.renderControlHeader(),
-				this.renderContactsBoard(),
-				e('tr', {key:2}, 
-					e('td', {key:1, colSpan:'3', className:''}, 
-						e(WarningBox, {
-								key:1,
-								ref:(instance) => {this.warnBoxRef = instance;
-							}
-						})
-					)
-				)
+				this.renderContactsBoard()
 			])
 		);
 	}

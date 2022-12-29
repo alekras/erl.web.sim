@@ -12,6 +12,8 @@ class Panel extends React.Component {
 			connectedTo:'',
 			auth:false
 		};
+		this.parentTd = React.createRef();
+		this.warnBoxRef = undefined;
 	}
 	
 	handleMouseClickMenu(event, command) {
@@ -72,6 +74,9 @@ class Panel extends React.Component {
 			});
 		}
 		BoardChat.mqttClient.afterMsgArrive = () => {};
+		BoardChat.mqttClient.afterConnectionStateChanged = (isConnected) => {
+			this.setState({connected:isConnected});
+		};
 	}
 	
 	handleStateChangeReg = (success) => {
@@ -103,16 +108,32 @@ class Panel extends React.Component {
 		var board;
 		switch (this.state.activeMenu) {
 			case 'Login' :
-				board = e(BoardLogin, {key:1, onStateChange:this.handleStateChange}, null);
+				board = e(BoardLogin, 
+					{
+						parent:this.parentTd,
+						warnBox:this.warnBoxRef,
+						onStateChange:this.handleStateChange
+					});
 				break;
 			case 'Register' :
-				board = e(BoardRegister, {key:1, onStateChange:this.handleStateChangeReg}, null);
+				board = e(BoardRegister,
+					{
+						parent:this.parentTd,
+						warnBox:this.warnBoxRef,
+						onStateChange:this.handleStateChangeReg
+					});
 				break;
 			case 'Help' :
 				board = e(BoardHelp, {key:1});
 				break;
 			case 'Contacts' :
-				board = e(BoardContacts, {key:1, onMoveToChat:this.handleMoveToChat, user:this.state.user}, null);
+				board = e(BoardContacts,
+					{
+						parent:this.parentTd,
+						warnBox:this.warnBoxRef,
+						onMoveToChat:this.handleMoveToChat,
+						user:this.state.user
+					});
 				break;
 			case 'Chat' :
 				board = e(BoardChat, 
@@ -132,27 +153,37 @@ class Panel extends React.Component {
 				board = e(LandingPage, {key: 1}, null);
 				break;
 		}
-		return e('table', {className:'table', style:{width:this.props.w, height:this.props.h}},
+		return e('table', 
+			{
+				className:'table',
+				style:{width:this.props.w, height:this.props.h}
+			},
 			e('tbody', {}, [
 				e('tr', {align:"center", key: 1}, [
 					e('td', {key: 1, colSpan:'4', className:'title'}, [
-						e(Title, {key: 1, user:this.state.user})
+						e(Title, {key: 1, user:this.state.user, connected:this.state.connected})
 					])
 				]),
-				e('tr', {align:"center", className:'menu', key: 2}, [
-					e(Menu, {key: 1,
+				e('tr', {align:"center", className:'menu', key: 2},
+					e(Menu, 
+					{
+						key: 1,
 						onMenuClick:(event, command) => this.handleMouseClickMenu(event, command),
 						state: this.state.auth,
 						active: this.state.activeMenu
 					})
-				]),
-				e('tr', {align:"center", key: 3}, [
-					e('td', {key: 1, className:'board-container', colSpan:'4'}, [
-						board
-					])
-				]),
-				e('tr', {key: 4}, [
-					e('td', {key: 1, colSpan:'4', style:{height: '10px'}}, [
+				),
+				e('tr', {align:"center", key: 3},
+					e('td', 
+						{
+							ref:this.parentTd,
+							className:'board-container',
+							colSpan:'4'
+						}, board
+					)
+				),
+				e('tr', {key: 4},
+					e('td', {key: 1, colSpan:'4', style:{height: '10px'}},
 						e('div',
 							{
 								id: 'copyright',
@@ -161,8 +192,16 @@ class Panel extends React.Component {
 							},
 							`©AKrasnopolski 2022 v 0.0.2 (React)`
 						)
-					])
-				])
+					)
+				),
+				e('tr', {key:5}, 
+					e('td', {key:1, colSpan:'4'}, 
+						e(WarningBox, {
+								key:1,
+								ref:(instance) => {this.warnBoxRef = instance;}
+						})
+					)
+				)
 			]
 		))
 	}

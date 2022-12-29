@@ -97,7 +97,12 @@ class WarningBox extends React.Component {
 					left: this.state.box.x + 'px'
 				}
 			}, e('div', {key:0, className:'warning-inside'}, [
-					e('div', {key:0, className:'warning-msg'}, this.state.textWarning),
+					e('div',
+						{
+							key:0,
+							className:'warning-msg',
+							dangerouslySetInnerHTML:{ __html: this.state.textWarning}
+						}),
 					e('div', {key:1, className:'warning-btn-container'}, buttonArray)
 				])
 			)

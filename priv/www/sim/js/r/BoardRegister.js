@@ -29,14 +29,28 @@ class BoardRegister extends React.Component {
 	handleSuccess = (json) => {
 		console.log('Success: ' + JSON.stringify(json));
 		if (json.status == 'ok') {
-			this.setState({errorMsg:''});
+			this.props.warnBox.setLayout(
+				'warn', 
+				'User "' + this.state.userName + '" is successfully registered.', 
+				this.props.parent.current.getBoundingClientRect()
+			);
 			this.props.onStateChange(true);
 			// TODO: You are successfully registered
 		} else if (json.reason == 'password') {
-			this.setState({errorMsg:'Password is too short or does not fit confirmed one.<br/>Please try again.'});
+			this.props.warnBox.setLayout(
+				'warn', 
+				'Password is too short or does not fit confirmed one.<br/>Please try again.', 
+				this.props.parent.current.getBoundingClientRect()
+			);
+//			this.setState({errorMsg:'Password is too short or does not fit confirmed one.<br/>Please try again.'});
 			this.props.onStateChange(false);
 		} else if (json.reason == 'exist') {
-			this.setState({errorMsg:'This user name already exists.<br/>Please try another.'});
+//			this.setState({errorMsg:'This user name already exists.<br/>Please try another.'});
+			this.props.warnBox.setLayout(
+				'warn', 
+				'This user name already exists.<br/>Please try another.', 
+				this.props.parent.current.getBoundingClientRect()
+			);
 			this.props.onStateChange(false);
 		}
 	};
@@ -71,15 +85,6 @@ class BoardRegister extends React.Component {
 								className:'button btn-register',
 								type:'submit',
 								}, `REGISTER`)
-						])
-					]),
-					e('tr', {key:5}, [
-						e('td',{key:1, colSpan:'2', align:'center'},[
-							e('div', {
-								key:1,
-								className:'errorMsg',
-								dangerouslySetInnerHTML:{ __html: this.state.errorMsg }
-							}, null)
 						])
 					])
 				])

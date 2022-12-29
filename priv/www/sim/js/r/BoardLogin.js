@@ -4,7 +4,7 @@ class BoardLogin extends React.Component {
 
 	constructor(props) {
 		super(props);
-		this.state = {userName:'', password:'', errorMsg:''};
+		this.state = {userName:'', password:''};
 	}
 	
 	handleChange(event) {
@@ -27,7 +27,11 @@ class BoardLogin extends React.Component {
 			this.setState({errorMsg:''});
 			this.props.onStateChange(true, this.state.userName, this.state.password);
 		} else {
-			this.setState({errorMsg:'User name or Password are invalid.<br/>Please try again.'});
+			this.props.warnBox.setLayout(
+				'warn', 
+				'User name or Password are invalid.<br/>Please try again.', 
+				this.props.parent.current.getBoundingClientRect()
+			);
 			this.props.onStateChange(false);
 		}
 	};
@@ -42,8 +46,6 @@ class BoardLogin extends React.Component {
 //		console.log('A userName was submitted: >' + this.state.userName + '<');
 		if (this.state.userName == '') { // For debug TODO: remove
 			this.setState({userName:'alex', password:'alex', errorMsg:''});
-//			console.log('I am here, state:' + this.state.userName);
-//			this.handleSuccess({'status':'ok'});
 			this.props.onStateChange(true, 'alex', 'alex');
 		} else {
 			RestAPI.loginRequest(this.state, this.handleSuccess, this.handleError);
@@ -52,10 +54,10 @@ class BoardLogin extends React.Component {
 	};
 
 	shouldComponentUpdate(nextProps, nextState) {
-		if (this.state.errorMsg !== nextState.errorMsg) {
-			return true;
-		}
-		return false;
+//		if (this.state.errorMsg !== nextState.errorMsg) {
+//			return true;
+//		}
+		return true;
 	}
 
 	render() {
@@ -64,9 +66,9 @@ class BoardLogin extends React.Component {
 			e(
 			'table',
 			{
-				key:1
-			}, [
-				e('tbody', {key:1}, [
+				key:1,
+				ref:this.parentTable
+			}, e('tbody', {key:1}, [
 					e('tr', {key:1}, [e(TextInput, {key:1,label:'User name:',onChange:(e)=>this.handleChange(e),inpName:'user',inpType:'text'})]),
 					e('tr', {key:2}, [e(TextInput, {key:1,label:'Password:',onChange:(e)=>this.handleChange(e),inpName:'password',inpType:'password'})]),
 					e('tr', {key:3}, [
@@ -77,18 +79,9 @@ class BoardLogin extends React.Component {
 								type:'submit'
 							}, `LOGIN`)
 						])
-					]),
-					e('tr', {key:4}, [
-						e('td',{key:1, colSpan:'2', align:'center'},[
-							e('div', {
-								key:1,
-								className:'errorMsg',
-								dangerouslySetInnerHTML:{ __html: this.state.errorMsg }
-							}, null)
-						])
 					])
 				])
-			])
+			)
 		])
 	}
 }

@@ -84,19 +84,8 @@ table tr td {
 	text-align:right;
 }
 
-.label {
-	color: rgba(70,160,185,1);
-	margin: auto;
-	padding-right: 5px;
-	white-space:nowrap;
-	font-size: 10pt;
-	font-family: monospace;
-	font-style: normal;
-	font-weight: normal;
-}
-
 .text-inp-l {
-	height: 45px; /* set */
+	height: 55px; /* set */
 	text-align:left;
 }
 
@@ -141,16 +130,29 @@ table tr td {
 	background-size:cover;
 }
 
-.text-input {
-	width: 90%; /* 50*5=250-24 */	/* set */
-	text-align: left;
-	margin: 1px 6px;
-	border: 2px solid rgba(155,192,235,1);
-	border-radius: 8px;
+.label {
+	color: rgba(70,160,185,1);
+	white-space:nowrap;
+	align-content:center;
 	font-size: 12pt;
 	font-family: monospace;
 	font-style: normal;
 	font-weight: normal;
+}
+
+.text-input {
+	width: 90%; /* 50*5=250-24 */	/* set */
+	padding-left: 5px;
+	text-align: left;
+	margin: 0px 0px;
+	border: 2px solid rgba(155,192,235,1);
+	border-radius: 8px;
+	/*
+	font-size: 12pt;
+	font-family: monospace;
+	font-style: normal;
+	font-weight: normal;
+	*/
 }
 .text-input:focus {
 	border: 2px solid rgba(0,137,215,1);
@@ -376,10 +378,13 @@ table tr td {
 }
 
 .help {
+	float:left;
 	height:100%;
+	width:100%;
 	background-color: rgba(240, 234, 227, 1);
 	padding-left: 10px;
 	padding-right: 2px;
+	overflow: auto;
 }
 
 .help p{
@@ -403,4 +408,18 @@ table tr td {
 	font-weight: lighter;
 	font-size: xx-small;
 	text-align: right;
+}
+
+label {
+  display: flex;
+  flex-direction: column-reverse;
+}
+label>div {
+  transition: all .2s;
+  transform-origin: bottom left;
+}
+label>input[placeholder=" "]:not(:focus):placeholder-shown + div {
+  transform: translateY(1em) scale(1.00);
+  pointer-events: none;
+  opacity: .5
 }
