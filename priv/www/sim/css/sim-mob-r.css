@@ -77,6 +77,7 @@ table tr td {
 
 .board-container {
 	background-color: rgba(240, 234, 227, 1);
+	height: auto;
 }
 
 .text-inp-r {

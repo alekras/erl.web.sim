@@ -183,7 +183,7 @@ class Panel extends React.Component {
 					)
 				),
 				e('tr', {key: 4},
-					e('td', {key: 1, colSpan:'4', style:{height: '10px'}},
+					e('td', {key: 1, colSpan:'4', style:{height: '10px'}}, [
 						e('div',
 							{
 								id: 'copyright',
@@ -191,17 +191,21 @@ class Panel extends React.Component {
 								key: 1
 							},
 							`©AKrasnopolski 2022 v 0.0.2 (React)`
-						)
-					)
-				),
-				e('tr', {key:5}, 
-					e('td', {key:1, colSpan:'4'}, 
+						),
 						e(WarningBox, {
-								key:1,
+								key:2,
 								ref:(instance) => {this.warnBoxRef = instance;}
 						})
-					)
+					]),
 				)
+//				e('tr', {key:5}, 
+//					e('td', {key:1, colSpan:'4', style:{display: 'none'}}, 
+//						e(WarningBox, {
+//								key:1,
+//								ref:(instance) => {this.warnBoxRef = instance;}
+//						})
+//					)
+//				)
 			]
 		))
 	}
