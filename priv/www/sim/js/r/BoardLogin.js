@@ -4,7 +4,7 @@ class BoardLogin extends React.Component {
 
 	constructor(props) {
 		super(props);
-		this.state = {userName:'', password:''};
+		this.state = {userName:'alex', password:'alex'};
 	}
 	
 	handleChange(event) {
@@ -22,7 +22,7 @@ class BoardLogin extends React.Component {
 	}
 
 	handleSuccess = (json) => {
-//		console.log('Success: ' + JSON.stringify(json));
+		console.log('Login is success: ' + JSON.stringify(json));
 		if (json.status == 'ok') {
 			this.setState({errorMsg:''});
 			this.props.onStateChange(true, this.state.userName, this.state.password);
@@ -45,11 +45,9 @@ class BoardLogin extends React.Component {
 		this.setState({errorMsg:''});
 //		console.log('A userName was submitted: >' + this.state.userName + '<');
 		if (this.state.userName == '') { // For debug TODO: remove
-			this.setState({userName:'alex', password:'alex', errorMsg:''});
-			this.props.onStateChange(true, 'alex', 'alex');
-		} else {
-			RestAPI.loginRequest(this.state, this.handleSuccess, this.handleError);
+			this.setState({userName:'alex', password:'alex'});
 		}
+		RestAPI.loginRequest(this.state, this.handleSuccess, this.handleError);
 		event.preventDefault();
 	};
 

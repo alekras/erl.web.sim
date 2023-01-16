@@ -12,10 +12,24 @@ class Panel extends React.Component {
 			connectedTo:'',
 			auth:false
 		};
+		RestAPI.checkSession(this.handleCheckSessionSuccess, this.handleCheckSessionError);
 		this.parentTd = React.createRef();
 		this.warnBoxRef = undefined;
 	}
 	
+	handleCheckSessionSuccess = (json) => {
+		console.log('Response GET -> session:: ' + JSON.stringify(json));
+		if (json.session) {
+			this.handleStateChange(true, json.session.user, json.session.password);
+		} else {
+			console.log('Cannot retrive session object...')
+		}
+	}
+	
+	handleCheckSessionError = (error) => {
+		console.log('Error during get session check')
+	}
+
 	handleMouseClickMenu(event, command) {
 		console.log('Click on ' + command);
 		if (command == 'Logout') {
@@ -24,6 +38,7 @@ class Panel extends React.Component {
 				delete BoardChat.mqttClient;
 			}
 			BoardChat.messageList = [];
+			this.deleteCookie('sessionid');
 			this.setState({
 				auth:false,
 				activeMenu:'Land',
@@ -34,7 +49,11 @@ class Panel extends React.Component {
 			this.setState({activeMenu: command, connectedTo:this.state.user});
 		}
 	}
-	
+
+	deleteCookie(name) {
+		document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+	}
+
 	handleStateChange = (auth, un, pw) => {
 //		console.log('State change: ' + JSON.stringify(this.state) 
 //				+ ' auth: ' + auth + ' un: ' + un + ' pw: ' + pw);

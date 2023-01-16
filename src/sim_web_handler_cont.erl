@@ -81,6 +81,36 @@ make_reply_get_all(User, Req) ->
 					}, <<"{\"status\":\"fail\", \"reason\":\"not_exist\"}">>, Req)
 	end.
 
+%% http://localhost:8080/rest/user/status?users=alex,tom
+rest_req_statuses(ContactList) -> 
+	Host = application:get_env(sim_web, mqtt_rest_url, "http://localhost:18080"),
+	Users = string:join(ContactList, ","),
+	Url = string:replace(Host ++ "/rest/user/status?users=" ++ Users, " ", "%20", all),
+	lager:info("URL encoded: ~p", [Url]),
+	ReqTo0 = {Url, 
+		[{"X-Forwarded-For", "localhost"},
+		 {"Accept", "application/json"},
+		 {"X-API-Key", "mqtt-rest-api"}
+		]},
+	ConnStatuses =
+	case httpc:request(get, ReqTo0, [], []) of
+		{ok, {{_Pr, Status, _}, _Headers, Body}} ->
+			case Status of
+				200 -> 
+					lager:debug("Body from MQTT: ~p~n",[Body]),
+					jsx:decode(binary:list_to_bin(Body), [return_maps]);
+				404 -> []
+			end;
+		{error, _Reason} ->
+			lager:error("Conection error: ~p", [_Reason]),
+			[];
+		_R -> 
+			lager:error("Conection error. Responce: ~p", [_R]),
+			[]
+	end,
+	lager:info("get /rest/user/status?users=~p Connection statuses: ~p", [Users, ConnStatuses]),
+	ConnStatuses.
+
 rest_req_isconnected(User) ->
 	Host = application:get_env(sim_web, mqtt_rest_url, "http://localhost:18080"),
 	Url = string:replace(Host ++ "/rest/user/" ++ User ++ "/status", " ", "%20", all),
@@ -109,9 +139,12 @@ rest_req_isconnected(User) ->
 contacts_json(Contacts_list) ->
 	L = [ 
 		begin
-			Status = rest_req_isconnected(Contact),
-			lists:concat(["\"", Contact, "\":{\"status\":\"", Status, "\"}"])
-		end	|| Contact <- Contacts_list
+			lists:concat([
+				"\"", binary:bin_to_list(Contact),
+				"\":{\"status\":\"", binary:bin_to_list(Status),
+				"\"}"
+			])
+		end	|| #{<<"id">> := Contact, <<"status">> := Status} <- rest_req_statuses(Contacts_list)
 	],
 	"{\"status\":\"ok\",\"contacts\":{"
 		++ lists:flatten(lists:join(",", L))

@@ -6,6 +6,7 @@ class RestAPI {
 	}
 	
 	static loginRequest(state, handleSuccess, handleError) {
+		console.log('userName=' + state.userName + 'password=' + state.password);
 		let myHeaders = new Headers();
 		myHeaders.append('Accept', 'application/json');
 		let req = new Request('/sim/login', {
@@ -19,6 +20,19 @@ class RestAPI {
 				handleSuccess,
 				handleError
 			);
+	}
+	
+	static checkSession(handleSuccess, handleError) {
+		let myHeaders = new Headers();
+		myHeaders.append('Accept', 'application/json');
+		let req = new Request('/sim/checksession', {
+			method: 'GET', 
+			headers: myHeaders
+			});
+		fetch(req)
+			.then(res => res.json())
+			.then(json => handleSuccess(json))
+			.catch(err => handleError(err));
 	}
 	
 	static registerRequest(state, handleSuccess, handleError) {
@@ -55,7 +69,7 @@ class RestAPI {
 	}
 	
 	static add_contact(user, new_contact, handleSuccess, handleError) {
-		console.log('new contact=' + new_contact);
+//		console.log('new contact=' + new_contact);
 		let myHeaders = new Headers();
 		myHeaders.append('Accept', 'application/json');
 		let req = new Request('/sim/contacts/' + user + '/add/' + new_contact, {

@@ -36,7 +36,7 @@ login(_, _, Req) ->
 	%% Method not allowed.
 	cowboy_req:reply(405, Req).
 
-make_reply(User, Password, Req) ->
+make_reply(User, Password, Req0) ->
 	Host = application:get_env(sim_web, mqtt_rest_url, "http://localhost:18080"),
 	ReqTo0 = {
 		Host ++ "/rest/user/" ++ User, 
@@ -66,18 +66,53 @@ make_reply(User, Password, Req) ->
 							[]
 					end,
 
+					Req = process_session(Req0, User, binary:bin_to_list(Password)),
+					
 					cowboy_req:reply(200, #{
 						<<"content-type">> => <<"application/json">>
 					}, sim_web_handler_cont:contacts_json(L), Req);
 				true ->
 					cowboy_req:reply(200, #{
 						<<"content-type">> => <<"application/json">>
-					}, <<"{\"status\":\"fail\"}">>, Req)
+					}, <<"{\"status\":\"fail\"}">>, Req0)
 			end;
 		_ ->
 			cowboy_req:reply(400, #{
 				<<"content-type">> => <<"application/json">>
-			}, <<"{\"status\":\"bad request\"}">>, Req)
+			}, <<"{\"status\":\"bad request\"}">>, Req0)
+	end.
+
+process_session(Req0, User, Password) ->
+	Cookies = cowboy_req:parse_cookies(Req0),
+	lager:debug("<<Session>> retrieve Cookies: ~p~n", [Cookies]),
+	Session =
+	case lists:keyfind(<<"sessionid">>, 1, Cookies) of
+		{_, SessionId} ->
+			lager:debug("<<Session>> retrieve session id: ~p~n", [SessionId]),
+			case ets:match_object(sessionTable, #session{id = SessionId, _ = '_'}) of
+				[SessionObj] ->
+					lager:debug("<<Session>> retrieve session object: ~p~n", [SessionObj]),
+					SessionObj;
+				_E -> 
+					lager:debug("<<Session>> retrieve session object with error: ~p~n", [_E]),
+					undefined
+			end;
+		false -> undefined
+	end,
+	case Session of
+		undefined ->
+			NewSessionId = base64:encode(crypto:strong_rand_bytes(32)),
+			lager:debug("<<Session>> start session with id: ~p~n", [NewSessionId]),
+			ets:insert(sessionTable, 
+				#session{
+					id = NewSessionId,
+					created = os:system_time(second),
+					userId = User,
+					password = Password
+				}
+			),
+			cowboy_req:set_resp_cookie(<<"sessionid">>, NewSessionId, Req0, #{max_age => 120}); %% @TODO from ENV
+		#session{} -> Req0
 	end.
 
 binary_to_hex(Binary) -> [conv(N) || <<N:4>> <= Binary].

@@ -41,12 +41,13 @@ function changeLayout(description, index){
 }
 */
 function changeLayout(description){
-	var a = document.getElementById("link");
+	var href;
 	if (description == "mobile") {
-		a.setAttribute("href", "/sim/css/sim-mob-r.css");
+		href = "/sim/css/sim-mob-r.css";
 	} else {
-		a.setAttribute("href", "/sim/css/sim-r.css");
+		href = "/sim/css/sim-r.css";
 	}
+	document.getElementById("link").setAttribute("href", href);
 }
 /*
 function doOnLoad(restore) {

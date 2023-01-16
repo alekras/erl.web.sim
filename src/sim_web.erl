@@ -23,6 +23,7 @@ start(_Type, _Args) ->
 			{"/sim/css/[...]", cowboy_static, {priv_dir, sim_web, "www/sim/css", [{mimetypes, cow_mimetypes, all}]}},
 			{"/sim/img/[...]", cowboy_static, {priv_dir, sim_web, "www/sim/img", [{mimetypes, cow_mimetypes, all}]}},
 			{"/sim/audio/[...]", cowboy_static, {priv_dir, sim_web, "www/sim/audio", [{mimetypes, cow_mimetypes, all}]}},
+			{"/sim/checksession", sim_web_handler_check_session, []},
 			{"/sim/login", sim_web_handler_log, []},
 			{"/sim/register", sim_web_handler_reg, []},
 			{"/sim/contacts/:user_name/get_all", sim_web_handler_cont, [get_all]},
@@ -36,6 +37,7 @@ start(_Type, _Args) ->
 		env => #{dispatch => Dispatch}
 	}),
 	sim_web_dets_dao:start(),
+	ets:new(sessionTable, [set, public, named_table, {keypos, #session.id}]),
 	lager:info("Sim_web application is starting on port:~p; Rest Host url:~p~n", [Port, Host]),
 	sim_web_sup:start_link().
 
