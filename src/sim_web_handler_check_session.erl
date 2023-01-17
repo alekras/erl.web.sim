@@ -21,7 +21,7 @@ init(Req0, Opts) ->
 %% ====================================================================
 
 check_session(<<"GET">>, Req0) ->
-	case get_session(Req0) of
+	case sim_web_utils:get_session(Req0) of
 		undefined ->
 			cowboy_req:reply(
 				200,
@@ -38,17 +38,3 @@ check_session(<<"GET">>, Req0) ->
 check_session(_, Req) ->
 	%% Method not allowed.
 	cowboy_req:reply(405, Req).
-
-get_session(Req0) ->
-	Cookies = cowboy_req:parse_cookies(Req0),
-	lager:debug("<<GET Session>> retrieve Cookies: ~p~n", [Cookies]),
-	case lists:keyfind(<<"sessionid">>, 1, Cookies) of
-		{_, SessionId} ->
-			case ets:match_object(sessionTable, #session{id = SessionId, _ = '_'}) of
-				[SessionObj] ->
-					SessionObj;
-				_E -> 
-					undefined
-			end;
-		false -> undefined
-	end.

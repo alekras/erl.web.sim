@@ -83,26 +83,11 @@ make_reply(User, Password, Req0) ->
 	end.
 
 process_session(Req0, User, Password) ->
-	Cookies = cowboy_req:parse_cookies(Req0),
-	lager:debug("<<Session>> retrieve Cookies: ~p~n", [Cookies]),
-	Session =
-	case lists:keyfind(<<"sessionid">>, 1, Cookies) of
-		{_, SessionId} ->
-			lager:debug("<<Session>> retrieve session id: ~p~n", [SessionId]),
-			case ets:match_object(sessionTable, #session{id = SessionId, _ = '_'}) of
-				[SessionObj] ->
-					lager:debug("<<Session>> retrieve session object: ~p~n", [SessionObj]),
-					SessionObj;
-				_E -> 
-					lager:debug("<<Session>> retrieve session object with error: ~p~n", [_E]),
-					undefined
-			end;
-		false -> undefined
-	end,
-	case Session of
+	case sim_web_utils:get_session(Req0) of
 		undefined ->
 			NewSessionId = base64:encode(crypto:strong_rand_bytes(32)),
 			lager:debug("<<Session>> start session with id: ~p~n", [NewSessionId]),
+			ets:match_delete(sessionTable, #session{userId = User, _ = '_'}),
 			ets:insert(sessionTable, 
 				#session{
 					id = NewSessionId,
