@@ -52,6 +52,7 @@ class BoardChat extends React.Component {
 		var txt = payload.msg.replace(/ /g, '&nbsp;').replace(/\n/g, '<br>');
 		BoardChat.messageList.push({msg:txt, time:payload.time,
 			type:'in', sender:contact});
+		window.sessionStorage.setItem('messageList', JSON.stringify(BoardChat.messageList));
 	}
 	
 	refreshAfterMsgArrived = () => {

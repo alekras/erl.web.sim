@@ -21,6 +21,7 @@ class Panel extends React.Component {
 		console.log('Response GET -> session:: ' + JSON.stringify(json));
 		if (json.session) {
 			this.handleStateChange(true, json.session.user, json.session.password);
+			BoardChat.messageList = JSON.parse(window.sessionStorage.getItem('messageList'));
 		} else {
 			console.log('Cannot retrive session object...')
 		}
@@ -39,6 +40,7 @@ class Panel extends React.Component {
 			}
 			BoardChat.messageList = [];
 			this.deleteCookie('sessionid');
+			window.sessionStorage.removeItem('messageList');
 			this.setState({
 				auth:false,
 				activeMenu:'Land',
@@ -51,7 +53,9 @@ class Panel extends React.Component {
 	}
 
 	deleteCookie(name) {
-		document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+		console.log('1.Cookie = ' + document.cookie);
+		document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/sim;' + Config.domain;
+		console.log('2.Cookie = ' + document.cookie);
 	}
 
 	handleStateChange = (auth, un, pw) => {

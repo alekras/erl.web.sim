@@ -383,14 +383,13 @@ table tr td {
 	height:100%;
 	width:100%;
 	background-color: rgba(240, 234, 227, 1);
-	padding-left: 10px;
-	padding-right: 2px;
 	overflow: auto;
 }
 
 .help p{
 	text-align:left;
 	text-indent:15px;
+	padding-left: 10px;
 	font: normal normal 12pt Helvetica, Arial, sans-serif;
 }
 /*

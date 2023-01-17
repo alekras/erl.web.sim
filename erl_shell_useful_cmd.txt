@@ -1,0 +1,7 @@
+erl -sname my -remsh sim_web -setcookie web
+
+dets:match_object(user_db,'_').
+
+ets:match_object(sessionTable,'_').
+rd(session, {id,created,userId,password}). 
+ets:match_delete(sessionTable, #session{userId = "alex", _ = '_'}).
