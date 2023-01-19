@@ -21,7 +21,12 @@ class Panel extends React.Component {
 		console.log('Response GET -> session:: ' + JSON.stringify(json));
 		if (json.session) {
 			this.handleStateChange(true, json.session.user, json.session.password);
-			BoardChat.messageList = JSON.parse(window.sessionStorage.getItem('messageList'));
+			var messageList = window.sessionStorage.getItem('messageList');
+			if (messageList) {
+				BoardChat.messageList = JSON.parse(messageList);
+			} else {
+				BoardChat.messageList = [];
+			}
 		} else {
 			console.log('Cannot retrive session object...')
 		}
@@ -54,7 +59,7 @@ class Panel extends React.Component {
 
 	deleteCookie(name) {
 		console.log('1.Cookie = ' + document.cookie);
-		document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/sim;' + Config.domain;
+		document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/sim;';
 		console.log('2.Cookie = ' + document.cookie);
 	}
 

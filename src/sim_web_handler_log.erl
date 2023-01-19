@@ -85,18 +85,18 @@ make_reply(User, Password, Req0) ->
 process_session(Req0, User, Password) ->
 	case sim_web_utils:get_session(Req0) of
 		undefined ->
-			NewSessionId = base64:encode(crypto:strong_rand_bytes(32)),
-			lager:debug("<<Session>> start session with id: ~p~n", [NewSessionId]),
+			SessionId = base64:encode(crypto:strong_rand_bytes(32)),
+			lager:debug("<<Session>> start session with id: ~p~n", [SessionId]),
 			ets:match_delete(sessionTable, #session{userId = User, _ = '_'}),
 			ets:insert(sessionTable, 
 				#session{
-					id = NewSessionId,
+					id = SessionId,
 					created = os:system_time(second),
 					userId = User,
 					password = Password
 				}
 			),
-			cowboy_req:set_resp_cookie(<<"sessionid">>, NewSessionId, Req0, #{max_age => 120}); %% @TODO from ENV
+			cowboy_req:set_resp_cookie(<<"sessionid">>, SessionId, Req0, #{max_age => 21600}); %% 6*60*60 @TODO from ENV
 		#session{} -> Req0
 	end.
 
