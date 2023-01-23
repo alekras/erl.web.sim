@@ -13,7 +13,7 @@ class LandingPage extends React.Component {
 			{
 				style:{color:'#3e7878', font:'18pt bold'}
 			},
-			`Landing page`
+			`SIM is web browser messenger with anonymous registration.`
 		)
 	}
 }
