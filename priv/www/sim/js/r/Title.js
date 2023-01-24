@@ -13,7 +13,7 @@ class Title extends React.Component {
 	}
 	
 	render() {
-		var title = 'SIMPLE INSTANT MESSENGER (SIM)';
+		var title = 'SLICK INSTANT MESSENGER (SIM)';
 		var user = ((this.props.user)? ('User: ' + this.props.user) : '');
 		var bgColor;
 		if (this.props.connected) {

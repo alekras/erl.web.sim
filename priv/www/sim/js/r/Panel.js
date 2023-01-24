@@ -58,9 +58,9 @@ class Panel extends React.Component {
 	}
 
 	deleteCookie(name) {
-		console.log('1.Cookie = ' + document.cookie);
+//		console.log('1.Cookie = ' + document.cookie);
 		document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;path=/sim;';
-		console.log('2.Cookie = ' + document.cookie);
+//		console.log('2.Cookie = ' + document.cookie);
 	}
 
 	handleStateChange = (auth, un, pw) => {
