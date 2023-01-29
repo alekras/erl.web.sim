@@ -8,7 +8,7 @@ class LandingPage extends React.Component {
 	}
 
 	getHtmlText() {
-		return `<h4>Slack and austere instant messenger (SIM)</h4>
+		return `<h4>Slick and austere instant messenger (SIM)</h4>
 				<h5>Features:</h5>
 			<p>
 				1. Anonymous registration: user does not need to link your account to e-mail or phone number.
