@@ -9,11 +9,11 @@
 %% ====================================================================
 %% API functions
 %% ====================================================================
--export([start_link/0]).
+-export([start_link/1]).
 
--spec start_link() -> {ok, pid()}.
-start_link() ->
-	supervisor:start_link({local, ?MODULE}, ?MODULE, []).
+-spec start_link(Args :: []) -> {ok, pid()}.
+start_link(Children) ->
+	supervisor:start_link({local, ?MODULE}, ?MODULE, Children).
 
 %% ====================================================================
 %% Behavioural functions
@@ -36,9 +36,8 @@ start_link() ->
 				   | temporary,
 	Modules :: [module()] | dynamic.
 %% ====================================================================
-init([]) ->
-	Procs = [],
-	{ok, {{one_for_one, 10, 10}, Procs}}.
+init(Children) ->
+	{ok, {{one_for_one, 10, 10}, Children}}.
 
 %% ====================================================================
 %% Internal functions

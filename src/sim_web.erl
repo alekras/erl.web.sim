@@ -10,8 +10,7 @@
 %% ====================================================================
 -export([
 	start/2,
-	stop/1,
-	test_setup/0
+	stop/1
 ]).
 
 start(_Type, _Args) ->
@@ -38,20 +37,29 @@ start(_Type, _Args) ->
 	}),
 	sim_web_dets_dao:start(),
 	ets:new(sessionTable, [set, public, named_table, {keypos, #session.id}]),
+	sim_web_echo:start(),
 	lager:info("Sim_web application is starting on port:~p; Rest Host url:~p~n", [Port, Host]),
-	sim_web_sup:start_link().
+%% 	ChildSpec :: {Id :: term(), StartFunc, RestartPolicy, Shutdown, Type :: worker | supervisor, Modules},
+%% 	StartFunc :: {M :: module(), F :: atom(), A :: [term()] | undefined},
+%% 	RestartPolicy :: permanent
+%% 				   | transient
+%% 				   | temporary,
+%% 	Shutdown :: brutal_kill | timeout(),
+%% 	Modules :: [module()] | dynamic.
+	EchoSpec = {
+		echo_worker, 
+		{sim_web_echo, start, []},
+		permanent, 
+		5000, 
+		supervisor, 
+		[sim_web_echo]
+	},
+%%	sim_web_sup:start_link([EchoSpec]).
+	sim_web_sup:start_link([]).
 
 stop(_State) ->
 	sim_web_dets_dao:close(),
 	ok.
-
-test_setup() ->
-	sim_web_dets_dao:save(#user{user_id = "alex", contacts = ["tom", "john", "sam"], state = online}),
-	sim_web_dets_dao:save(#user{user_id = "tom", contacts = ["alex"], state = offline}),
-	sim_web_dets_dao:save(#user{user_id = "sam", contacts = ["alex", "john"], state = offline}),
-	sim_web_dets_dao:save(#user{user_id = "john", contacts = ["tom", "alex"], state = online}),
-	List = dets:match_object(user_db, #user{user_id = '_', _ = '_'}),
-	[io:format("~p~n", [U]) || U <- List].
 
 %% ====================================================================
 %% Internal functions

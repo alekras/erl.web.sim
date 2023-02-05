@@ -1,5 +1,5 @@
 {application, sim_web, [
-	{description, "Web server for SIM (simple instant messenger)."},
+	{description, "Web server for SIM (slick instant messenger)."},
 	{vsn, "1.1.0"},
 	{modules, [
 	]},
@@ -12,7 +12,10 @@
 		lager,
 		jsx,
 		cowboy,
-		ranch
+		ranch,
+		mqtt_client,
+		mqtt_common,
+		websocket_client
 	]},
 	{included_applications, [
 	]},
