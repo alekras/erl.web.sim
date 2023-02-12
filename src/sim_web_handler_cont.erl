@@ -82,6 +82,7 @@ make_reply_get_all(User, Req) ->
 	end.
 
 %% http://localhost:8080/rest/user/status?users=alex,tom
+rest_req_statuses([]) -> [#{}];
 rest_req_statuses(ContactList) -> 
 	Host = application:get_env(sim_web, mqtt_rest_url, "http://localhost:18080"),
 	Users = string:join(ContactList, ","),

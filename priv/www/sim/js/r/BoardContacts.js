@@ -104,20 +104,28 @@ class BoardContacts extends React.Component {
 	}
 	
 	clickToRemove = (event, contactName) => {
-		this.props.warnBox.setLayout(
-			'confirm',
-			'Do you want to remove "' + contactName + '" from your contacts list?',
-			this.props.parent.current.getBoundingClientRect(),
-			(arg) => {
-				if (arg) {
-					RestAPI.remove_contact(
-					this.props.user, 
-					contactName, 
-					this.handleSuccessRemoveContact, 
-					this.handleErrorRemoveContact)
-				}
-			} 
-		);
+		if (contactName == 'echo') {
+			this.props.warnBox.setLayout(
+				'warn',
+				'You cannot remove system defined contact "' + contactName + '" from your contacts list. ',
+				this.props.parent.current.getBoundingClientRect()
+			);
+		} else {
+			this.props.warnBox.setLayout(
+				'confirm',
+				'Do you want to remove "' + contactName + '" from your contacts list?',
+				this.props.parent.current.getBoundingClientRect(),
+				(arg) => {
+					if (arg) {
+						RestAPI.remove_contact(
+						this.props.user, 
+						contactName, 
+						this.handleSuccessRemoveContact, 
+						this.handleErrorRemoveContact)
+					}
+				} 
+			);
+		}
 
 	}
 	

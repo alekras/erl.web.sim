@@ -62,8 +62,8 @@ make_reply(User, Password, Req0) ->
 						#user{user_id = User, contacts = Contacts} ->
 							Contacts;
 						_ ->
-							sim_web_dets_dao:save(#user{user_id = User, contacts = []}),
-							[]
+							sim_web_dets_dao:save(#user{user_id = User, contacts = ["echo"]}),
+							["echo"]
 					end,
 
 					Req = process_session(Req0, User, binary:bin_to_list(Password)),

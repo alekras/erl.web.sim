@@ -37,7 +37,7 @@ start(_Type, _Args) ->
 	}),
 	sim_web_dets_dao:start(),
 	ets:new(sessionTable, [set, public, named_table, {keypos, #session.id}]),
-	sim_web_echo:start(),
+%%	sim_web_echo:start(),
 	lager:info("Sim_web application is starting on port:~p; Rest Host url:~p~n", [Port, Host]),
 %% 	ChildSpec :: {Id :: term(), StartFunc, RestartPolicy, Shutdown, Type :: worker | supervisor, Modules},
 %% 	StartFunc :: {M :: module(), F :: atom(), A :: [term()] | undefined},
@@ -54,8 +54,7 @@ start(_Type, _Args) ->
 		supervisor, 
 		[sim_web_echo]
 	},
-%%	sim_web_sup:start_link([EchoSpec]).
-	sim_web_sup:start_link([]).
+	sim_web_sup:start_link([EchoSpec]).
 
 stop(_State) ->
 	sim_web_dets_dao:close(),

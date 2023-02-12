@@ -4,7 +4,7 @@ class BoardLogin extends React.Component {
 
 	constructor(props) {
 		super(props);
-		this.state = {userName:'alex', password:'alex'};
+		this.state = {userName:'', password:''};
 	}
 	
 	handleChange(event) {
@@ -24,7 +24,6 @@ class BoardLogin extends React.Component {
 	handleSuccess = (json) => {
 		console.log('Login is success: ' + JSON.stringify(json));
 		if (json.status == 'ok') {
-			this.setState({errorMsg:''});
 			this.props.onStateChange(true, this.state.userName, this.state.password);
 		} else {
 			this.props.warnBox.setLayout(
@@ -42,25 +41,42 @@ class BoardLogin extends React.Component {
 	};
 
 	handleSubmit(event) {
-		this.setState({errorMsg:''});
-//		console.log('A userName was submitted: >' + this.state.userName + '<');
-		if (this.state.userName == '') { // For debug TODO: remove
+		if (Config.devMode && this.state.userName == '') { // For debug TODO: remove
 			this.setState({userName:'alex', password:'alex'});
+			RestAPI.loginRequest({userName:'alex', password:'alex'}, this.handleSuccess, this.handleError);
+			event.preventDefault();
+			return;
 		}
-		RestAPI.loginRequest(this.state, this.handleSuccess, this.handleError);
+		this.doLoginRequest();
 		event.preventDefault();
 	};
 
+	handleSubmitByKey(event) {
+		if (event.code == 'Enter') {
+//			console.log('onSubmit event: >' + event.code + '<');
+			this.doLoginRequest();
+		}
+	};
+	
+	doLoginRequest() {
+		if (this.state.userName == 'echo') {
+			this.props.onStateChange(false);
+		} else {
+			RestAPI.loginRequest(this.state, this.handleSuccess, this.handleError);
+		}
+	}
+
 	shouldComponentUpdate(nextProps, nextState) {
-//		if (this.state.errorMsg !== nextState.errorMsg) {
-//			return true;
-//		}
 		return true;
 	}
 
 	render() {
 //		console.log('RENDER BoardLogin: ' + JSON.stringify(this.state));
-		return e('form', {onSubmit: (e) => this.handleSubmit(e)}, [
+		return e('form', 
+				{
+					onSubmit: (e) => this.handleSubmit(e),
+					onKeyDown: (e) => this.handleSubmitByKey(e)
+				}, [
 			e(
 			'table',
 			{

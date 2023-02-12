@@ -53,7 +53,7 @@ class Panel extends React.Component {
 				user:undefined
 			});
 		} else {
-			this.setState({activeMenu: command, connectedTo:this.state.user});
+			this.setState({activeMenu: command, connectedTo:'echo'});
 		}
 	}
 
@@ -226,14 +226,6 @@ class Panel extends React.Component {
 						})
 					]),
 				)
-//				e('tr', {key:5}, 
-//					e('td', {key:1, colSpan:'4', style:{display: 'none'}}, 
-//						e(WarningBox, {
-//								key:1,
-//								ref:(instance) => {this.warnBoxRef = instance;}
-//						})
-//					)
-//				)
 			]
 		))
 	}

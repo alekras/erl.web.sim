@@ -67,8 +67,19 @@ class BoardRegister extends React.Component {
 		event.preventDefault();
 	}
 	
+	handleSubmitByKey(event) {
+		if (event.code == 'Enter') {
+//			console.log('onSubmit event: >' + event.code + '<');
+			RestAPI.registerRequest(this.state, this.handleSuccess, this.handleError);
+		}
+	};
+
 	render() {
-		return e('form', {onSubmit: (e) => this.handleSubmit(e)}, [
+		return e('form', 
+				{
+					onSubmit: (e) => this.handleSubmit(e),
+					onKeyDown: (e) => this.handleSubmitByKey(e)
+				}, [
 			e(
 			'table',
 			{
