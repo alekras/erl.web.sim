@@ -25,11 +25,11 @@ table tr td {
 }
 
 .title {
-	height: 30px;
+	height: 25px;
 	width:100%;
-	padding: 0px 15px;
-	text-align:center;
-	font-family: monospace;
+	padding: 0px 15px 0 2px;
+	text-align: center;
+	font-family: sans-serif;
 	font-style: normal;
 	font-weight: bold;
 	font-size: 9pt;
@@ -413,6 +413,16 @@ table tr td {
 	font-weight: lighter;
 	font-size: xx-small;
 	text-align: right;
+}
+
+.ssl-seal {
+	float:left;
+	height: 25px;
+	width: 99px;
+	background-color: white;
+	background-image: url("/sim/img/positivessl_trust_seal_sm_124x32.png");
+	background-repeat:no-repeat;
+	background-size:contain;
 }
 
 label {

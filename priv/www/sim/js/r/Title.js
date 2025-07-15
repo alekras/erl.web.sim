@@ -23,14 +23,17 @@ class Title extends React.Component {
 		}
 		return e(React.Fragment, {}, [
 			e('span',
-				{key:0, style:{color:'#3e7878', float:'left'}},
+				{key:0, className: 'ssl-seal'}
+			),
+			e('span',
+				{key:1, style:{color:'#3e7878', padding:'7px 2px 0 2px', float:'left'}},
 				title
 			),
 			e('span',
-				{key:1, style:{color:'#3e7878', backgroundColor:bgColor, float:'right'}}, 
+				{key:2, style:{color:'#3e7878', padding:'7px 0 0 0', backgroundColor:bgColor, float:'right'}}, 
 				user
 			),
-			e('span', {key:2, style:{clear:'both'}})
+			e('span', {key:3, style:{clear:'both'}})
 		]);
 	}
 }

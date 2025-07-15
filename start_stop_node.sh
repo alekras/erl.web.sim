@@ -1,6 +1,7 @@
 #!/bin/sh
 
-export PATH="$PATH:/usr/local/bin:/usr/local/Cellar/erlang/23.0/lib/erlang/bin"
+##export PATH="$PATH:/usr/local/bin:/usr/local/Cellar/erlang/23.0/lib/erlang/bin"
+export PATH="$PATH:/usr/local/Cellar/erlang@23/23.3.4.18/lib/erlang/bin"
 echo "arguments: $1 $2"
 REBAR3="/opt/local/bin/rebar3"
 $REBAR3 do version

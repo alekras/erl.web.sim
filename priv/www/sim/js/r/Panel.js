@@ -210,22 +210,29 @@ class Panel extends React.Component {
 						}, board
 					)
 				),
-				e('tr', {key: 4},
-					e('td', {key: 1, colSpan:'4', style:{height: '10px'}}, [
+				e('tr', {key: 4}, [
+					e('td', {key: 1, colSpan:'1', style:{height: '10px'}}, 
+						e('div',
+							{
+								key: 1 /* for future use */
+							}
+						)
+					),
+					e('td', {key: 2, colSpan:'3', style:{height: '10px'}}, [
 						e('div',
 							{
 								id: 'copyright',
 								className: 'copyright',
 								key: 1
 							},
-							`©AKrasnopolski 2022 v 0.0.2 (React)`
+							`©AKrasnopolski 2025 v 0.0.2 (React)`
 						),
 						e(WarningBox, {
 								key:2,
 								ref:(instance) => {this.warnBoxRef = instance;}
 						})
 					]),
-				)
+				])
 			]
 		))
 	}
