@@ -27,13 +27,12 @@ table tr td {
 .title {
 	height: 25px;
 	width:100%;
-	padding: 0px 15px 0 2px;
+	padding: 0 15px 0 0;
 	text-align: center;
 	font-family: sans-serif;
 	font-style: normal;
 	font-weight: bold;
 	font-size: 9pt;
-	text-align: left;
 /*	border: 1px solid black;*/
 }
 
@@ -417,8 +416,8 @@ table tr td {
 
 .ssl-seal {
 	float:left;
-	height: 25px;
-	width: 99px;
+	height: 23px;
+	width: 98px;
 	background-color: white;
 	background-image: url("/sim/img/positivessl_trust_seal_sm_124x32.png");
 	background-repeat:no-repeat;

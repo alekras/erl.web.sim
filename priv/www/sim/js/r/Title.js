@@ -26,11 +26,11 @@ class Title extends React.Component {
 				{key:0, className: 'ssl-seal'}
 			),
 			e('span',
-				{key:1, style:{color:'#3e7878', padding:'7px 2px 0 2px', float:'left'}},
+				{key:1, style:{color:'#3e7878', margin:'5px 2px 0 2px', float:'left'}},
 				title
 			),
 			e('span',
-				{key:2, style:{color:'#3e7878', padding:'7px 0 0 0', backgroundColor:bgColor, float:'right'}}, 
+				{key:2, style:{color:'#3e7878', margin:'5px 2px 0 2px', backgroundColor:bgColor, float:'right'}}, 
 				user
 			),
 			e('span', {key:3, style:{clear:'both'}})
