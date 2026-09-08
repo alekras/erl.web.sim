@@ -1,0 +1,27 @@
+{application, sim_web, [
+	{description, "Web server for SIM (slick instant messenger)."},
+	{vsn, "1.1.0"},
+	{modules, [
+	]},
+	{registered, []},
+	{applications, [
+		kernel,
+		stdlib,
+		sasl,
+		inets,
+		lager,
+		jsx,
+		cowboy,
+		ranch,
+		mqtt_client,
+		mqtt_common,
+		websocket_client
+	]},
+	{included_applications, [
+	]},
+	{mod, {sim_web, []}},
+	{env, [
+		{storage, dets},
+		{dets_home_folder, "test"}
+	]}
+ ]}.

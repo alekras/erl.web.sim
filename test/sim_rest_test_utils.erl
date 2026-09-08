@@ -39,6 +39,7 @@
 do_start() ->
 	?debug_Fmt(">>> do start >>> ~n", []),
 	S = application:ensure_all_started(sim_web),
+	httpc:set_options([{cookies, enabled}]),
 	sim_restful:delete_mqtt_user("Alexei"),
 	sim_restful:delete_mqtt_user("Sam"),
 %%	[ ?debug_Fmt(" ### ~p", [T]) || T <- application:which_applications()],
@@ -61,7 +62,7 @@ do_cleanup(_X, _Pids) ->
 	ok.
 
 get_storage(server) ->
-	case application:get_env(mqtt_server, storage, dets) of
+	case application:get_env(sim_web, storage, dets) of
 		mysql -> mqtt_mysql_dao;
 		dets -> mqtt_dets_dao
 	end;

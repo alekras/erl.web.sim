@@ -1,27 +1,27 @@
-{application, sim_web, [
-	{description, "Web server for SIM (slick instant messenger)."},
-	{vsn, "1.1.0"},
-	{modules, [
-	]},
+{application,
+	sim_web,
+	[
+		{description, "This is a RESTful API of SIM server. The API manages SIM user&#39;s records. See for details https://github.com/alekras/erl.web.sim"},
+	{vsn, "2.0.1"},
 	{registered, []},
 	{applications, [
-		kernel,
-		stdlib,
-		sasl,
-		inets,
+		kernel, 
+		stdlib, 
+		public_key, 
+		ssl, 
 		lager,
-		jsx,
-		cowboy,
-		ranch,
+		sasl,
 		mqtt_client,
 		mqtt_common,
-		websocket_client
-	]},
-	{included_applications, [
+		websocket_client,
+		inets, 
+		ranch, 
+		cowboy, 
+		jesse
 	]},
 	{mod, {sim_web, []}},
-	{env, [
-		{storage, dets},
-		{dets_home_folder, "test"}
-	]}
- ]}.
+	{env, []},
+	{modules, []},
+	{licenses, ["Apache 2.0"]},
+	{links, []}
+]}.

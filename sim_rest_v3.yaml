@@ -1,0 +1,252 @@
+openapi: 3.0.1
+info:
+  title: SLICK INSTANT MESSENGER (SIM) web application restful API
+  description: >-
+    This is a RESTful API of SIM server. The API manages SIM user's records.
+    See for details https://github.com/alekras/erl.web.sim
+  contact:
+    email: krasnop@bellsouth.net
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 2.0.1
+
+externalDocs:
+  description: Find out more about SIM web server
+  url: https://github.com/alekras/erl.web.sim
+
+servers:
+- url: '{protocol}://{server}:{port}/sim'
+  variables:
+    protocol:
+      enum:
+        - http
+        - https
+      default: http
+    server:
+      enum:
+        - lucky3p.com
+        - localhost
+      default: localhost
+    port:
+      enum:
+        - 8000
+        - 443
+      default: '8000'
+tags:
+- name: sim
+  description: Manage user's contacts database, login and register.
+paths:
+  /users:
+    get:
+      tags:
+      - sim
+      summary: User is trying to log in to server
+      operationId: loginUser
+      parameters:
+      - in: query
+        name: userName
+        description: user name to login
+        required: true
+        schema:
+          type: string
+      - in: query
+        name: password
+        description: user password to login
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          $ref: '#/components/responses/SuccessUser'
+        '400':
+          $ref: '#/components/responses/InvalidReq'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    post:
+      tags:
+      - sim
+      summary: Register a new user
+      description: Register (or add) a new user with name and password
+      operationId: registerUser
+      requestBody:
+        $ref: '#/components/requestBodies/UserBody'
+      responses:
+        '200':
+          $ref: '#/components/responses/SuccessUser'
+        '400':
+          $ref: '#/components/responses/InvalidReq'
+  /users/{userName}/contacts:
+    get:
+      tags:
+      - sim
+      summary: Get user's contacts with connection status
+      description: Returns a user's contacts with connection status
+      operationId: getUserContacts
+      parameters:
+      - $ref: '#/components/parameters/UserNameParam'
+      responses:
+        '200':
+          $ref: '#/components/responses/SuccessContacts'
+        '400':
+          $ref: '#/components/responses/InvalidReq'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    post:
+      tags:
+      - sim
+      summary: Add the contact to user's contacts list
+      description: Add the contact to user's contacts list
+      operationId: addUserContact
+      parameters:
+      - $ref: '#/components/parameters/UserNameParam'
+      requestBody:
+        $ref: '#/components/requestBodies/ContactBody'
+      responses:
+        '200':
+          $ref: '#/components/responses/SuccessContacts'
+        '400':
+          $ref: '#/components/responses/InvalidReq'
+        '404':
+          $ref: '#/components/responses/NotFound'
+    delete:
+      tags:
+      - sim
+      summary: Remove the contact from user's contacts list
+      description: Remove the contact from user's contacts list
+      operationId: deleteUserContact
+      parameters:
+      - $ref: '#/components/parameters/UserNameParam'
+      requestBody:
+        $ref: '#/components/requestBodies/ContactBody'
+      responses:
+        '200':
+          $ref: '#/components/responses/SuccessContacts'
+        '400':
+          $ref: '#/components/responses/InvalidReq'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /checksession:
+    get:
+      tags:
+      - sim
+      summary: Get web session status
+      description: Returns a session object
+      operationId: getSession
+      responses:
+        '200':
+          $ref: '#/components/responses/SessionObject'
+        '400':
+          $ref: '#/components/responses/InvalidReq'
+
+security:
+  - ApiKeyAuth: []
+
+components:
+  parameters:
+    UserNameParam:
+      required: true
+      name: userName
+      in: path
+      description: User name
+      schema:
+        type: string
+  requestBodies:
+    UserBody:
+      description: User's name and password in plain text format
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/UserReq'
+      required: true
+    ContactBody:
+      description: Contact's name that linked to the given user.
+      content:
+        application/json:
+          schema:
+            title: Contact
+            type: object
+            properties:
+              contactName:
+                type: string
+      required: true
+  responses:
+    NotFound:
+      description: User not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    InvalidReq:
+      description: Invalid request
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    SuccessUser:
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/User'
+    SuccessContacts:
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Contacts'
+    SessionObject:
+      description: Successful operation
+      content:
+        application/json:
+          schema:
+            title: Session
+            type: object
+            properties:
+              userName:
+                type: string
+              password:
+                type: string
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: authorization
+  schemas:
+    UserReq:
+      type: object
+      properties:
+        userName:
+          type: string
+        password:
+          type: string
+      example:
+        userName: alex
+        password: aaaaaaa
+    User:
+      type: object
+      properties:
+        success:
+          type: boolean
+        userName:
+          type: string
+        contacts:
+          $ref: '#/components/schemas/Contacts'
+      required:
+        - userName
+        - contacts
+    Contacts:
+      type: object
+      additionalProperties:
+        type: string
+        enum: ['on', 'off', 'notFound']
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+        - code
+        - message

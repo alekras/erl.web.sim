@@ -1,0 +1,507 @@
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "contact" : {
+      "email" : "krasnop@bellsouth.net"
+    },
+    "description" : "This is a RESTful API of SIM server. The API manages SIM user's records. See for details https://github.com/alekras/erl.web.sim",
+    "license" : {
+      "name" : "Apache 2.0",
+      "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "title" : "SLICK INSTANT MESSENGER (SIM) web application restful API",
+    "version" : "2.0.1"
+  },
+  "externalDocs" : {
+    "description" : "Find out more about SIM web server",
+    "url" : "https://github.com/alekras/erl.web.sim"
+  },
+  "servers" : [ {
+    "url" : "{protocol}://{server}:{port}/sim",
+    "variables" : {
+      "protocol" : {
+        "default" : "http",
+        "enum" : [ "http", "https" ]
+      },
+      "server" : {
+        "default" : "localhost",
+        "enum" : [ "lucky3p.com", "localhost" ]
+      },
+      "port" : {
+        "default" : "8000",
+        "enum" : [ "8000", "443" ]
+      }
+    }
+  } ],
+  "security" : [ {
+    "ApiKeyAuth" : [ ]
+  } ],
+  "tags" : [ {
+    "description" : "Manage user's contacts database, login and register.",
+    "name" : "sim"
+  } ],
+  "paths" : {
+    "/users" : {
+      "get" : {
+        "operationId" : "loginUser",
+        "parameters" : [ {
+          "description" : "user name to login",
+          "explode" : true,
+          "in" : "query",
+          "name" : "userName",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "form"
+        }, {
+          "description" : "user password to login",
+          "explode" : true,
+          "in" : "query",
+          "name" : "password",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "form"
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/User"
+                }
+              }
+            },
+            "description" : "Successful operation"
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            },
+            "description" : "Invalid request"
+          },
+          "404" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            },
+            "description" : "User not found"
+          }
+        },
+        "summary" : "User is trying to log in to server",
+        "tags" : [ "sim" ]
+      },
+      "post" : {
+        "description" : "Register (or add) a new user with name and password",
+        "operationId" : "registerUser",
+        "requestBody" : {
+          "$ref" : "#/components/requestBodies/UserBody"
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/User"
+                }
+              }
+            },
+            "description" : "Successful operation"
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            },
+            "description" : "Invalid request"
+          }
+        },
+        "summary" : "Register a new user",
+        "tags" : [ "sim" ]
+      }
+    },
+    "/users/{userName}/contacts" : {
+      "delete" : {
+        "description" : "Remove the contact from user's contacts list",
+        "operationId" : "deleteUserContact",
+        "parameters" : [ {
+          "description" : "User name",
+          "explode" : false,
+          "in" : "path",
+          "name" : "userName",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "simple"
+        } ],
+        "requestBody" : {
+          "$ref" : "#/components/requestBodies/ContactBody"
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Contacts"
+                }
+              }
+            },
+            "description" : "Successful operation"
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            },
+            "description" : "Invalid request"
+          },
+          "404" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            },
+            "description" : "User not found"
+          }
+        },
+        "summary" : "Remove the contact from user's contacts list",
+        "tags" : [ "sim" ]
+      },
+      "get" : {
+        "description" : "Returns a user's contacts with connection status",
+        "operationId" : "getUserContacts",
+        "parameters" : [ {
+          "description" : "User name",
+          "explode" : false,
+          "in" : "path",
+          "name" : "userName",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "simple"
+        } ],
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Contacts"
+                }
+              }
+            },
+            "description" : "Successful operation"
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            },
+            "description" : "Invalid request"
+          },
+          "404" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            },
+            "description" : "User not found"
+          }
+        },
+        "summary" : "Get user's contacts with connection status",
+        "tags" : [ "sim" ]
+      },
+      "post" : {
+        "description" : "Add the contact to user's contacts list",
+        "operationId" : "addUserContact",
+        "parameters" : [ {
+          "description" : "User name",
+          "explode" : false,
+          "in" : "path",
+          "name" : "userName",
+          "required" : true,
+          "schema" : {
+            "type" : "string"
+          },
+          "style" : "simple"
+        } ],
+        "requestBody" : {
+          "$ref" : "#/components/requestBodies/ContactBody"
+        },
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Contacts"
+                }
+              }
+            },
+            "description" : "Successful operation"
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            },
+            "description" : "Invalid request"
+          },
+          "404" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            },
+            "description" : "User not found"
+          }
+        },
+        "summary" : "Add the contact to user's contacts list",
+        "tags" : [ "sim" ]
+      }
+    },
+    "/checksession" : {
+      "get" : {
+        "description" : "Returns a session object",
+        "operationId" : "getSession",
+        "responses" : {
+          "200" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Session"
+                }
+              }
+            },
+            "description" : "Successful operation"
+          },
+          "400" : {
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/Error"
+                }
+              }
+            },
+            "description" : "Invalid request"
+          }
+        },
+        "summary" : "Get web session status",
+        "tags" : [ "sim" ]
+      }
+    }
+  },
+  "components" : {
+    "parameters" : {
+      "UserNameParam" : {
+        "description" : "User name",
+        "explode" : false,
+        "in" : "path",
+        "name" : "userName",
+        "required" : true,
+        "schema" : {
+          "type" : "string"
+        },
+        "style" : "simple"
+      }
+    },
+    "requestBodies" : {
+      "UserBody" : {
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/UserReq"
+            }
+          }
+        },
+        "description" : "User's name and password in plain text format",
+        "required" : true
+      },
+      "ContactBody" : {
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/Contact"
+            }
+          }
+        },
+        "description" : "Contact's name that linked to the given user.",
+        "required" : true
+      }
+    },
+    "responses" : {
+      "NotFound" : {
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/Error"
+            }
+          }
+        },
+        "description" : "User not found"
+      },
+      "InvalidReq" : {
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/Error"
+            }
+          }
+        },
+        "description" : "Invalid request"
+      },
+      "SuccessUser" : {
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/User"
+            }
+          }
+        },
+        "description" : "Successful operation"
+      },
+      "SuccessContacts" : {
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/Contacts"
+            }
+          }
+        },
+        "description" : "Successful operation"
+      },
+      "SessionObject" : {
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/Session"
+            }
+          }
+        },
+        "description" : "Successful operation"
+      }
+    },
+    "schemas" : {
+      "UserReq" : {
+        "example" : {
+          "userName" : "alex",
+          "password" : "aaaaaaa"
+        },
+        "properties" : {
+          "userName" : {
+            "type" : "string"
+          },
+          "password" : {
+            "type" : "string"
+          }
+        },
+        "type" : "object"
+      },
+      "User" : {
+        "example" : {
+          "success" : true,
+          "userName" : "userName",
+          "contacts" : null
+        },
+        "properties" : {
+          "success" : {
+            "type" : "boolean"
+          },
+          "userName" : {
+            "type" : "string"
+          },
+          "contacts" : {
+            "$ref" : "#/components/schemas/Contacts"
+          }
+        },
+        "required" : [ "contacts", "userName" ],
+        "type" : "object"
+      },
+      "Contacts" : {
+        "additionalProperties" : {
+          "enum" : [ "on", "off", "notFound" ],
+          "type" : "string"
+        },
+        "type" : "object"
+      },
+      "Error" : {
+        "example" : {
+          "code" : "code",
+          "message" : "message"
+        },
+        "properties" : {
+          "code" : {
+            "type" : "string"
+          },
+          "message" : {
+            "type" : "string"
+          }
+        },
+        "required" : [ "code", "message" ],
+        "type" : "object"
+      },
+      "Contact" : {
+        "example" : {
+          "contactName" : "contactName"
+        },
+        "properties" : {
+          "contactName" : {
+            "type" : "string"
+          }
+        },
+        "title" : "Contact",
+        "type" : "object"
+      },
+      "Session" : {
+        "example" : {
+          "userName" : "userName",
+          "password" : "password"
+        },
+        "properties" : {
+          "userName" : {
+            "type" : "string"
+          },
+          "password" : {
+            "type" : "string"
+          }
+        },
+        "title" : "Session",
+        "type" : "object"
+      }
+    },
+    "securitySchemes" : {
+      "ApiKeyAuth" : {
+        "in" : "header",
+        "name" : "authorization",
+        "type" : "apiKey"
+      }
+    }
+  }
+}
