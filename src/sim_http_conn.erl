@@ -40,9 +40,11 @@
 get_user(User_name) when is_binary(User_name) ->
 	get_user(binary_to_list(User_name));
 get_user(User_name) ->
-	URL = application:get_env(sim_web, mqtt_rest_url, "http://localhost:18080"),
+	Host = application:get_env(sim_web, mqtt_host, "localhost"),
+	Port = application:get_env(sim_web, mqtt_port_rest, 8080),
+	URL = lists:concat(["http://", Host, ":", Port, "/rest/user/", User_name]),
 	ReqTo0 = {
-		URL ++ "/rest/user/" ++ User_name,
+		URL,
 		[
 		 {"X-Forwarded-For", "localhost"},
 		 {"Accept", "application/json"},
@@ -65,9 +67,11 @@ get_user(User_name) ->
 add_user(UserName, Password) when is_binary(UserName) ->
 	add_user(binary_to_list(UserName), Password);
 add_user(UserName, Password) ->
-	URL = application:get_env(sim_web, mqtt_rest_url, "http://localhost:18080"),
+	Host = application:get_env(sim_web, mqtt_host, "localhost"),
+	Port = application:get_env(sim_web, mqtt_port_rest, 8080),
+	URL = lists:concat(["http://", Host, ":", Port, "/rest/user/", UserName]),
 	ReqTo0 = {
-		URL ++ "/rest/user/" ++ UserName,
+		URL,
 		[
 		 {"Accept", "application/json"},
 		 {"authorization", "mqtt"}
@@ -90,10 +94,11 @@ add_user(UserName, Password) ->
 %% http://localhost:8080/rest/user/status?users=alex,tom
 get_statuses([]) -> #{};
 get_statuses(Contacts_list) ->
-	Host = application:get_env(sim_web, mqtt_rest_url, "http://localhost:18080"),
+	Host = application:get_env(sim_web, mqtt_host, "localhost"),
+	Port = application:get_env(sim_web, mqtt_port_rest, 8080),
 	Users = string:join(Contacts_list, ","),
 	Users1 = string:replace(Users, " ", "%20", all),
-	URL = Host ++ "/rest/user/status?users=" ++ Users1,
+	URL = lists:concat(["http://", Host, ":", Port, "/rest/user/status?users=", Users1]),
 	lager:info("URL encoded: ~p", [URL]),
 	ReqTo0 = {URL, 
 		[
@@ -123,8 +128,9 @@ get_statuses(Contacts_list) ->
 get_status(User) when is_binary(User) ->
 	get_status(binary_to_list(User));
 get_status(User) ->
-	Host = application:get_env(sim_web, mqtt_rest_url, "http://localhost:18080"),
-	URL = Host ++ "/rest/user/" ++ User ++ "/status",
+	Host = application:get_env(sim_web, mqtt_host, "localhost"),
+	Port = application:get_env(sim_web, mqtt_port_rest, 8080),
+	URL = lists:concat(["http://", Host, ":", Port, "/rest/user/", User, "/status"]),
 	lager:info("URL: ~p", [URL]),
 	ReqTo0 = {URL, 
 		[

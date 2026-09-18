@@ -39,10 +39,15 @@ class BoardHelp extends React.Component {
 	}
 	
 	render() {
+		var h = '100%';
+		if (browserType() === 'FF') {
+			h = (this.props.h - 70) + 'px'
+		}
 		return e(
 			'div',
 			{
 				className:'help',
+				style:{height: h},
 				dangerouslySetInnerHTML:{ __html: this.getHtmlText() }
 			}
 		)

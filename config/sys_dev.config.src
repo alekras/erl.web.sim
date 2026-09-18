@@ -1,0 +1,49 @@
+[
+	{sasl, [
+			{sasl_error_logger, false},
+			{utc_log, true}
+	]},
+
+	{lager, [
+%% log levels: none, debug, info, notice, warning, error, critical, alert, emergency
+    {error_logger_redirect, false},
+    {log_root, "logs"},
+    {handlers, [
+      {lager_console_backend, [
+         {level, debug},
+         {formatter, lager_default_formatter},
+         {formatter_config, [
+            "  ", date, "T", time, " [",severity,"] ", pid, " ", 
+            {module, [module, ":"], [""]}, 
+            {function, [function, ":"], [""]}, 
+            {line, [line], [""]},
+            {endtype, [" -", endtype, "- "], [" - "]}, 
+            message, "\n"
+         ]}
+      ]},
+      {lager_file_backend, [{file, "common.log.txt"}, {level, info}]}
+    ]},
+    {traces, [
+    ]}
+  ]},
+
+	{sim_web, [
+%		{storage, mysql},
+		{storage, dets},
+		{dets_home_folder, "${DETS_DIR}"},
+		{mqtt_host, "${HOST_MQTT}"},
+		{mqtt_port_rest, ${PORT_MQTT_REST}},
+		{mqtt_port, ${PORT_MQTT_WS}},
+		{mqtt_conn_type, web_socket},
+		{port, ${PORT_REST}}
+	]},
+	
+	{mqtt_client, [
+	]},
+	
+	{mqtt_common, [
+		{storage, dets},
+		{dets_home_folder, "${DETS_DIR}"},
+		{timeout, 202}
+	]}
+].

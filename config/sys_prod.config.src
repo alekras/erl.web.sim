@@ -10,7 +10,7 @@
     {log_root, "logs"},
     {handlers, [
       {lager_console_backend, [
-         {level, debug},
+         {level, info},
          {formatter, lager_default_formatter},
          {formatter_config, [
             "  ", date, "T", time, " [",severity,"] ", pid, " ", 
@@ -30,12 +30,12 @@
 	{sim_web, [
 %		{storage, mysql},
 		{storage, dets},
-		{dets_home_folder, "/var/db/dets-storage"},
-		{mqtt_rest_url, "http://localhost:8080"},
-		{mqtt_host, "localhost"},
-		{mqtt_port, 8880},
+		{dets_home_folder, "${DETS_DIR}"},
+		{mqtt_host, "${HOST_MQTT}"},
+		{mqtt_port_rest, ${PORT_MQTT_REST}},
+		{mqtt_port, ${PORT_MQTT_WS}},
 		{mqtt_conn_type, web_socket},
-		{port, 8000}
+		{port, ${PORT_REST}}
 	]},
 	
 	{mqtt_client, [
@@ -43,7 +43,7 @@
 	
 	{mqtt_common, [
 		{storage, dets},
-		{dets_home_folder, "/var/db/dets-storage"},
+		{dets_home_folder, "${DETS_DIR}"},
 		{timeout, 202}
 	]}
 ].

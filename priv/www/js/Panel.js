@@ -152,7 +152,7 @@ class Panel extends React.Component {
 					});
 				break;
 			case 'Help' :
-				board = e(BoardHelp, {key:1});
+				board = e(BoardHelp, {key:1, w:this.props.w, h:this.props.h});
 				break;
 			case 'Contacts' :
 				board = e(BoardContacts,
@@ -184,7 +184,10 @@ class Panel extends React.Component {
 		return e('table', 
 			{
 				className:'table',
-				style:{width:this.props.w, height:this.props.h}
+				style:{
+					width:this.props.w + 'px',
+					height:this.props.h + 'px'
+				}
 			},
 			e('tbody', {}, [
 				e('tr', {align:"center", key: 1}, [

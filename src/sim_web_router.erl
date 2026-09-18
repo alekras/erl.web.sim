@@ -18,6 +18,7 @@ get_paths(LogicHandler) ->
 		[{'_', 
 			lists:append(
 				[
+					{"/test", cowboy_static, {priv_file, sim_web, "www/index-test.html"}},
 					{"/sim", cowboy_static, {priv_file, sim_web, "www/index-react.html"}},
 					{"/sim/js/[...]", cowboy_static, {priv_dir, sim_web, "www/js", [{mimetypes, cow_mimetypes, all}]}},
 					{"/sim/css/[...]", cowboy_static, {priv_dir, sim_web, "www/css", [{mimetypes, cow_mimetypes, all}]}},

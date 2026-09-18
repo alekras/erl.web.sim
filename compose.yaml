@@ -1,0 +1,62 @@
+
+services:
+  mqtt-service:
+    image: mqtt_server
+    container_name: docker_container_a
+    hostname: localhost
+    tty: "true"
+    environment:
+      PORT_REST: 8080
+      PORT_CLEAR: 18883
+      PORT_TLS: 18483
+      PORT_WS: 8880
+      PORT_WSS: 4443
+      NODE_NAME: mqtt_server
+      CLUSTER_NODES: ""
+      MNESIA_DIR: "/opt/mnesia_data"
+      MNESIA_MASTER: "true"
+    ports:
+       - "8080:8080"
+       - "8880:8880"
+       - "4443:4443"
+    expose:
+      - "4443"   # Internal port mqtt server listens on
+      - "8080"   # Internal port mqtt server listens on
+      - "8880"   # Internal port mqtt server listens on
+    volumes:
+#      - mnesia-volume:/opt/mnesia_data
+      - /opt/mqtt/server/mnesia:/opt/mnesia_data
+    networks:
+      - mqtt_net
+
+  sim_web-service:
+    image: sim_web
+    container_name: docker_container_b
+    hostname: localhost
+    tty: "true"
+    environment:
+       DETS_DIR="/var/db/dets-storage"
+       PORT_REST=8000
+       PORT_MQTT_WS=8880
+       HOST_MQTT="docker_container_0"
+       PORT_MQTT_REST=8080
+    ports:
+      - "8000:8000"
+    expose:
+      - "8000"  # Internal port mqtt server listens on
+    volumes:
+      - /var/db/dets-storage:/var/db/dets-storage
+    networks:
+      - mqtt_net
+
+networks:
+  mqtt_net:
+    driver: bridge
+
+volumes:
+  mnesia-volume:
+    name: mnesia-volume
+  dets-volume:
+    name: dets-volume
+
+# docker compose -f compose.yaml up
