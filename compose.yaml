@@ -42,7 +42,7 @@ services:
       DETS_DIR: "/var/db/dets-storage"
       PORT_REST: 8000
       PORT_MQTT_WS: 8880
-      HOST_MQTT: "docker_container_0"
+      HOST_MQTT: "docker_container_a"
       PORT_MQTT_REST: 8080
     ports:
       - "8000:8000"
