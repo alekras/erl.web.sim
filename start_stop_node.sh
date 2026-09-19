@@ -8,16 +8,15 @@ export PORT_MQTT_REST=8080
 
 echo "arguments: $1 $2"
 
-
 case "$1" in
 	dev)
 		cd _build/default/rel/sim_web_dev
-    export HOST_MQTT=MACBOOK-PRO
+		export HOST_MQTT=MACBOOK-PRO
 		SCRIPT_NAME="./bin/sim_web_dev"
 		;;
 	prod)
 		cd _build/default/rel/sim_web
-    export HOST_MQTT=localhost
+		export HOST_MQTT=localhost
 		SCRIPT_NAME="./bin/sim_web"
 		;;
 	*)

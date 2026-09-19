@@ -15,6 +15,9 @@ services:
       CLUSTER_NODES: ""
       MNESIA_DIR: "/opt/mnesia_data"
       MNESIA_MASTER: "true"
+      CERT_FILE: "/.ssh/certificate.crt"
+      CA_CERT_FILE: "/.ssh/ca_bundle.crt"
+      KEY_FILE: "/.ssh/private.key"
     ports:
       - "8080:8080"
       - "8880:8880"
@@ -26,6 +29,7 @@ services:
     volumes:
 #      - mnesia-volume:/opt/mnesia_data
       - /opt/mqtt/server/mnesia:/opt/mnesia_data
+      - /home/alexei/.ssh/lucky3p.com:/.ssh
     networks:
       - mqtt_net
 
