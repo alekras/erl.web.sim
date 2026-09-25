@@ -160,7 +160,9 @@ class Panel extends React.Component {
 						parent:this.parentTd,
 						warnBox:this.warnBoxRef,
 						onMoveToChat:this.handleMoveToChat,
-						user:this.state.user
+						user:this.state.user,
+						w:this.props.w, 
+						h:this.props.h
 					});
 				break;
 			case 'Chat' :

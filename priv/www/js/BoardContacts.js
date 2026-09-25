@@ -190,10 +190,16 @@ class BoardContacts extends React.Component {
 				clickToRemove:this.clickToRemove});
 		});
 		
+		var h = '100%';
+		if (browserType() === 'FF') {
+			h = (this.props.h - 129) + 'px'
+		}
+		
 		return e('tr', {key:1}, [
-			e('td', {key:1, colSpan:'3', className:'td-contacts-record'}, 
+			e('td', {key:1, colSpan:'3'}, 
 				e('div', {key:1,
-					className:'board_chat'
+					className:'board_chat',
+					style:{height:h}
 				}, rows)
 			)
 		]);

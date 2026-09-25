@@ -41,7 +41,7 @@ class BoardHelp extends React.Component {
 	render() {
 		var h = '100%';
 		if (browserType() === 'FF') {
-			h = (this.props.h - 70) + 'px'
+			h = (this.props.h - 102) + 'px'
 		}
 		return e(
 			'div',

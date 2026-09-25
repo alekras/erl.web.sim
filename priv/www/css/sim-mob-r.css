@@ -114,10 +114,6 @@ table tr td {
 	width: 45px;
 }
 
-.td-contacts-record {
-	height: 100%;
-}
-
 .button {
 	padding: 0px;
 	margin: 2px 5px;
@@ -227,8 +223,8 @@ table tr td {
 
 .board_chat {
 	width: 100%;
-	min-height: 100% !important;
-	height: 100%; /* set */
+/*	min-height: 100% !important;
+	height: 100%; */
 	border: 0px solid black;
 	margin-top: 2px;
 	padding: 0px;
@@ -384,7 +380,6 @@ table tr td {
 
 .help {
 	float:left;
-	height:100%;
 	width:100%;
 	background-color: rgba(240, 234, 227, 1);
 	overflow: auto;

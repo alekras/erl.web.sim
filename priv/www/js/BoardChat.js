@@ -97,6 +97,11 @@ class BoardChat extends React.Component {
 			}
 		}
 		
+		var h = '100%';
+		if (browserType() === 'FF') {
+			h = (this.props.h - 168) + 'px'
+		}
+		
 		return e(
 			'table',
 			{
@@ -105,8 +110,8 @@ class BoardChat extends React.Component {
 			}, 
 			e('tbody', {key:1}, [
 				e('tr', {key:1}, [
-					e('td', {key:1, colSpan:'2', style:{height:'100%'}}, 
-						[e('div', {key:1, className:'board_chat'}, rows)])
+					e('td', {key:1, colSpan:'2'}, 
+						[e('div', {key:1, className:'board_chat', style:{height:h}}, rows)])
 				]),
 				e('tr', {key:0}, [
 					e('td', {key:1, colSpan:'2', style:{height:'15px', backgroundColor:'white'}}, [
