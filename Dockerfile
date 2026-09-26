@@ -28,7 +28,7 @@ EXPOSE 8000
 
 # Command to run the Erlang application release
 ENV RELEASE_NAME=$RELEASE_NAME
-CMD bin/${RELEASE_NAME} console
+CMD ["sh","-c","bin/${RELEASE_NAME} console"]
 
 # Command from host terminal to build image
 #DEV  docker build --build-arg RELEASE_NAME=sim_web_dev -t sim_web_dev --file Dockerfile .
